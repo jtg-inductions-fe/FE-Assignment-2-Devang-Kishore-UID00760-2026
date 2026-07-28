@@ -1,0 +1,12 @@
+[
+    {
+        "id": "O1",
+        "customerId": "U1",
+        "restaurantId": "R1",
+        "restaurantName": "Spice Route Kitchen",
+        "items": [],
+        "status": "preparing",
+        "subtotal": 620,
+        "createdAt": ""
+    }
+]

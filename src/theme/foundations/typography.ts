@@ -1,22 +1,8 @@
 import type { Theme } from '@mui/material/styles';
-import type {
-    TypographyOptions,
-    TypographyUtils,
-} from '@mui/material/styles/createTypography';
+import type { TypographyOptions } from '@mui/material/styles/createTypography';
 
 import { HTML_FONT_SIZE } from '@constant';
 
-/* Custom px to rem function */
-const typographyUtil: TypographyUtils = {
-    /**
-     * Converts a pixel value to rem units.
-     * @param px - The pixel value to convert.
-     * @returns The equivalent value in rem units as a string.
-     */
-    pxToRem: (px: number) => `${px / HTML_FONT_SIZE}` + 'rem',
-};
-
-// TODO: Add the necessary typographies here.
 /**
  * Creates a typography block with various styles
  * @param theme - Theme object to access the breakpoints.
@@ -29,17 +15,110 @@ const typographyStyle = (theme: Theme): TypographyOptions => ({
     fontWeightLight: 400,
     fontWeightRegular: 500,
     fontWeightMedium: 600,
+    fontWeightBold: 700,
 
     h1: {
-        fontSize: typographyUtil.pxToRem(30),
-        fontWeight: 700,
-        lineHeight: typographyUtil.pxToRem(45),
+        fontSize: theme.typography.pxToRem(32),
+        fontWeight: theme.typography.fontWeightBold,
+        lineHeight: 1.2,
 
         [theme.breakpoints.up('md')]: {
-            fontSize: typographyUtil.pxToRem(48),
-            lineHeight: typographyUtil.pxToRem(62.5),
+            fontSize: theme.typography.pxToRem(40),
         },
+    },
+
+    h2: {
+        fontSize: theme.typography.pxToRem(24),
+        fontWeight: theme.typography.fontWeightBold,
+        lineHeight: 1.25,
+
+        [theme.breakpoints.up('md')]: {
+            fontSize: theme.typography.pxToRem(32),
+        },
+    },
+
+    h3: {
+        fontSize: theme.typography.pxToRem(22),
+        fontWeight: theme.typography.fontWeightRegular,
+        lineHeight: 1.25,
+
+        [theme.breakpoints.up('md')]: {
+            fontSize: theme.typography.pxToRem(28),
+        },
+    },
+
+    h4: {
+        fontSize: theme.typography.pxToRem(20),
+        fontWeight: theme.typography.fontWeightMedium,
+        lineHeight: 1.35,
+
+        [theme.breakpoints.up('md')]: {
+            fontSize: theme.typography.pxToRem(24),
+        },
+    },
+
+    h5: {
+        fontSize: theme.typography.pxToRem(18),
+        fontWeight: theme.typography.fontWeightMedium,
+        lineHeight: 1.4,
+
+        [theme.breakpoints.up('md')]: {
+            fontSize: theme.typography.pxToRem(20),
+        },
+    },
+
+    h6: {
+        fontSize: theme.typography.pxToRem(16),
+        fontWeight: theme.typography.fontWeightMedium,
+        lineHeight: 1.4,
+
+        [theme.breakpoints.up('md')]: {
+            fontSize: theme.typography.pxToRem(18),
+        },
+    },
+
+    subtitle1: {
+        fontSize: theme.typography.pxToRem(16),
+        fontWeight: theme.typography.fontWeightMedium,
+        lineHeight: 1.5,
+    },
+
+    subtitle2: {
+        fontWeight: theme.typography.fontWeightMedium,
+        lineHeight: 1.45,
+        fontSize: theme.typography.pxToRem(14),
+    },
+
+    body1: {
+        fontSize: theme.typography.pxToRem(16),
+        fontWeight: theme.typography.fontWeightRegular,
+        lineHeight: 1.6,
+    },
+
+    body2: {
+        fontSize: theme.typography.pxToRem(14),
+        fontWeight: theme.typography.fontWeightRegular,
+        lineHeight: 1.6,
+    },
+
+    button: {
+        fontSize: theme.typography.pxToRem(14),
+        fontWeight: theme.typography.fontWeightMedium,
+        lineHeight: 1.4,
+        textTransform: 'none',
+    },
+
+    caption: {
+        fontSize: theme.typography.pxToRem(12),
+        fontWeight: theme.typography.fontWeightRegular,
+        lineHeight: 1.5,
+    },
+    overline: {
+        fontSize: theme.typography.pxToRem(12),
+        fontWeight: theme.typography.fontWeightMedium,
+        lineHeight: 1.5,
+        textTransform: 'uppercase',
     },
 });
 
-export const typography = { typographyStyle, typographyUtil };
+export const typography = { typographyStyle };
