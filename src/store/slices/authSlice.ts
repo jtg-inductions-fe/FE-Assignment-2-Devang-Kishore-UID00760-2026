@@ -1,26 +1,28 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { getCurrentUser, login, signUp } from './auth.service';
+import { getCurrentUser, login, signUp } from '../../services/auth.service';
 import { Role, User } from '../../types/index';
 import { removeStorage } from '../../utils/storage';
 
-type AuthState = {
+interface AuthState {
     user: User | null;
     loading: boolean;
     error: string | null;
-};
+    isLoggedIn: boolean;
+}
 
 const initialState: AuthState = {
     user: getCurrentUser(),
     loading: false,
     error: null,
+    isLoggedIn: false,
 };
-type UserData = {
+interface UserData {
     name: string;
     email: string;
     password: string;
     role: Role;
-};
+}
 
 export const loginUser = createAsyncThunk(
     'auth/login',
@@ -57,6 +59,7 @@ export const authSlice = createSlice({
     reducers: {
         logout(state) {
             state.user = null;
+            state.isLoggedIn = false;
             removeStorage('crt_user');
         },
         clearError(state) {
@@ -72,6 +75,7 @@ export const authSlice = createSlice({
             .addCase(loginUser.fulfilled, (state, action) => {
                 state.loading = false;
                 state.user = action.payload;
+                state.isLoggedIn = true;
             })
             .addCase(loginUser.rejected, (state) => {
                 state.loading = false;
@@ -84,6 +88,7 @@ export const authSlice = createSlice({
             .addCase(signupUser.fulfilled, (state, action) => {
                 state.loading = false;
                 state.user = action.payload;
+                state.isLoggedIn = true;
             })
             .addCase(signupUser.rejected, (state) => {
                 state.loading = false;

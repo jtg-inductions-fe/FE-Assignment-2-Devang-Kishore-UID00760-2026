@@ -5,7 +5,7 @@ import {
     deleteMenuItem,
     getMenu,
     updateMenuItem,
-} from './menu.service';
+} from '../../services/menu.service';
 import { MenuItem } from '../../types/index';
 interface MenuState {
     items: MenuItem[];

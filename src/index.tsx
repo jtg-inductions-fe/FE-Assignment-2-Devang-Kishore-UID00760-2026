@@ -8,7 +8,7 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 
 import { theme } from '@theme';
 
-import { SnackbarProvider } from './components/snackbar/SnackBar';
+import { SnackbarProvider } from './components/common/snackbar/SnackBar';
 import { router } from './routes/router';
 import { store } from './store/store';
 

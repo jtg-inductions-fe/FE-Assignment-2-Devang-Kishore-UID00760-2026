@@ -26,7 +26,9 @@ export const ConfirmDialog = ({
     >
         <DialogTitle id="confirm-dialog-title">{title}</DialogTitle>
         <DialogContent>
-            <DialogContentText>{message}</DialogContentText>
+            <DialogContentText aria-describedby="confirm-dialog-description">
+                {message}
+            </DialogContentText>
         </DialogContent>
         <DialogActions>
             <Button color="error" onClick={onCancel}>

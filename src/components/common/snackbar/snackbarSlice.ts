@@ -1,7 +1,7 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 import type { SnackbarState } from './snackbar.types';
-import type { Snackbar } from '../../types';
+import type { Snackbar } from '../../../types';
 
 const initialState: SnackbarState = {
     open: false,

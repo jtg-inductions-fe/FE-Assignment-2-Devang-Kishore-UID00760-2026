@@ -1,4 +1,4 @@
-import type { Snackbar } from '../../types';
+import type { Snackbar } from '@types';
 export interface SnackbarState {
     open: boolean;
     message: string;

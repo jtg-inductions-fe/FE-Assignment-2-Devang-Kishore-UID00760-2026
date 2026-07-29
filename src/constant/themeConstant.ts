@@ -24,7 +24,7 @@ export const COLORS = {
     },
 
     INFO: {
-        MAIN: '#0288D1',
+        MAIN: '#00299a',
         TEXT: '#FFFFFF',
     },
 
@@ -34,7 +34,7 @@ export const COLORS = {
     },
 
     WARNING: {
-        MAIN: '#FB8C00',
+        MAIN: '#e38006',
         TEXT: '#FFFFFF',
     },
 

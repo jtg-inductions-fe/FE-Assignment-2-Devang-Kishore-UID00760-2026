@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import snackbarReducer from '../components/snackbar/snackbarSlice';
-import authReducer from '../features/auth/authSlice';
-import cartReducer from '../features/cart/cartSlice';
-import ordersReducer from '../features/orders/ordersSlice';
-import menuReducer from '../features/restaurantDetails/menuSlice';
-import restaurantReducer from '../features/restaurantDiscovery/restaurantSlice';
+import authReducer from './slices/authSlice';
+import cartReducer from './slices/cartSlice';
+import menuReducer from './slices/menuSlice';
+import ordersReducer from './slices/ordersSlice';
+import restaurantReducer from './slices/restaurantSlice';
+import snackbarReducer from '../components/common/snackbar/snackbarSlice';
 export const store = configureStore({
     reducer: {
         auth: authReducer,

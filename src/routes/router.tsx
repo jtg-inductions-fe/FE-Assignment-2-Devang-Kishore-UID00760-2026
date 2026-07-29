@@ -4,18 +4,18 @@ import { ROUTES } from '@constant';
 
 import { AuthRoute } from './AuthRoute';
 import { PrivateRoute } from './PrivateRoute';
+import { ErrorPage } from '../container/exception/ErrorPage';
+import { NotFoundPage } from '../container/exception/NotFoundPage';
 import { AppLayout } from '../layouts/AppLayout';
 import { AuthLayout } from '../layouts/AuthLayout';
-import { ErrorPage } from '../pages/ErrorPage';
-import { NotFoundPage } from '../pages/NotFoundPage';
 
 export const router = createBrowserRouter([
     {
         path: ROUTES.ROOT,
+        errorElement: <ErrorPage />,
         children: [
             {
                 element: <PrivateRoute />,
-                errorElement: <ErrorPage />,
                 children: [
                     {
                         element: <AppLayout />,

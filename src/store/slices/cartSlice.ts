@@ -12,9 +12,11 @@ const CART_KEY = 'cart_items';
 const initialState: CartState = {
     items: readStorage<CartItem[]>(CART_KEY, []),
 };
+
 const persist = (items: CartItem[]): void => {
     writeStorage(CART_KEY, items);
 };
+
 export const cartSlice = createSlice({
     name: 'cart',
     initialState,

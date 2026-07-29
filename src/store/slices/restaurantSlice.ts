@@ -5,7 +5,7 @@ import {
     deleteRestaurant,
     getRestaurants,
     updateRestaurant,
-} from './restaurant.service';
+} from '../../services/restaurant.service';
 import { Restaurant } from '../../types/index';
 
 interface RestaurantState {
@@ -19,23 +19,28 @@ const initialState: RestaurantState = {
     loading: false,
     error: null,
 };
+
 export const fetchRestaurants = createAsyncThunk(
     'restaurants/fetch',
     getRestaurants,
 );
+
 export const saveRestaurant = createAsyncThunk(
     'restaurant/save',
     (payload: Omit<Restaurant, 'id'>) => createRestaurant(payload),
 );
+
 export const updateRestaurantData = createAsyncThunk(
     'restaurants/update',
     (payload: { id: string; data: Partial<Restaurant> }) =>
         updateRestaurant(payload.id, payload.data),
 );
+
 export const removeRestaurant = createAsyncThunk(
     'restaurant/remove',
     (id: string) => deleteRestaurant(id),
 );
+
 export const RestaurantSlice = createSlice({
     name: 'Restaurant',
     initialState,

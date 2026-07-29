@@ -1,6 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { getOrders, placeOrder, updateOrder } from './orders.service';
+import {
+    getOrders,
+    placeOrder,
+    updateOrder,
+} from '../../services/orders.service';
 import { CartItem, Order, OrderStatus } from '../../types/index';
 interface OrdersState {
     items: Order[];

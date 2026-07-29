@@ -29,11 +29,9 @@ export const NotFoundPage = () => (
                 justifyContent="center"
             >
                 <ComponentGrid size={{ xs: 12, md: 6 }}>
-                    <Typography variant="h1" color="primary.main">
-                        404
-                    </Typography>
+                    <Typography variant="h1">404</Typography>
                     <Typography variant="h4">Page Not Found</Typography>
-                    <Typography variant="body1" color="text.secondary">
+                    <Typography variant="body1" color="text.primary">
                         The page you are looking for might have been removed.
                     </Typography>
                     <Button
