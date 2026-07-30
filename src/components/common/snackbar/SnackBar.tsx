@@ -2,11 +2,14 @@ import type { PropsWithChildren } from 'react';
 
 import { Alert, Snackbar } from '@mui/material';
 
+import { UseAppDispatch, UseAppSelector } from '@hooks/storeHooks';
+
 import { hideSnackbar } from './snackbarSlice';
-import { UseAppDispatch, UseAppSelector } from '../../../hooks/storeHooks';
+
 export const SnackbarProvider = ({ children }: PropsWithChildren) => {
     const dispatch = UseAppDispatch();
     const snackbar = UseAppSelector((state) => state.snackbar);
+
     return (
         <>
             {children}

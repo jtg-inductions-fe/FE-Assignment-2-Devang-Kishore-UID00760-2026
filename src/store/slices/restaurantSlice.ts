@@ -1,12 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-
 import {
     createRestaurant,
     deleteRestaurant,
     getRestaurants,
     updateRestaurant,
-} from '../../services/restaurant.service';
-import { Restaurant } from '../../types/index';
+} from '@services/restaurant.service';
+import { Restaurant } from '@types';
 
 interface RestaurantState {
     items: Restaurant[];

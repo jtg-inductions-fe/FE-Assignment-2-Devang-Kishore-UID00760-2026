@@ -1,6 +1,6 @@
-import usersMock from '../data/user.json';
-import { Role, User } from '../types/index';
-import { readStorage, writeStorage } from '../utils/storage';
+import usersMock from '@data/user.json';
+import { Role, User } from '@types';
+import { readStorage, writeStorage } from '@utils/storage';
 
 type UserData = {
     name: string;
@@ -25,7 +25,7 @@ export const login = (email: string, password: string): Promise<User> => {
     );
 
     if (!user) {
-        throw new Error('User not found');
+        throw new Error('Email or password is incorrect');
     }
 
     writeStorage(CURRENT_USER, user);

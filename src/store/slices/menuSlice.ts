@@ -1,12 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-
 import {
     addMenuItem,
     deleteMenuItem,
     getMenu,
     updateMenuItem,
-} from '../../services/menu.service';
-import { MenuItem } from '../../types/index';
+} from '@services/menu.service';
+import { MenuItem } from '@types';
 interface MenuState {
     items: MenuItem[];
     loading: boolean;

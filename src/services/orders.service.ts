@@ -1,6 +1,6 @@
-import ordersMock from '../data/orders.json';
-import type { CartItem, Order, OrderStatus } from '../types';
-import { readStorage, writeStorage } from '../utils/storage';
+import ordersMock from '@data/orders.json';
+import type { CartItem, Order, OrderStatus } from '@types';
+import { readStorage, writeStorage } from '@utils/storage';
 
 interface OrderData {
     customerId: string;

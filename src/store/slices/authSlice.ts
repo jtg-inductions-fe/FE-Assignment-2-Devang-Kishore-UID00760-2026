@@ -1,8 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-
-import { getCurrentUser, login, signUp } from '../../services/auth.service';
-import { Role, User } from '../../types/index';
-import { removeStorage } from '../../utils/storage';
+import { getCurrentUser, login, signUp } from '@services/auth.service';
+import { Role, User } from '@types';
+import { removeStorage } from '@utils/storage';
 
 interface AuthState {
     user: User | null;
@@ -15,8 +14,9 @@ const initialState: AuthState = {
     user: getCurrentUser(),
     loading: false,
     error: null,
-    isLoggedIn: false,
+    isLoggedIn: getCurrentUser() ? true : false,
 };
+
 interface UserData {
     name: string;
     email: string;

@@ -1,6 +1,7 @@
 import { Navigate, Outlet } from 'react-router-dom';
 
+import { UseAppSelector } from '@hooks/storeHooks';
 export const PrivateRoute = () => {
-    const user = true; //will check using redux store
-    return user ? <Outlet /> : <Navigate to="/login" replace />;
+    const { isLoggedIn } = UseAppSelector((state) => state.auth);
+    return isLoggedIn ? <Outlet /> : <Navigate to="/login" replace />;
 };

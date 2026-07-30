@@ -1,7 +1,7 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import type { Snackbar } from '@types';
 
 import type { SnackbarState } from './snackbar.types';
-import type { Snackbar } from '../../../types';
 
 const initialState: SnackbarState = {
     open: false,
@@ -21,6 +21,7 @@ const snackbarSlice = createSlice({
             state.message = action.payload.message;
             state.severity = action.payload.severity ?? 'success';
         },
+
         hideSnackbar(state) {
             state.open = false;
         },

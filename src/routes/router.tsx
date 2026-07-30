@@ -1,14 +1,15 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 
 import { ROUTES } from '@constant';
+import { Login } from '@container/Auth/Login';
+import { Signup } from '@container/Auth/Signup';
+import { ErrorPage } from '@container/exceptions/ErrorPage';
+import { NotFoundPage } from '@container/exceptions/NotFoundPage';
+import { AppLayout } from '@layouts/AppLayout';
+import { AuthLayout } from '@layouts/AuthLayout';
 
 import { AuthRoute } from './AuthRoute';
 import { PrivateRoute } from './PrivateRoute';
-import { ErrorPage } from '../container/exception/ErrorPage';
-import { NotFoundPage } from '../container/exception/NotFoundPage';
-import { AppLayout } from '../layouts/AppLayout';
-import { AuthLayout } from '../layouts/AuthLayout';
-
 export const router = createBrowserRouter([
     {
         path: ROUTES.ROOT,
@@ -59,11 +60,11 @@ export const router = createBrowserRouter([
                         children: [
                             {
                                 path: ROUTES.LOGIN,
-                                element: <div>login</div>,
+                                element: <Login />,
                             },
                             {
                                 path: ROUTES.SIGNUP,
-                                element: <div>signup</div>,
+                                element: <Signup />,
                             },
                         ],
                     },

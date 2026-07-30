@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-import { CartItem, MenuItem } from '../../types/index';
-import { readStorage, writeStorage } from '../../utils/storage';
+import { CartItem, MenuItem } from '@types';
+import { readStorage, writeStorage } from '@utils/storage.ts';
 
 interface CartState {
     items: CartItem[];

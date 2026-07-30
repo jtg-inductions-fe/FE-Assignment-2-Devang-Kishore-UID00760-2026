@@ -1,6 +1,6 @@
-import menuMock from '../data/menu.json';
-import type { MenuItem } from '../types';
-import { readStorage, writeStorage } from '../utils/storage';
+import menuMock from '@data/menu.json';
+import type { MenuItem } from '@types';
+import { readStorage, writeStorage } from '@utils/storage';
 
 const MENU_KEY = 'menu';
 
