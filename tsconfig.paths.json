@@ -4,7 +4,7 @@
             "@assets/*": ["./src/assets/*"],
             "@constant": ["./src/constant/index"],
             "@components/*": ["./src/components/*"],
-            "@container/*": ["./src/container/*"],
+            "@containers/*": ["./src/containers/*"],
             "@theme": ["./src/theme/index"],
             "@types": ["./src/types/index"],
             "@services/*": ["./src/services/*"],

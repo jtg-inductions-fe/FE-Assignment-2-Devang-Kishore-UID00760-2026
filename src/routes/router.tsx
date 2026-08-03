@@ -1,15 +1,17 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 
-import { ROUTES } from '@constant';
-import { Login } from '@container/Auth/Login';
-import { Signup } from '@container/Auth/Signup';
-import { ErrorPage } from '@container/exceptions/ErrorPage';
-import { NotFoundPage } from '@container/exceptions/NotFoundPage';
+import { AddRestaurant } from '@containers/AddRestaurant/AddRestaurant';
+import { Login } from '@containers/Auth/Login';
+import { Signup } from '@containers/Auth/Signup';
+import { ErrorPage } from '@containers/exceptions/ErrorPage';
+import { NotFoundPage } from '@containers/exceptions/NotFoundPage';
 import { AppLayout } from '@layouts/AppLayout';
 import { AuthLayout } from '@layouts/AuthLayout';
 
-import { AuthRoute } from './AuthRoute';
-import { PrivateRoute } from './PrivateRoute';
+import { AuthRoute } from './AuthRoutes';
+import { PrivateRoute } from './PrivateRoutes';
+import { ProtectedRoutes } from './ProtectedRoutes';
+import { ROUTES } from '../constants';
 export const router = createBrowserRouter([
     {
         path: ROUTES.ROOT,
@@ -46,6 +48,17 @@ export const router = createBrowserRouter([
                             {
                                 path: ROUTES.CHECKOUT,
                                 element: <div>checkout</div>,
+                            },
+                            {
+                                element: (
+                                    <ProtectedRoutes allowedRoles={['owner']} />
+                                ),
+                                children: [
+                                    {
+                                        path: ROUTES.ADDRESTAURANT,
+                                        element: <AddRestaurant />,
+                                    },
+                                ],
                             },
                         ],
                     },

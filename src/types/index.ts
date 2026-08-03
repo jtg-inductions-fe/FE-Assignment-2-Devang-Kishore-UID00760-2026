@@ -1,3 +1,12 @@
+export type { ImagePreviewProps } from './imagePreview.types';
+export type { CustomSelectProps } from './customSelect.types';
+export type { ToggleSwitchProps } from './toggleSwitch.types';
+export type {
+    MenuItemFormData,
+    AddRestaurantFormData,
+} from './AddRestaurant.types';
+export type { FeedBackState, FeedbackComponentType } from './feedback.types';
+export type { ConfirmationDialogProps } from './confirmationDialog.types';
 export type Role = 'customer' | 'owner';
 export type FoodType = 'veg' | 'nonVeg' | 'both';
 export type OrderStatus =
@@ -60,11 +69,10 @@ export interface Restaurant {
     ownerId: string;
     name: string;
     description: string;
-
     contactNumber: string;
     email: string;
     fssaiCertificateId: string;
-    GstNumber: string;
+    gstNumber: string;
     cuisines: Cuisine[];
     category: FoodType;
     image: string;

@@ -1,18 +1,17 @@
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-import { Box } from '@mui/material';
+import { Box, Checkbox } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
-import logo from '@assets/images/logo.svg';
 import { Button } from '@components/common/button';
+import { Logo } from '@components/common/logo';
 import { PasswordField } from '@components/common/passwordField/PasswordField';
-import { showSnackbar } from '@components/common/snackbar/snackbarSlice';
 import { TextField } from '@components/common/textField';
-import { ROUTES } from '@constant';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { UseAppDispatch, UseAppSelector } from '@hooks/storeHooks';
-import { loginUser } from '@store/slices/authSlice';
+import { signupUser } from '@store/slices/authSlice';
+import { showSnackbar } from '@store/slices/feedBackSlice';
 
 import {
     AuthCard,
@@ -21,29 +20,32 @@ import {
     AuthHeader,
     AuthLink,
     AuthWrapper,
-    LogoImage,
 } from './auth.styled';
-import { LoginFormData, loginSchema } from './auth.validation';
+import { SignupFormData, signupSchema } from './auth.validation';
+import { ROUTES } from '../../constants';
 
-export const Login = () => {
+export const Signup = () => {
     const dispatch = UseAppDispatch();
     const navigate = useNavigate();
     const { loading } = UseAppSelector((state) => state.auth);
 
-    const { control, handleSubmit } = useForm<LoginFormData>({
-        resolver: yupResolver(loginSchema),
+    const { control, handleSubmit } = useForm<SignupFormData>({
+        resolver: yupResolver(signupSchema),
         defaultValues: {
+            name: '',
             email: '',
             password: '',
+            confirmPassword: '',
+            role: 'customer',
         },
     });
 
-    const onSubmit = async (data: LoginFormData) => {
+    const onSubmit = async (data: SignupFormData) => {
         try {
-            await dispatch(loginUser(data)).unwrap();
+            await dispatch(signupUser(data)).unwrap();
             dispatch(
                 showSnackbar({
-                    message: 'Login successful.',
+                    message: 'SignUP successful.',
                     severity: 'success',
                 }),
             );
@@ -63,10 +65,10 @@ export const Login = () => {
             <AuthContent>
                 <AuthCard>
                     <AuthHeader>
-                        <LogoImage src={logo} alt="Tangoo Logo" />
-                        <Typography variant="h1">WELCOME BACK</Typography>
+                        <Logo />
+                        <Typography variant="h1">START ORDERING</Typography>
                         <Typography variant="body1" color="secondary.light">
-                            Sign in to continue ordering you favourite food
+                            Sign up to start ordering you favourite food
                         </Typography>
                     </AuthHeader>
                     <AuthForm
@@ -74,6 +76,24 @@ export const Login = () => {
                             void handleSubmit(onSubmit)(e);
                         }}
                     >
+                        <Box>
+                            <Typography variant="subtitle1" mb={1}>
+                                Name
+                            </Typography>
+                            <Controller
+                                name="name"
+                                control={control}
+                                render={({ field, fieldState }) => (
+                                    <TextField
+                                        {...field}
+                                        placeholder="Enter your name"
+                                        type="name"
+                                        error={!!fieldState.error}
+                                        helperText={fieldState.error?.message}
+                                    />
+                                )}
+                            />
+                        </Box>
                         <Box>
                             <Typography variant="subtitle1" mb={1}>
                                 Email
@@ -109,6 +129,50 @@ export const Login = () => {
                                 )}
                             />
                         </Box>
+                        <Box>
+                            <Typography variant="subtitle1" mb={1}>
+                                Confirm Password
+                            </Typography>
+                            <Controller
+                                name="confirmPassword"
+                                control={control}
+                                render={({ field, fieldState }) => (
+                                    <PasswordField
+                                        {...field}
+                                        placeholder="Enter password again"
+                                        error={!!fieldState.error}
+                                        helperText={fieldState.error?.message}
+                                    />
+                                )}
+                            />
+                        </Box>
+
+                        <Box display="Flex" alignItems="center">
+                            <Controller
+                                name="role"
+                                control={control}
+                                render={({
+                                    field: { value, onChange, ...field },
+                                }) => (
+                                    <Checkbox
+                                        {...field}
+                                        checked={value === 'owner'}
+                                        onChange={(e) =>
+                                            onChange(
+                                                e.target.checked
+                                                    ? 'owner'
+                                                    : 'customer',
+                                            )
+                                        }
+                                        inputProps={{ 'aria-label': 'role' }}
+                                    />
+                                )}
+                            />
+                            <Typography variant="h6">
+                                Join as Restaurant Partner
+                            </Typography>
+                        </Box>
+
                         <Button
                             type="submit"
                             variant="contained"
@@ -117,7 +181,7 @@ export const Login = () => {
                             loading={loading}
                             disabled={loading}
                         >
-                            Login
+                            Sign Up
                         </Button>
                         <Box
                             display="Flex"
@@ -126,14 +190,14 @@ export const Login = () => {
                             gap={0.5}
                         >
                             <Typography variant="body2">
-                                Don&apos;t have an account?
+                                Already have an account?
                             </Typography>
-                            <AuthLink to={ROUTES.SIGNUP}>
+                            <AuthLink to={ROUTES.LOGIN}>
                                 <Typography
                                     variant="body2"
                                     fontWeight="inherit"
                                 >
-                                    Sign Up
+                                    Login
                                 </Typography>
                             </AuthLink>
                         </Box>

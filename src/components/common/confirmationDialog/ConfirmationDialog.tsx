@@ -7,7 +7,7 @@ import {
     DialogTitle,
 } from '@mui/material';
 
-import { ConfirmationDialogProps } from './confirmationDialog.types';
+import { ConfirmationDialogProps } from '@types';
 
 export const ConfirmDialog = ({
     open,
@@ -23,10 +23,13 @@ export const ConfirmDialog = ({
         aria-labelledby="confirm-dialog-title"
         role="alertdialog"
         maxWidth="lg"
+        disableRestoreFocus
     >
         <DialogTitle id="confirm-dialog-title">{title}</DialogTitle>
         <DialogContent>
-            <DialogContentText>{message}</DialogContentText>
+            <DialogContentText aria-describedby="confirm-dialog-description">
+                {message}
+            </DialogContentText>
         </DialogContent>
         <DialogActions>
             <Button color="error" onClick={onCancel}>

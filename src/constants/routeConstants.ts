@@ -10,6 +10,7 @@ export const ROUTES = {
     CART: '/cart',
     ORDERS: '/orders',
     CHECKOUT: '/checkout',
+    ADDRESTAURANT: '/addRestaurant',
     ROOT: '/',
     ALL: '*',
 };

@@ -5,6 +5,6 @@ export const StyledButton = styled(MuiButton)(({ theme }) => ({
     borderRadius: theme.spacing(1.5),
     textTransform: 'none',
     boxShadow: 'none',
-    minHeight: 48,
     fontWeight: theme.typography.fontWeightMedium,
+    minHeight: theme.spacing(12),
 }));

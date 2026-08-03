@@ -59,14 +59,6 @@ export const AuthCard = styled(Paper)(({ theme }) => ({
     },
 }));
 
-export const LogoImage = styled('img')(({ theme }) => ({
-    width: theme.spacing(40),
-
-    [theme.breakpoints.up('md')]: {
-        width: theme.spacing(60),
-    },
-}));
-
 export const AuthForm = styled('form')(({ theme }) => ({
     display: 'flex',
     flexDirection: 'column',
