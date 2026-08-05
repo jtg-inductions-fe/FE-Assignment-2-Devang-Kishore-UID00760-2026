@@ -1,18 +1,22 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { FieldPath, FormProvider } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import { Typography } from '@mui/material';
 
-import { Button } from '@components/common/button';
-import { ConfirmDialog } from '@components/common/confirmationDialog/ConfirmationDialog';
-import { Logo } from '@components/common/logo';
-import { CustomStepper } from '@components/common/strapper/CustomStepper';
+import { Button } from '@components/button';
+import { ConfirmDialog } from '@components/confirmationDialog/ConfirmationDialog';
+import { Logo } from '@components/logo';
+import { CustomStepper } from '@components/strapper/CustomStepper';
 import { UseAppDispatch, UseAppSelector } from '@hooks/storeHooks';
 import { showSnackbar } from '@store/slices/feedBackSlice';
 import { createMenuEntry } from '@store/slices/menuSlice';
-import { saveRestaurant } from '@store/slices/restaurantSlice';
+import {
+    fetchRestaurantByID,
+    saveRestaurant,
+    updateRestaurantData,
+} from '@store/slices/restaurantSlice';
 import { AddRestaurantFormData } from '@types';
 
 import {
@@ -53,7 +57,7 @@ const STEP_FIELDS: FieldPath<AddRestaurantFormData>[][] = [
 export const AddRestaurant = () => {
     const { methods, activeStep, nextStep, previousStep } =
         useAddRestaurantForm();
-
+    const { id } = useParams();
     const ActiveStep = STEPS[activeStep];
     const { trigger } = methods;
     const dispatch = UseAppDispatch();
@@ -65,29 +69,37 @@ export const AddRestaurant = () => {
         setIsOpen((state) => !state);
     };
 
-    const onSubmit = async (data: AddRestaurantFormData) => {
-        try {
-            const restaurant = await dispatch(
-                saveRestaurant({
-                    ownerId: user!.id,
-                    name: data.name,
-                    description: data.description,
-                    contactNumber: data.contactNumber,
-                    email: data.email,
-                    fssaiCertificateId: data.fssaiCertificateId,
-                    gstNumber: data.gstNumber,
-                    cuisines: data.cuisines,
-                    category: data.category,
-                    image: data.image,
-                    logo: data.logo,
-                    address: data.address,
-                    isOpen: data.isOpen,
-                    openingTime: data.openingTime,
-                    closingTime: data.closingTime,
-                    workingDays: data.workingDays,
-                }),
-            ).unwrap();
+    const isEditMode = !!id;
+    const selectedRestaurant = UseAppSelector(
+        (state) => state.restaurants.selectedRestaurant,
+    );
 
+    const onSubmit = async (data: AddRestaurantFormData) => {
+        const restaurantData = {
+            ownerId: user!.id,
+            name: data.name,
+            description: data.description,
+            contactNumber: data.contactNumber,
+            email: data.email,
+            fssaiCertificateId: data.fssaiCertificateId,
+            gstNumber: data.gstNumber,
+            cuisines: data.cuisines,
+            category: data.category,
+            image: data.image,
+            logo: data.logo,
+            address: data.address,
+            isOpen: data.isOpen,
+            openingTime: data.openingTime,
+            closingTime: data.closingTime,
+            workingDays: data.workingDays,
+        };
+
+        try {
+            const restaurant = !isEditMode
+                ? await dispatch(saveRestaurant(restaurantData)).unwrap()
+                : await dispatch(
+                      updateRestaurantData({ id, data: restaurantData }),
+                  ).unwrap();
             await Promise.all(
                 data.menu.map((item) =>
                     dispatch(
@@ -129,6 +141,30 @@ export const AddRestaurant = () => {
             await methods.handleSubmit(onSubmit)();
         }
     };
+    const handleConfirm = async () => {
+        await navigate(ROUTES.DISCOVERY);
+        setIsOpen((state) => !state);
+    };
+
+    useEffect(() => {
+        if (!id) return;
+        dispatch(fetchRestaurantByID(id))
+            .unwrap()
+            .catch(() => {
+                dispatch(
+                    showSnackbar({
+                        message: 'Error while fetching restaurant data.',
+                        severity: 'error',
+                    }),
+                );
+            });
+    }, [id, dispatch]);
+
+    useEffect(() => {
+        if (selectedRestaurant) {
+            methods.reset(selectedRestaurant);
+        }
+    }, [selectedRestaurant, methods]);
 
     return (
         <AddRestaurantContainer maxWidth="lg">
@@ -139,7 +175,7 @@ export const AddRestaurant = () => {
             </AddRestaurantHeader>
             <StyledPaper elevation={2}>
                 <Typography variant="h3" mb={4}>
-                    ADD NEW RESTAURANT
+                    {isEditMode ? 'EDIT RESTAURANT' : 'ADD NEW RESTAURANT'}
                 </Typography>
                 <Typography variant="body1" mb={4} color="secondary.main">
                     Add your restaurant and start serving customers through our
@@ -174,7 +210,7 @@ export const AddRestaurant = () => {
                                 type="button"
                                 variant="contained"
                                 onClick={() => {
-                                    void handleNext;
+                                    void handleNext();
                                 }}
                                 loading={loading}
                             >
@@ -188,16 +224,19 @@ export const AddRestaurant = () => {
             </StyledPaper>
             <ConfirmDialog
                 open={isOpen}
-                title={'Cancel Adding New Restaurant.'}
-                message={'Do you want to cancel adding new restaurant?'}
+                title={
+                    isEditMode
+                        ? 'Cancel Editing Restaurant.'
+                        : 'Cancel Adding New Restaurant.'
+                }
+                message={
+                    isEditMode
+                        ? 'Do you want to cancel editing restaurant?'
+                        : 'Do you want to cancel adding new restaurant?'
+                }
                 confirmLabel={'Confirm'}
                 onCancel={() => setIsOpen((state) => !state)}
-                onConfirm={() =>
-                    void (async () => {
-                        await navigate(ROUTES.DISCOVERY);
-                        setIsOpen((state) => !state);
-                    })
-                }
+                onConfirm={() => void handleConfirm()}
             />
         </AddRestaurantContainer>
     );

@@ -3,8 +3,8 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { MenuItem } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 
-import { CustomSelect } from '@components/common/customSelect';
-import { TextField } from '@components/common/textField';
+import { CustomSelect } from '@components/customSelect';
+import { TextField } from '@components/textField';
 import { UseAppSelector } from '@hooks/storeHooks';
 import type { AddRestaurantFormData } from '@types';
 

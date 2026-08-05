@@ -12,7 +12,8 @@
             "@utils/*": ["./src/utils/*"],
             "@hooks/*": ["./src/hooks/*"],
             "@layouts/*": ["./src/layouts/*"],
-            "@data/*": ["./src/data/*"]
+            "@data/*": ["./src/data/*"],
+            "@config/*": ["./src/config/*"]
         }
     }
 }

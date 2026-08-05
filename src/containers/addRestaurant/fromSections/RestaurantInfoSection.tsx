@@ -4,10 +4,10 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { MenuItem, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 
-import { CustomSelect } from '@components/common/customSelect';
-import { ImagePreview } from '@components/common/imagePreview';
-import { TextField } from '@components/common/textField';
-import { TimeField } from '@components/common/timeField';
+import { CustomSelect } from '@components/customSelect';
+import { ImagePreview } from '@components/imagePreview';
+import { TextField } from '@components/textField';
+import { TimeField } from '@components/timeField';
 import type { AddRestaurantFormData } from '@types';
 
 const DAYS = [

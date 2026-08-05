@@ -6,11 +6,11 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { MenuItem } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 
-import { Button } from '@components/common/button';
-import { ConfirmDialog } from '@components/common/confirmationDialog/ConfirmationDialog';
-import { CustomSelect } from '@components/common/customSelect';
-import { ImagePreview } from '@components/common/imagePreview';
-import { TextField } from '@components/common/textField';
+import { Button } from '@components/button';
+import { ConfirmDialog } from '@components/confirmationDialog/ConfirmationDialog';
+import { CustomSelect } from '@components/customSelect';
+import { ImagePreview } from '@components/imagePreview';
+import { TextField } from '@components/textField';
 import type { AddRestaurantFormData } from '@types';
 
 import { MenuCard } from '../AddRestaurant.styled';

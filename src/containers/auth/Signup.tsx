@@ -4,10 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import { Box, Checkbox } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
-import { Button } from '@components/common/button';
-import { Logo } from '@components/common/logo';
-import { PasswordField } from '@components/common/passwordField/PasswordField';
-import { TextField } from '@components/common/textField';
+import { Button } from '@components/button';
+import { Logo } from '@components/logo';
+import { PasswordField } from '@components/passwordField/PasswordField';
+import { TextField } from '@components/textField';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { UseAppDispatch, UseAppSelector } from '@hooks/storeHooks';
 import { signupUser } from '@store/slices/authSlice';

@@ -1,4 +1,4 @@
-import { FeedbackComponent } from '@components/common/feedback/Feedback';
+import { FeedbackComponent } from '@components/feedback/Feedback';
 import { UseAppDispatch, UseAppSelector } from '@hooks/storeHooks';
 import { hideSnackbar } from '@store/slices/feedBackSlice';
 

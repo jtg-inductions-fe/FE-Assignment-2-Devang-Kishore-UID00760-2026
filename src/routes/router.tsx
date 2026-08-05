@@ -1,8 +1,9 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 
-import { AddRestaurant } from '@containers/AddRestaurant/AddRestaurant';
-import { Login } from '@containers/Auth/Login';
-import { Signup } from '@containers/Auth/Signup';
+import { AddRestaurant } from '@containers/addRestaurant/AddRestaurant';
+import { Login } from '@containers/auth/Login';
+import { Signup } from '@containers/auth/Signup';
+import { Discovery } from '@containers/discovery/Discovery';
 import { ErrorPage } from '@containers/exceptions/ErrorPage';
 import { NotFoundPage } from '@containers/exceptions/NotFoundPage';
 import { AppLayout } from '@layouts/AppLayout';
@@ -31,7 +32,7 @@ export const router = createBrowserRouter([
                             },
                             {
                                 path: ROUTES.DISCOVERY,
-                                element: <div>discovery</div>,
+                                element: <Discovery />,
                             },
                             {
                                 path: ROUTES.RESTAURANT,
@@ -55,7 +56,11 @@ export const router = createBrowserRouter([
                                 ),
                                 children: [
                                     {
-                                        path: ROUTES.ADDRESTAURANT,
+                                        path: ROUTES.ADD_RESTAURANT,
+                                        element: <AddRestaurant />,
+                                    },
+                                    {
+                                        path: ROUTES.EDIT_RESTAURANT,
                                         element: <AddRestaurant />,
                                     },
                                 ],
