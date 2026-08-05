@@ -1,12 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-
 import {
     addMenuItem,
     deleteMenuItem,
     getMenu,
     updateMenuItem,
-} from '../../services/menu.service';
-import { MenuItem } from '../../types/index';
+} from '@services/menu.service';
+import { MenuItem } from '@types';
 interface MenuState {
     items: MenuItem[];
     loading: boolean;
@@ -20,10 +19,12 @@ export const fetchMenu = createAsyncThunk(
     'menu/fetch',
     (restaurantId?: string) => getMenu(restaurantId),
 );
+
 export const createMenuEntry = createAsyncThunk(
     'menu/create',
     (payload: Omit<MenuItem, 'id'>) => addMenuItem(payload),
 );
+
 export const updateMenuEntry = createAsyncThunk(
     'menu/update',
     (payload: { id: string; data: Partial<MenuItem> }) =>
@@ -44,6 +45,9 @@ export const menuSlice = createSlice({
                 state.items = action.payload;
             })
             .addCase(createMenuEntry.fulfilled, (state, action) => {
+                state.items.push(action.payload);
+            })
+            .addCase(updateMenuEntry.fulfilled, (state, action) => {
                 state.items = state.items.map((item) =>
                     item.id === action.payload.id ? action.payload : item,
                 );

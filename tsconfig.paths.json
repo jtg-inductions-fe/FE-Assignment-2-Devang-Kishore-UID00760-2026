@@ -3,8 +3,16 @@
         "paths": {
             "@assets/*": ["./src/assets/*"],
             "@constant": ["./src/constant/index"],
+            "@components/*": ["./src/components/*"],
+            "@containers/*": ["./src/containers/*"],
             "@theme": ["./src/theme/index"],
-            "@types": ["./src/types"]
+            "@types": ["./src/types/index"],
+            "@services/*": ["./src/services/*"],
+            "@store/*": ["./src/store/*"],
+            "@utils/*": ["./src/utils/*"],
+            "@hooks/*": ["./src/hooks/*"],
+            "@layouts/*": ["./src/layouts/*"],
+            "@data/*": ["./src/data/*"]
         }
     }
 }

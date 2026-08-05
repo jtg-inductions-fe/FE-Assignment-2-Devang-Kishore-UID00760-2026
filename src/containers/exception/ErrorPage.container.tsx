@@ -1,25 +1,14 @@
 import { Link } from 'react-router-dom';
 
-import { Box, Button, Container, Typography } from '@mui/material';
+import { Button, Container, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid2';
-import { styled } from '@mui/system';
 
-const MainBox = styled(Box)(() => ({
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    minHeight: '100vh',
-}));
+import { ComponentGrid, MainBox } from './Exceptions.styled';
 
-const ComponentGrid = styled(Grid)(() => ({
-    textAlign: 'center',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: '20px',
-}));
-
+/**
+ * Error page.
+ * @returns  Error page.
+ */
 export const ErrorPage = () => (
     <MainBox>
         <Container maxWidth="md">

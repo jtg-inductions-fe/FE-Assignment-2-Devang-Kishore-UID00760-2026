@@ -1,3 +1,5 @@
+export type { FeedBackState, FeedbackComponentType } from './feedback.types';
+export type { ConfirmationDialogProps } from './confirmationDialog.types';
 export type Role = 'customer' | 'owner';
 export type FoodType = 'veg' | 'nonVeg' | 'both';
 export type OrderStatus =
@@ -7,7 +9,7 @@ export type OrderStatus =
     | 'outForDelivery'
     | 'delivered'
     | 'rejected';
-export type Snackbar = 'success' | 'error' | 'warning' | 'info';
+export type SnackbarTheme = 'success' | 'error' | 'warning' | 'info';
 export type Cuisine =
     | 'Indian'
     | 'Chinese'
@@ -60,11 +62,10 @@ export interface Restaurant {
     ownerId: string;
     name: string;
     description: string;
-
     contactNumber: string;
     email: string;
     fssaiCertificateId: string;
-    GstNumber: string;
+    gstNumber: string;
     cuisines: Cuisine[];
     category: FoodType;
     image: string;

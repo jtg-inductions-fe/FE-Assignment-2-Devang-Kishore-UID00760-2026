@@ -1,8 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-
-import { getCurrentUser, login, signUp } from '../../services/auth.service';
-import { Role, User } from '../../types/index';
-import { removeStorage } from '../../utils/storage';
+import { getCurrentUser, login, signUp } from '@services/auth.service';
+import { Role, User } from '@types';
+import { removeStorage } from '@utils/storage';
 
 interface AuthState {
     user: User | null;

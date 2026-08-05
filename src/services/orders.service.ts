@@ -1,6 +1,6 @@
-import ordersMock from '../data/orders.json';
-import type { CartItem, Order, OrderStatus } from '../types';
-import { readStorage, writeStorage } from '../utils/storage';
+import ordersMock from '@data/orders.json';
+import type { CartItem, Order, OrderStatus } from '@types';
+import { readStorage, writeStorage } from '@utils/storage';
 
 interface OrderData {
     customerId: string;
@@ -11,16 +11,33 @@ interface OrderData {
 
 const ORDERS_KEY = 'orders';
 
+/**
+ * Fetches data of orders from local storage.
+ * @returns Data of orders fetched from local storage.
+ */
 const getStoredOrders = (): Order[] =>
     readStorage<Order[]>(ORDERS_KEY, ordersMock as Order[]);
 
+/**
+ * stores data in local storage.
+ * @param orders Data of order to be stored in local storage.
+ */
 const saveOrders = (orders: Order[]): void => {
     writeStorage(ORDERS_KEY, orders);
 };
 
+/**
+ * Fetches orders form local storage.
+ * @returns Data of orders.
+ */
 export const getOrders = (): Promise<Order[]> =>
     Promise.resolve(getStoredOrders());
 
+/**
+ * saves the order data in local storage.
+ * @param payload Data of order.
+ * @returns Data of order stored in local storage.
+ */
 export const placeOrder = (payload: OrderData): Promise<Order> => {
     const subtotal = payload.items.reduce(
         (sum, cartItem) => sum + cartItem.item.price * cartItem.quantity,
@@ -41,9 +58,17 @@ export const placeOrder = (payload: OrderData): Promise<Order> => {
     };
 
     saveOrders([order, ...orders]);
+
     return Promise.resolve(order);
 };
-export const updateOrder = (
+
+/**
+ * updated the state of order.
+ * @param id Id of order to be updated.
+ * @param status Status of order to be set.
+ * @returns Data of order after update.
+ */
+export const updateOrder = async (
     id: string,
     status: OrderStatus,
 ): Promise<Order> => {
@@ -60,5 +85,6 @@ export const updateOrder = (
     }
 
     saveOrders(updated);
+
     return Promise.resolve(order);
 };

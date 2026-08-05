@@ -2,10 +2,10 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import authReducer from './slices/authSlice';
 import cartReducer from './slices/cartSlice';
+import feedbackReducer from './slices/feedBackSlice';
 import menuReducer from './slices/menuSlice';
 import ordersReducer from './slices/ordersSlice';
 import restaurantReducer from './slices/restaurantSlice';
-import snackbarReducer from '../components/common/snackbar/snackbarSlice';
 export const store = configureStore({
     reducer: {
         auth: authReducer,
@@ -13,7 +13,7 @@ export const store = configureStore({
         menu: menuReducer,
         cart: cartReducer,
         orders: ordersReducer,
-        snackbar: snackbarReducer,
+        feedback: feedbackReducer,
     },
 });
 
