@@ -1,27 +1,22 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { useState } from 'react';
 
-import { generatePath, useNavigate, useSearchParams } from 'react-router-dom';
+import { generatePath, useNavigate } from 'react-router-dom';
 
-import { ShoppingCartOutlined } from '@mui/icons-material';
 import ErrorIcon from '@mui/icons-material/Error';
-import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import { Box, Button, Skeleton, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 
 import { ConfirmDialog } from '@components/confirmationDialog/ConfirmationDialog';
-import { Header } from '@components/header/Header';
 import { RestaurantCard } from '@components/restaurantCard';
 import { permissions } from '@config/permissions.config';
 import { usePermissions } from '@hooks/permissionsHook';
 import { UseAppDispatch, UseAppSelector } from '@hooks/storeHooks';
-import { logout } from '@store/slices/authSlice';
 import { showSnackbar } from '@store/slices/feedBackSlice';
 import {
-    fetchRestaurants,
     removeRestaurant,
     updateRestaurantData,
 } from '@store/slices/restaurantSlice';
-import { ConfirmationDialogProps, Day, FoodType, Restaurant } from '@types';
+import { ConfirmationDialogProps, Day, Restaurant } from '@types';
 
 import {
     CuisineChip,
@@ -45,28 +40,13 @@ const CUISINES = [
 ];
 
 export const Discovery = () => {
-    const [searchParams, setSearchParams] = useSearchParams();
-    const search = searchParams.get('search') ?? '';
-    const foodType = (searchParams.get('type') as FoodType) ?? 'both';
-    const { user } = UseAppSelector((state) => state.auth);
     const dispatch = UseAppDispatch();
     const navigate = useNavigate();
     const hasPermission = usePermissions();
     const { items: restaurants, loading } = UseAppSelector(
         (state) => state.restaurants,
     );
-    useEffect(() => {
-        dispatch(fetchRestaurants({ search, type: foodType }))
-            .unwrap()
-            .catch(() => {
-                dispatch(
-                    showSnackbar({
-                        message: 'Error while fetching restaurants.',
-                        severity: 'error',
-                    }),
-                );
-            });
-    }, [dispatch, search, foodType]);
+
     const handleEdit = (id: string) => {
         void navigate(generatePath(ROUTES.EDIT_RESTAURANT, { id: id }));
     };
@@ -80,25 +60,6 @@ export const Discovery = () => {
         return `${hours}:${minutes} ${amPm}`;
     };
 
-    const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
-        const value = event.target.value;
-        const params = new URLSearchParams(searchParams);
-        if (value.trim()) {
-            params.set('search', value);
-        } else {
-            params.delete('search');
-        }
-        setSearchParams(params);
-    };
-    const handleFoodType = (value: FoodType) => {
-        const params = new URLSearchParams(searchParams);
-        if (value === 'both') {
-            params.delete('type');
-        } else {
-            params.set('type', value);
-        }
-        setSearchParams(params);
-    };
     const handleToggleRestaurant = (restaurant: Restaurant) => {
         dispatch(
             updateRestaurantData({
@@ -119,7 +80,7 @@ export const Discovery = () => {
 
     const showCuisines = hasPermission(permissions.SHOW_CUISINES_GRID);
     const showAddRestaurant = hasPermission(permissions.ADD_RESTAURANT);
-    const [dailogData, setDailogData] = useState<
+    const [dialogData, setDialogData] = useState<
         Omit<ConfirmationDialogProps, 'onCancel' | 'confirmLabel'>
     >({
         open: false,
@@ -129,7 +90,7 @@ export const Discovery = () => {
     });
 
     const handleCancel = () => {
-        setDailogData((state) => ({
+        setDialogData((state) => ({
             open: !state.open,
             title: state.title,
             message: state.message,
@@ -141,20 +102,12 @@ export const Discovery = () => {
         void navigate(ROUTES.ADD_RESTAURANT);
     };
 
-    const handleLogout = () => {
-        setDailogData(() => ({
-            open: true,
-            title: 'Logout',
-            message: 'Do you want to logout?',
-            onConfirm: () => void dispatch(logout()),
-        }));
-    };
     const handleDelete = (id: string) => {
         const confirmDelete = () => {
-            setDailogData((state) => ({ ...state, open: !state.open }));
+            setDialogData((state) => ({ ...state, open: !state.open }));
             return void dispatch(removeRestaurant(id));
         };
-        setDailogData(() => ({
+        setDialogData(() => ({
             open: true,
             title: `Delete Restaurant`,
             message: 'Do you want to delete restaurant?',
@@ -176,10 +129,10 @@ export const Discovery = () => {
 
     const handleToggleConfirmation = (restaurant: Restaurant) => {
         const confirmToggle = () => {
-            setDailogData((state) => ({ ...state, open: !state.open }));
+            setDialogData((state) => ({ ...state, open: !state.open }));
             handleToggleRestaurant(restaurant);
         };
-        setDailogData(() => ({
+        setDialogData(() => ({
             open: true,
             title: `${restaurant.isOpen ? 'Close' : 'Open'} Restaurant`,
             message: `Do you want to ${restaurant.isOpen ? 'Close' : 'Open'} Restaurant?`,
@@ -190,30 +143,6 @@ export const Discovery = () => {
     };
     return (
         <>
-            <Header
-                searchBarProps={{
-                    value: search,
-                    placeholder: 'Search restaurants...',
-                    fullWidth: true,
-                    onChange: handleSearch,
-                }}
-                vegToggleProps={{ value: foodType, onChange: handleFoodType }}
-                cartButtonProps={{
-                    icon: <ShoppingCartOutlined />,
-                    badgeContent: 3,
-                }}
-                ordersButtonProps={{
-                    icon: <ShoppingBagIcon />,
-                    badgeContent: 3,
-                }}
-                profileMenuProps={{
-                    name: user?.name ?? 'User',
-                    onLogout: () => {
-                        handleLogout();
-                    },
-                }}
-                showCart={hasPermission(permissions.SHOW_CART)}
-            />
             <DiscoveryContainer>
                 {showAddRestaurant && (
                     <Grid size={4}>
@@ -238,7 +167,7 @@ export const Discovery = () => {
                     </CuisinesSection>
                 )}
                 <Typography variant="h1">Discover Restaurants</Typography>
-                <Grid container spacing={2}>
+                <Grid container spacing={4}>
                     {restaurants?.length === 0 && (
                         <RestaurantNotFound>
                             <ErrorIcon fontSize="large" color="error" />
@@ -297,14 +226,14 @@ export const Discovery = () => {
                 </Grid>
             </DiscoveryContainer>
             <ConfirmDialog
-                open={dailogData.open}
-                title={dailogData.title}
-                message={dailogData.message}
+                open={dialogData.open}
+                title={dialogData.title}
+                message={dialogData.message}
                 confirmLabel={'Confirm'}
                 onCancel={() => {
                     handleCancel();
                 }}
-                onConfirm={dailogData.onConfirm}
+                onConfirm={dialogData.onConfirm}
             />
         </>
     );

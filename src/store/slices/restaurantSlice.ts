@@ -6,7 +6,7 @@ import {
     getRestaurants,
     updateRestaurant,
 } from '@services/restaurant.service';
-import { Restaurant, RestaurantFilters } from '@types';
+import { FiltersData, Restaurant } from '@types';
 
 interface RestaurantState {
     items: Restaurant[];
@@ -24,7 +24,7 @@ const initialState: RestaurantState = {
 
 export const fetchRestaurants = createAsyncThunk(
     'restaurants/fetch',
-    (filters?: RestaurantFilters) => getRestaurants(filters),
+    (filters?: FiltersData) => getRestaurants(filters),
 );
 
 export const saveRestaurant = createAsyncThunk(

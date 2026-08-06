@@ -115,7 +115,7 @@ export const ClosedIcon = styled(Box)(({ theme }) => ({
     height: '100%',
 }));
 
-export const EllipsisTypography = styled(Typography)(({ theme }) => ({
+export const EllipsisTypography = styled(Typography)({
     ...mixins.lineClamp?.(2),
-    width: theme.spacing(120),
-}));
+    width: '100%',
+});

@@ -1,5 +1,5 @@
 import menuMock from '@data/menu.json';
-import type { MenuItem } from '@types';
+import type { FiltersData, MenuItem } from '@types';
 import { readStorage, writeStorage } from '@utils/storage';
 
 const MENU_KEY = 'menu';
@@ -9,13 +9,28 @@ const getStoredMenu = (): MenuItem[] =>
 const saveMenu = (menu: MenuItem[]): void => {
     writeStorage(MENU_KEY, menu);
 };
-export const getMenu = (restaurantID?: string): Promise<MenuItem[]> => {
+export const getMenu = (payload: {
+    restaurantID?: string;
+    filters?: FiltersData;
+}): Promise<MenuItem[]> => {
+    const restaurantID = payload.restaurantID;
+    const filters = payload.filters;
     const menu = getStoredMenu();
     const currentMenu = restaurantID
         ? menu.filter((item) => restaurantID === item.restaurantID)
         : menu;
-    const menuData = currentMenu;
-
+    let menuData = currentMenu;
+    if (filters?.search) {
+        const search = filters.search.toLowerCase();
+        menuData = menuData.filter((menuItem) =>
+            menuItem.name.toLowerCase().includes(search),
+        );
+    }
+    if (filters?.type && filters.type !== 'both') {
+        menuData = menuData.filter(
+            (menuItem) => menuItem.category === filters.type,
+        );
+    }
     return Promise.resolve(menuData);
 };
 

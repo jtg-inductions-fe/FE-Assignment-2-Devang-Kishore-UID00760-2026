@@ -6,7 +6,7 @@ export type {
     AddRestaurantFormData,
 } from './AddRestaurant.types';
 export type { FeedBackState, FeedbackComponentType } from './feedback.types';
-export type { RestaurantFilters } from './restaurantFilters.type';
+export type { FiltersData } from './filters.type';
 export type { ConfirmationDialogProps } from './confirmationDialog.types';
 export type { VegToggleProps } from './vegToggle.types';
 export type { BadgeIconButtonProps } from './badgeIconButton.types';

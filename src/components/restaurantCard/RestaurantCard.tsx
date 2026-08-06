@@ -6,7 +6,8 @@ import {
     LockOutlined,
     RamenDiningOutlined,
 } from '@mui/icons-material';
-import { Box, Button, Link, Stack, Typography } from '@mui/material';
+import { Box, Button, Chip, Link, Stack, Typography } from '@mui/material';
+import Grid from '@mui/material/Grid2';
 
 import { ToggleSwitch } from '@components/toggleSwitch';
 import { RestaurantCardProps } from '@types';
@@ -64,14 +65,14 @@ export const RestaurantCard = ({
             </RestaurantImageContainer>
             <RestaurantContent>
                 <RestaurantHeader>
-                    <Box>
+                    <Grid size={10}>
                         <EllipsisTypography variant="h4">
                             {Restaurant.name}
                         </EllipsisTypography>
                         <EllipsisTypography variant="body2">
                             {Restaurant.description}
                         </EllipsisTypography>
-                    </Box>
+                    </Grid>
                     <VegChip
                         label={Restaurant.category}
                         color={
@@ -99,11 +100,21 @@ export const RestaurantCard = ({
                     </RestaurantTimings>
                     <RestaurantData>
                         <RamenDiningOutlined />
-                        {Restaurant.cuisines?.map((cuisine) => (
-                            <Typography variant="body2" key={cuisine}>
-                                {cuisine}
-                            </Typography>
-                        ))}
+                        {Restaurant.cuisines
+                            .slice(0, 3)
+                            ?.map((cuisine) => (
+                                <Chip
+                                    label={cuisine}
+                                    variant="outlined"
+                                    key={cuisine}
+                                />
+                            ))}
+                        {Restaurant.cuisines.length > 3 && (
+                            <Chip
+                                label={`+${Restaurant.cuisines.length - 3}`}
+                                variant="outlined"
+                            />
+                        )}
                     </RestaurantData>
                 </RestaurantInfo>
             </RestaurantContent>
@@ -111,7 +122,7 @@ export const RestaurantCard = ({
         <RestaurantFooter>
             {canOpen && (
                 <ToggleSwitch
-                    label="open"
+                    label={Restaurant.isOpen ? 'Open' : 'Closed'}
                     color="secondary"
                     checked={Restaurant.isOpen}
                     onChange={onToggle}

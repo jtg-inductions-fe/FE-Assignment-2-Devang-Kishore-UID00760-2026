@@ -5,14 +5,14 @@ export const DiscoveryContainer = styled(Box)(({ theme }) => ({
     display: 'flex',
     flexDirection: 'column',
     alignContent: 'center',
-    gap: theme.spacing(8),
+    gap: theme.spacing(4),
 }));
 
 export const CuisinesSection = styled(Box)(({ theme }) => ({
     width: '100%',
     display: 'flex',
     alignItem: 'center',
-    height: theme.spacing(40),
+    height: theme.spacing(20),
     gap: theme.spacing(6),
     overflowX: 'scroll',
     '&::-webkit-scrollbar': {

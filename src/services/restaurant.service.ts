@@ -1,5 +1,5 @@
 import restaurantMock from '@data/restaurants.json';
-import type { Restaurant, RestaurantFilters } from '@types';
+import type { FiltersData, Restaurant } from '@types';
 import { readStorage, writeStorage } from '@utils/storage';
 
 const RESTAURANTS_KEY = 'restaurants';
@@ -12,7 +12,7 @@ const saveRestaurants = (restaurants: Restaurant[]): void => {
 };
 
 export const getRestaurants = (
-    filters?: RestaurantFilters,
+    filters?: FiltersData,
 ): Promise<Restaurant[]> => {
     let restaurants = getStoredRestaurants();
     if (filters?.search) {
@@ -24,6 +24,11 @@ export const getRestaurants = (
     if (filters?.type && filters.type !== 'both') {
         restaurants = restaurants.filter(
             (restaurant) => restaurant.category === filters.type,
+        );
+    }
+    if (filters?.ownerId) {
+        restaurants = restaurants.filter(
+            (restaurant) => restaurant.ownerId === filters.ownerId,
         );
     }
     return Promise.resolve(restaurants);

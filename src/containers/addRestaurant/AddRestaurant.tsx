@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { FieldPath, FormProvider } from 'react-hook-form';
+import { FieldPath, FormProvider, useFieldArray } from 'react-hook-form';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import { Typography } from '@mui/material';
@@ -11,7 +11,11 @@ import { Logo } from '@components/logo';
 import { CustomStepper } from '@components/strapper/CustomStepper';
 import { UseAppDispatch, UseAppSelector } from '@hooks/storeHooks';
 import { showSnackbar } from '@store/slices/feedBackSlice';
-import { createMenuEntry } from '@store/slices/menuSlice';
+import {
+    createMenuEntry,
+    fetchMenu,
+    removeMenuEntry,
+} from '@store/slices/menuSlice';
 import {
     fetchRestaurantByID,
     saveRestaurant,
@@ -57,6 +61,10 @@ const STEP_FIELDS: FieldPath<AddRestaurantFormData>[][] = [
 export const AddRestaurant = () => {
     const { methods, activeStep, nextStep, previousStep } =
         useAddRestaurantForm();
+    const { replace } = useFieldArray({
+        control: methods.control,
+        name: 'menu',
+    });
     const { id } = useParams();
     const ActiveStep = STEPS[activeStep];
     const { trigger } = methods;
@@ -73,7 +81,7 @@ export const AddRestaurant = () => {
     const selectedRestaurant = UseAppSelector(
         (state) => state.restaurants.selectedRestaurant,
     );
-
+    const menuItem = UseAppSelector((state) => state.menu.items);
     const onSubmit = async (data: AddRestaurantFormData) => {
         const restaurantData = {
             ownerId: user!.id,
@@ -100,6 +108,15 @@ export const AddRestaurant = () => {
                 : await dispatch(
                       updateRestaurantData({ id, data: restaurantData }),
                   ).unwrap();
+
+            if (isEditMode) {
+                await Promise.all(
+                    menuItem.map(async (item) => {
+                        await dispatch(removeMenuEntry(item.id)).unwrap();
+                    }),
+                );
+            }
+
             await Promise.all(
                 data.menu.map((item) =>
                     dispatch(
@@ -141,6 +158,7 @@ export const AddRestaurant = () => {
             await methods.handleSubmit(onSubmit)();
         }
     };
+
     const handleConfirm = async () => {
         await navigate(ROUTES.DISCOVERY);
         setIsOpen((state) => !state);
@@ -150,6 +168,9 @@ export const AddRestaurant = () => {
         if (!id) return;
         dispatch(fetchRestaurantByID(id))
             .unwrap()
+            .then(async () => {
+                await dispatch(fetchMenu({ restaurantId: id })).unwrap();
+            })
             .catch(() => {
                 dispatch(
                     showSnackbar({
@@ -163,8 +184,9 @@ export const AddRestaurant = () => {
     useEffect(() => {
         if (selectedRestaurant) {
             methods.reset(selectedRestaurant);
+            replace(menuItem);
         }
-    }, [selectedRestaurant, methods]);
+    }, [selectedRestaurant, methods, menuItem, replace]);
 
     return (
         <AddRestaurantContainer maxWidth="lg">

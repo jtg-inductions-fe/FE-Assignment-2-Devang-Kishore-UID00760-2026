@@ -69,7 +69,7 @@ export const Header = ({
                     {ordersButtonProps && (
                         <BadgeIconButton {...ordersButtonProps} />
                     )}
-                    {cartButtonProps && (
+                    {showCart && cartButtonProps && (
                         <BadgeIconButton {...cartButtonProps} />
                     )}
                     <ProfileMenu {...profileMenuProps} />

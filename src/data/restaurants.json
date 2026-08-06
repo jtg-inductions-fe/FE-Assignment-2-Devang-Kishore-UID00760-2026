@@ -1,7 +1,7 @@
 [
     {
         "id": "R1",
-        "ownerId": "U2",
+        "ownerId": "U1",
         "name": "spice Route kitchen",
         "cuisines": ["Indian", "Italian", "Chinese"],
         "address": {
@@ -20,7 +20,7 @@
         "image": "https://plus.unsplash.com/premium_photo-1694547926001-f2151e4a476b?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Zm9vZF9waG90b2dyYXBoeXxlbnwwfHwwfHx8MA%3D%3D",
         "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEwjxMyA0h7jPtwarVPkSXqlN6oQQfLJHDsVdXtp1uRA&s=10",
         "isOpen": true,
-        "openingTime": "1:33",
+        "openingTime": "01:33",
         "closingTime": "19:59",
         "workingDays": [
             "Monday",
