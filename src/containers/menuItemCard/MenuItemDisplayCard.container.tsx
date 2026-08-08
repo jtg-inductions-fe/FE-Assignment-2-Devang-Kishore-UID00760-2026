@@ -51,7 +51,7 @@ export const MenuItemDisplayCard = (props: MenuItemsContainer) => {
             stock={stock}
             changeStock={() => void stockChange}
             onBlur={(value: number) => void stockChange(value)}
-            onDecrement={() => void handleStockDecrement}
+            onDecrement={() => void handleStockDecrement()}
             canChangeStock={hasPermission(permissions.EDIT_STOCK)}
         />
     );
