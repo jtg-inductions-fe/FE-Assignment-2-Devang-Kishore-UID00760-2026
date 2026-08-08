@@ -64,6 +64,7 @@ export const RestaurantAddress = styled(Box)(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
     gap: theme.spacing(1),
+    maxWidth: '50%',
 }));
 
 export const VegChip = styled(Chip)({

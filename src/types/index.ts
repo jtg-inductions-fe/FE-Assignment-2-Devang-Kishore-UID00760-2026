@@ -12,7 +12,17 @@ export type { VegToggleProps } from './vegToggle.types';
 export type { BadgeIconButtonProps } from './badgeIconButton.types';
 export type { ProfileMenuProps } from './profileMenu.types';
 export type { HeaderProps } from './header.types';
-export type { RestaurantCardProps } from './restaurantCard.types';
+export type {
+    RestaurantCardProps,
+    RestaurantBannerProps,
+} from './restaurantCard.types';
+export type {
+    MenuFormContainer,
+    MenuItemCardProps,
+    RestaurantMenuItemProps,
+    MenuItemsContainer,
+} from './MenuItemCard.types';
+export type { NumberStepperProps } from './numberStepper.types';
 export type Role = 'customer' | 'owner';
 export type FoodType = 'veg' | 'nonVeg' | 'both';
 export type OrderStatus =
@@ -62,10 +72,10 @@ export interface MenuItem {
     id: string;
     name: string;
     restaurantID: string;
-    description: string;
+    description?: string;
     category: FoodType;
     price: number;
-    image: string;
+    image?: string;
     stock: number;
     cuisine: Cuisine;
 }

@@ -42,7 +42,7 @@ export const ProfileMenu = ({ name, onLogout }: ProfileMenuProps) => {
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-                <Typography variant="body1" color="primary">
+                <Typography variant="body1" color="text">
                     {name}
                 </Typography>
                 <Divider />

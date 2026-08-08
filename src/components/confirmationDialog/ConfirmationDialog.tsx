@@ -1,6 +1,5 @@
 import {
     Button,
-    Dialog,
     DialogActions,
     DialogContent,
     DialogContentText,
@@ -8,6 +7,8 @@ import {
 } from '@mui/material';
 
 import { ConfirmationDialogProps } from '@types';
+
+import { CustomDialog } from './ConfirmDialog.styled';
 
 export const ConfirmDialog = ({
     open,
@@ -17,7 +18,7 @@ export const ConfirmDialog = ({
     onCancel,
     onConfirm,
 }: ConfirmationDialogProps) => (
-    <Dialog
+    <CustomDialog
         open={open}
         onClose={onCancel}
         aria-labelledby="confirm-dialog-title"
@@ -39,5 +40,5 @@ export const ConfirmDialog = ({
                 {confirmLabel}
             </Button>
         </DialogActions>
-    </Dialog>
+    </CustomDialog>
 );

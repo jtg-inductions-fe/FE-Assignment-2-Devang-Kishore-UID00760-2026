@@ -31,9 +31,9 @@ import {
     RestaurantForm,
     StyledPaper,
 } from './AddRestaurant.styled';
-import { MenuSection } from './fromSections/MenuSection';
-import { RestaurantInfoSection } from './fromSections/RestaurantInfoSection';
-import { RestaurantSection } from './fromSections/RestaurantSection';
+import { MenuSection } from './formSections/MenuSection';
+import { RestaurantInfoSection } from './formSections/RestaurantInfoSection';
+import { RestaurantSection } from './formSections/RestaurantSection';
 import { useAddRestaurantForm } from './useAddRestaurantForm';
 import { ROUTES } from '../../constants';
 
@@ -78,9 +78,11 @@ export const AddRestaurant = () => {
     };
 
     const isEditMode = !!id;
+
     const selectedRestaurant = UseAppSelector(
         (state) => state.restaurants.selectedRestaurant,
     );
+
     const menuItem = UseAppSelector((state) => state.menu.items);
     const onSubmit = async (data: AddRestaurantFormData) => {
         const restaurantData = {
@@ -166,6 +168,7 @@ export const AddRestaurant = () => {
 
     useEffect(() => {
         if (!id) return;
+
         dispatch(fetchRestaurantByID(id))
             .unwrap()
             .then(async () => {
@@ -182,11 +185,11 @@ export const AddRestaurant = () => {
     }, [id, dispatch]);
 
     useEffect(() => {
-        if (selectedRestaurant) {
+        if (id && selectedRestaurant?.id === id && menuItem) {
             methods.reset(selectedRestaurant);
             replace(menuItem);
         }
-    }, [selectedRestaurant, methods, menuItem, replace]);
+    }, [selectedRestaurant, methods, menuItem, replace, id]);
 
     return (
         <AddRestaurantContainer maxWidth="lg">

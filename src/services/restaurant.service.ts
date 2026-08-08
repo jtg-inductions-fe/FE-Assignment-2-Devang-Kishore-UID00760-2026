@@ -31,6 +31,17 @@ export const getRestaurants = (
             (restaurant) => restaurant.ownerId === filters.ownerId,
         );
     }
+
+    restaurants = restaurants.sort((a: Restaurant, b: Restaurant) => {
+        if (!a.isOpen && b.isOpen) {
+            return 1;
+        }
+        if (a.isOpen && !b.isOpen) {
+            return -1;
+        }
+        return 0;
+    });
+
     return Promise.resolve(restaurants);
 };
 

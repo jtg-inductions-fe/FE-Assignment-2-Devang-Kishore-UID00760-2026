@@ -10,10 +10,10 @@ const saveMenu = (menu: MenuItem[]): void => {
     writeStorage(MENU_KEY, menu);
 };
 export const getMenu = (payload: {
-    restaurantID?: string;
+    restaurantId?: string;
     filters?: FiltersData;
 }): Promise<MenuItem[]> => {
-    const restaurantID = payload.restaurantID;
+    const restaurantID = payload.restaurantId;
     const filters = payload.filters;
     const menu = getStoredMenu();
     const currentMenu = restaurantID
@@ -31,6 +31,16 @@ export const getMenu = (payload: {
             (menuItem) => menuItem.category === filters.type,
         );
     }
+
+    menuData = menuData.sort((a: MenuItem, b: MenuItem) => {
+        if (a.stock === 0 && b.stock > 0) {
+            return 1;
+        }
+        if (a.stock > 0 && b.stock === 0) {
+            return -1;
+        }
+        return 0;
+    });
     return Promise.resolve(menuData);
 };
 

@@ -6,6 +6,7 @@ import { Signup } from '@containers/auth/Signup';
 import { Discovery } from '@containers/discovery/Discovery';
 import { ErrorPage } from '@containers/exceptions/ErrorPage';
 import { NotFoundPage } from '@containers/exceptions/NotFoundPage';
+import { RestaurantMenu } from '@containers/restaurantMenu/RestaurantMenu';
 import { AppLayout } from '@layouts/AppLayout';
 import { AuthLayout } from '@layouts/AuthLayout';
 
@@ -36,7 +37,7 @@ export const router = createBrowserRouter([
                             },
                             {
                                 path: ROUTES.RESTAURANT,
-                                element: <div>restaurant</div>,
+                                element: <RestaurantMenu />,
                             },
                             {
                                 path: ROUTES.CART,

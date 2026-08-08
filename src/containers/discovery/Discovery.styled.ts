@@ -1,5 +1,7 @@
 import { Box, styled } from '@mui/material';
 
+import { Button } from '@components/button';
+
 export const DiscoveryContainer = styled(Box)(({ theme }) => ({
     padding: theme.spacing(8),
     display: 'flex',
@@ -23,7 +25,7 @@ export const CuisinesSection = styled(Box)(({ theme }) => ({
 export const CuisineChip = styled(Box)<{ src: string }>(({ theme, src }) => ({
     minWidth: theme.spacing(30),
     height: theme.spacing(15),
-    background: `linear-gradient(rgba(49, 49, 48, 0.3), rgba(74, 74, 74, 0.4)),url(${src}) bottom left/100% auto no-repeat`,
+    background: `linear-gradient(rgba(24, 24, 23, 0.8), rgba(27, 27, 27, 0.8)),url(${src}) bottom left/100% auto no-repeat`,
     backgroundSize: 'cover',
     borderRadius: theme.spacing(20),
     display: 'flex',
@@ -45,4 +47,8 @@ export const RestaurantNotFound = styled(Box)(({ theme }) => ({
     gap: theme.spacing(5),
     minHeight: theme.spacing(120),
     color: theme.palette.primary.contrastText,
+}));
+
+export const RestaurantButton = styled(Button)(({ theme }) => ({
+    borderRadius: theme.spacing(20),
 }));

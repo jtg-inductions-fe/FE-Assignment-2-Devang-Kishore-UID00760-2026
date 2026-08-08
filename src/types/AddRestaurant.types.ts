@@ -1,12 +1,12 @@
 import type { Address, Cuisine, Day, FoodType } from '@types';
 export interface MenuItemFormData {
     name: string;
-    description: string;
+    description?: string;
     cuisine: Cuisine;
     category: FoodType;
     price: number;
     stock: number;
-    image: string;
+    image?: string;
 }
 
 export interface AddRestaurantFormData {
