@@ -15,6 +15,7 @@ import {
 } from '@store/slices/cartSlice';
 import { showSnackbar } from '@store/slices/feedBackSlice';
 import { createOrder } from '@store/slices/ordersSlice';
+import { fetchRestaurantByID } from '@store/slices/restaurantSlice';
 import { CartContainerProps, ConfirmationDialogProps, OrderData } from '@types';
 
 import { ROUTES } from '../../constants';
@@ -82,9 +83,22 @@ export const CartContainer = (props: CartContainerProps) => {
         if (!cart.items.length) {
             return;
         }
+        const restaurantId = cart.items[0].item.restaurantID;
+        try {
+            await dispatch(fetchRestaurantByID(restaurantId)).unwrap();
+        } catch {
+            dispatch(
+                showSnackbar({
+                    message: 'Failed to order',
+                    severity: 'error',
+                }),
+            );
+        }
+
         const orderData: OrderData = {
             customerId: userId ?? '',
-            restaurantId: currentRestaurant?.id ?? '',
+            restaurantId:
+                currentRestaurant?.id ?? cart.items[0].item.restaurantID,
             restaurantName: currentRestaurant?.name ?? '',
             items: cart.items,
         };

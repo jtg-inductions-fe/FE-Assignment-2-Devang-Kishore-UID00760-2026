@@ -17,7 +17,7 @@ export const CartDialog = (props: CartDialogProps) => {
         onCheckout,
     } = props;
     return (
-        <StyledCartDialog open={open} onClose={onClose}>
+        <StyledCartDialog open={open} onClose={onClose} disableRestoreFocus>
             <CartContent
                 items={items}
                 onClose={onClose}
