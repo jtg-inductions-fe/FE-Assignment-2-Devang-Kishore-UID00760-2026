@@ -143,5 +143,19 @@ export const CartContainer = (props: CartContainerProps) => {
         );
     }
 
-    return <CartDialog {...cartProps} />;
+    return (
+        <>
+            <CartDialog {...cartProps} />
+            <ConfirmDialog
+                open={dialogData.open}
+                title={dialogData.title}
+                message={dialogData.message}
+                confirmLabel={'Confirm'}
+                onCancel={() => {
+                    handleCancel();
+                }}
+                onConfirm={dialogData.onConfirm}
+            />
+        </>
+    );
 };
