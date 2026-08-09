@@ -2,7 +2,7 @@ import { Control, FieldErrors, FieldValues } from 'react-hook-form';
 
 import { Cuisine, FoodType, MenuItem } from '@types';
 
-import { MenuItemFormData } from './AddRestaurant.types';
+import { MenuItemFormData } from './addRestaurant.types';
 
 export interface MenuFormContainer {
     open: boolean;
@@ -21,6 +21,7 @@ export interface MenuItemCardProps {
     canDelete: boolean;
     canAddInCart: boolean;
     canChangeStock: boolean;
+    isCartDisabled: boolean;
     onClick: () => void;
     onEdit: () => void;
     onDelete: () => void;

@@ -24,6 +24,7 @@ export const MenuItemCard = (props: MenuItemCardProps) => {
         canChangeStock,
         canDelete,
         canAddInCart,
+        isCartDisabled,
         onClick,
         onEdit,
         onDelete,
@@ -71,7 +72,7 @@ export const MenuItemCard = (props: MenuItemCardProps) => {
                                 variant="contained"
                                 color="warning"
                                 onClick={onClick}
-                                disabled={menuItem.stock === 0}
+                                disabled={isCartDisabled}
                             >
                                 Add
                                 <AddShoppingCartIcon />

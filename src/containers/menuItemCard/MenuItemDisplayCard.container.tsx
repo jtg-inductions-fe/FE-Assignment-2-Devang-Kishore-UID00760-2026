@@ -1,7 +1,7 @@
 import { MenuItemCard } from '@components/menuItemCard/MenuItemCard';
 import { permissions } from '@config/permissions.config';
 import { usePermissions } from '@hooks/permissionsHook';
-import { UseAppDispatch } from '@hooks/storeHooks';
+import { UseAppDispatch, UseAppSelector } from '@hooks/storeHooks';
 import { showSnackbar } from '@store/slices/feedBackSlice';
 import { updateMenuEntry } from '@store/slices/menuSlice';
 import { MenuItemsContainer } from '@types';
@@ -19,6 +19,9 @@ export const MenuItemDisplayCard = (props: MenuItemsContainer) => {
     const stock = menuItem.stock;
     const dispatch = UseAppDispatch();
     const hasPermission = usePermissions();
+    const selectedRestaurant = UseAppSelector(
+        (state) => state.restaurants.selectedRestaurant,
+    );
     const stockChange = async (newValue: number) => {
         try {
             await dispatch(
@@ -49,6 +52,7 @@ export const MenuItemDisplayCard = (props: MenuItemsContainer) => {
             onDelete={onDelete}
             onClick={onClick}
             stock={stock}
+            isCartDisabled={stock == 0 || !(selectedRestaurant?.isOpen ?? true)}
             changeStock={() => void stockChange}
             onBlur={(value: number) => void stockChange(value)}
             onDecrement={() => void handleStockDecrement()}

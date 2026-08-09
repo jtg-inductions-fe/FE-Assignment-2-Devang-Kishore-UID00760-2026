@@ -1,6 +1,6 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react';
 
-import { Outlet } from 'react-router-dom';
+import { Outlet, useSearchParams } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
 import { ShoppingCartOutlined } from '@mui/icons-material';
@@ -10,6 +10,7 @@ import { Box } from '@mui/material';
 import { ConfirmDialog } from '@components/confirmationDialog/ConfirmationDialog';
 import { Header } from '@components/header/Header';
 import { permissions } from '@config/permissions.config';
+import { CartContainer } from '@containers/cart/Cart';
 import { usePermissions } from '@hooks/permissionsHook';
 import { UseAppDispatch, UseAppSelector } from '@hooks/storeHooks';
 import { logout } from '@store/slices/authSlice';
@@ -37,6 +38,11 @@ export const AppLayout = () => {
         onConfirm: () => {},
     });
 
+    const [cartOpen, setCartOpen] = useState(false);
+    const [searchParams, setSearchparams] = useSearchParams();
+    const cartItems = UseAppSelector((state) => state.cart.items);
+    const cartItemsCount = cartItems.length;
+
     const handleCancel = () => {
         setDialogData((state) => ({
             open: !state.open,
@@ -62,6 +68,29 @@ export const AppLayout = () => {
 
     const handleFoodType = (value: FoodType) => {
         setFoodPreference(value);
+    };
+
+    const handleCartClose = () => {
+        setCartOpen(false);
+    };
+
+    const handleCartOpen = () => {
+        setCartOpen(true);
+    };
+
+    const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+        if (event.key != 'Enter') {
+            return;
+        }
+        const query = searchQuery.trim();
+        if (!query) {
+            searchParams.delete('search');
+            setSearchparams(searchParams);
+            return;
+        }
+        setSearchparams({
+            search: query,
+        });
     };
 
     useEffect(() => {
@@ -127,6 +156,7 @@ export const AppLayout = () => {
                     value: searchQuery,
                     placeholder: `${currentLocation === '/discovery' ? 'Search Restaurants....' : 'Search menu items...'}`,
                     fullWidth: true,
+                    onKeyDown: handleKeyDown,
                     onChange: handleSearch,
                 }}
                 vegToggleProps={{
@@ -135,7 +165,8 @@ export const AppLayout = () => {
                 }}
                 cartButtonProps={{
                     icon: <ShoppingCartOutlined />,
-                    badgeContent: 3,
+                    badgeContent: cartItemsCount,
+                    onClick: handleCartOpen,
                 }}
                 ordersButtonProps={{
                     icon: <ShoppingBagIcon />,
@@ -162,6 +193,7 @@ export const AppLayout = () => {
                 }}
                 onConfirm={dialogData.onConfirm}
             />
+            <CartContainer open={cartOpen} onClose={handleCartClose} />
         </main>
     );
 };

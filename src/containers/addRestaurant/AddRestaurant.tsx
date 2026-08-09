@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
 
 import { FieldPath, FormProvider, useFieldArray } from 'react-hook-form';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { Typography } from '@mui/material';
 
 import { Button } from '@components/button';
 import { ConfirmDialog } from '@components/confirmationDialog/ConfirmationDialog';
-import { Logo } from '@components/logo';
 import { CustomStepper } from '@components/strapper/CustomStepper';
 import { UseAppDispatch, UseAppSelector } from '@hooks/storeHooks';
 import { showSnackbar } from '@store/slices/feedBackSlice';
@@ -26,7 +25,6 @@ import { AddRestaurantFormData } from '@types';
 import {
     ActionWrapper,
     AddRestaurantContainer,
-    AddRestaurantHeader,
     FormWrapper,
     RestaurantForm,
     StyledPaper,
@@ -193,11 +191,6 @@ export const AddRestaurant = () => {
 
     return (
         <AddRestaurantContainer maxWidth="lg">
-            <AddRestaurantHeader>
-                <Link to="/">
-                    <Logo />
-                </Link>
-            </AddRestaurantHeader>
             <StyledPaper elevation={2}>
                 <Typography variant="h3" mb={4}>
                     {isEditMode ? 'EDIT RESTAURANT' : 'ADD NEW RESTAURANT'}

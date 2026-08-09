@@ -15,7 +15,7 @@ import { MenuItemDisplayCard } from '@containers/menuItemCard/MenuItemDisplayCar
 import { yupResolver } from '@hookform/resolvers/yup';
 import { usePermissions } from '@hooks/permissionsHook';
 import { UseAppDispatch, UseAppSelector } from '@hooks/storeHooks';
-import { addToCart } from '@store/slices/cartSlice';
+import { addToCart, clearCart } from '@store/slices/cartSlice';
 import { showSnackbar } from '@store/slices/feedBackSlice';
 import {
     createMenuEntry,
@@ -54,6 +54,7 @@ export const RestaurantMenu = () => {
 
     const hasPermission = usePermissions();
     const menuItems = UseAppSelector((state) => state.menu.items);
+    const items = UseAppSelector((state) => state.cart.items);
 
     useEffect(() => {
         if (!id) return;
@@ -73,7 +74,42 @@ export const RestaurantMenu = () => {
     }, [id, dispatch]);
 
     const handleAddToCart = (item: MenuItem) => {
-        dispatch(addToCart(item));
+        const existingRestaurantId =
+            items.length > 0 ? items[0].item.restaurantID : '';
+        if (
+            !existingRestaurantId ||
+            existingRestaurantId === selectedRestaurant?.id
+        ) {
+            dispatch(addToCart(item));
+            dispatch(
+                showSnackbar({
+                    message: 'Item Added successfully.',
+                    severity: 'success',
+                }),
+            );
+            return;
+        }
+
+        setDialogData({
+            open: true,
+            title: 'Different Restaurant',
+            message:
+                'your cart contains items from another restaurant.Do you want to clear your cart and add this items?',
+            onConfirm: () => {
+                dispatch(clearCart());
+                dispatch(addToCart(item));
+                dispatch(
+                    showSnackbar({
+                        message: 'Item Added successfully.',
+                        severity: 'success',
+                    }),
+                );
+                setDialogData((state) => ({
+                    ...state,
+                    open: false,
+                }));
+            },
+        });
     };
     const FOOD_TYPES = ['veg', 'nonVeg', 'both'];
 
@@ -116,6 +152,7 @@ export const RestaurantMenu = () => {
             image: '',
         },
     });
+
     const navigate = useNavigate();
     const [currentItemId, setCurrentItemId] = useState('');
     const [dialogData, setDialogData] = useState<
@@ -175,7 +212,7 @@ export const RestaurantMenu = () => {
         try {
             await dispatch(
                 createMenuEntry({
-                    restaurantID: selectedRestaurant?.id ?? ' ',
+                    restaurantID: selectedRestaurant?.id ?? '',
                     name: data.name,
                     description: data.description,
                     price: data.price,
@@ -223,12 +260,14 @@ export const RestaurantMenu = () => {
             },
         }));
     };
+
     const handleItemEdit = (item: MenuItem) => {
         setCurrentItemId(item.id);
         reset(item);
         setIsEditMode((state) => !state);
         setAddMenu((state) => !state);
     };
+
     const handleSaveTimings = async () => {
         try {
             await dispatch(
@@ -270,9 +309,11 @@ export const RestaurantMenu = () => {
                     <Typography variant="h3">Menu Items</Typography>
                 </Box>
                 <Box>
-                    <Button variant="contained" onClick={handleOpen}>
-                        + Add New Item
-                    </Button>
+                    {hasPermission(permissions.SHOW_ADD_ITEM) && (
+                        <Button variant="contained" onClick={handleOpen}>
+                            + Add New Item
+                        </Button>
+                    )}
                 </Box>
             </MenuHeader>
             <MenuItemsContainer container spacing={8}>
@@ -309,6 +350,7 @@ export const RestaurantMenu = () => {
                 foodTypes={FOOD_TYPES as FoodType[]}
                 errors={errors}
             />
+
             <ConfirmDialog
                 open={dialogData.open}
                 title={dialogData.title}

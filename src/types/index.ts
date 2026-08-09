@@ -4,7 +4,7 @@ export type { ToggleSwitchProps } from './toggleSwitch.types';
 export type {
     MenuItemFormData,
     AddRestaurantFormData,
-} from './AddRestaurant.types';
+} from './addRestaurant.types';
 export type { FeedBackState, FeedbackComponentType } from './feedback.types';
 export type { FiltersData } from './filters.type';
 export type { ConfirmationDialogProps } from './confirmationDialog.types';
@@ -12,6 +12,8 @@ export type { VegToggleProps } from './vegToggle.types';
 export type { BadgeIconButtonProps } from './badgeIconButton.types';
 export type { ProfileMenuProps } from './profileMenu.types';
 export type { HeaderProps } from './header.types';
+export type * from './cart.types';
+export type * from './orders.type';
 export type {
     RestaurantCardProps,
     RestaurantBannerProps,
@@ -21,7 +23,7 @@ export type {
     MenuItemCardProps,
     RestaurantMenuItemProps,
     MenuItemsContainer,
-} from './MenuItemCard.types';
+} from './menuItemCard.types';
 export type { NumberStepperProps } from './numberStepper.types';
 export type Role = 'customer' | 'owner';
 export type FoodType = 'veg' | 'nonVeg' | 'both';

@@ -121,9 +121,9 @@ export const Discovery = () => {
         const today = new Date().toLocaleDateString('en-US', {
             weekday: 'long',
         });
-        const RestaurantOpen =
-            restaurant.workingDays.includes(today as Day) && restaurant.isOpen;
-        if (RestaurantOpen !== restaurant.isOpen) {
+        const workingDay = restaurant.workingDays.includes(today as Day);
+
+        if (workingDay && restaurant.isOpen) {
             handleToggleRestaurant(restaurant);
         }
     };

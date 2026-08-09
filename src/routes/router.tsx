@@ -48,10 +48,6 @@ export const router = createBrowserRouter([
                                 element: <div>orders</div>,
                             },
                             {
-                                path: ROUTES.CHECKOUT,
-                                element: <div>checkout</div>,
-                            },
-                            {
                                 element: (
                                     <ProtectedRoutes allowedRoles={['owner']} />
                                 ),

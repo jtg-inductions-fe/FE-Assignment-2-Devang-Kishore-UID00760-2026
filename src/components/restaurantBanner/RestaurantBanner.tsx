@@ -1,17 +1,10 @@
-import {
-    AccessTime,
-    LocationOnOutlined,
-    LockOutlined,
-} from '@mui/icons-material';
+import { AccessTime, LocationOnOutlined } from '@mui/icons-material';
 import CallIcon from '@mui/icons-material/Call';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import { Button, Chip, Stack, Typography } from '@mui/material';
 
-import {
-    ClosedIcon,
-    EllipsisTypography,
-} from '@components/restaurantCard/RestaurantCard.styled';
+import { EllipsisTypography } from '@components/restaurantCard/RestaurantCard.styled';
 import { RestaurantBannerProps } from '@types';
 
 import {
@@ -43,11 +36,6 @@ export const RestaurantBanner = (props: RestaurantBannerProps) => {
     } = props;
     return (
         <BannerContainer>
-            {!restaurant?.isOpen && (
-                <ClosedIcon>
-                    <LockOutlined fontSize="inherit" />
-                </ClosedIcon>
-            )}
             <BannerImage src={restaurant?.image} isOpen={restaurant?.isOpen} />
             <BannerContent>
                 <RestaurantLogo src={restaurant?.logo} alt={restaurant?.name} />

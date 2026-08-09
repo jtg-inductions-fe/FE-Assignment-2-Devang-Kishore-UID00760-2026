@@ -111,7 +111,7 @@ export const ClosedIcon = styled(Box)(({ theme }) => ({
     fontSize: theme.spacing(15),
     top: 0,
     left: 0,
-    color: theme.palette.common.white,
+    color: theme.palette.error.light,
     width: '100%',
     height: '100%',
 }));

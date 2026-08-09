@@ -9,4 +9,5 @@ export const permissions = {
     EDIT_MENU_ITEM: 'editMenuItem',
     SHOW_TIMINGS_EDIT: 'editRestaurantTimings',
     EDIT_STOCK: 'editMenuItemStock',
+    SHOW_ADD_ITEM: 'addMenuItem',
 };

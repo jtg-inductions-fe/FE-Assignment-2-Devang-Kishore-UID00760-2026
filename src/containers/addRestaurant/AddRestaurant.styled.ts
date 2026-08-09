@@ -31,12 +31,6 @@ export const AddRestaurantContainer = styled(Container)(({ theme }) => ({
     gap: theme.spacing(15),
 }));
 
-export const AddRestaurantHeader = styled(Box)({
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'space-between',
-});
-
 export const MenuCard = styled(Grid)(({ theme }) => ({
     padding: theme.spacing(8),
     borderRadius: theme.shape.borderRadius,

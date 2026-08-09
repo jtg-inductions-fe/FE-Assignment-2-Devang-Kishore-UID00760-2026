@@ -9,6 +9,7 @@ export const rolePermissions = {
         permissions.EDIT_MENU_ITEM,
         permissions.SHOW_TIMINGS_EDIT,
         permissions.EDIT_STOCK,
+        permissions.SHOW_ADD_ITEM,
     ],
     customer: [permissions.SHOW_CART, permissions.SHOW_CUISINES_GRID],
 };
