@@ -1,8 +1,8 @@
 import ordersMock from '@data/orders.json';
-import type { CartItem, Order, OrderStatus } from '@types';
+import type { CartItem, Order, OrderStatus, Role } from '@types';
 import { readStorage, writeStorage } from '@utils/storage';
 
-import { getRestaurant } from './restaurant.service';
+import { getRestaurant, getRestaurants } from './restaurant.service';
 
 interface OrderData {
     customerId: string;
@@ -20,8 +20,26 @@ const saveOrders = (orders: Order[]): void => {
     writeStorage(ORDERS_KEY, orders);
 };
 
-export const getOrders = (): Promise<Order[]> =>
-    Promise.resolve(getStoredOrders());
+export const getOrders = async (
+    userId: string,
+    role: Role,
+): Promise<Order[]> => {
+    const orders = getStoredOrders();
+    if (role === 'customer') {
+        return orders.filter((order) => order.customerId === userId);
+    }
+
+    if (role === 'owner') {
+        const restaurants = await getRestaurants();
+        const ownerRestaurantIds = restaurants
+            .filter((restaurant) => restaurant.ownerId === userId)
+            .map((currentRestaurant) => currentRestaurant.id);
+        return orders.filter((order) =>
+            ownerRestaurantIds.includes(order.restaurantId),
+        );
+    }
+    return [];
+};
 
 export const placeOrder = async (payload: OrderData): Promise<Order> => {
     const subtotal = payload.items.reduce(

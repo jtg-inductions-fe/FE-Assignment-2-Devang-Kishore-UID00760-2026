@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { Box, Typography } from '@mui/material';
+import { Box, Divider, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 
 import { AddMenuItem } from '@components/addMenuItem/AddMenuItem';
@@ -317,23 +317,45 @@ export const RestaurantMenu = () => {
                 </Box>
             </MenuHeader>
             <MenuItemsContainer container spacing={8}>
-                {menuItems?.map((item) => (
-                    <Grid size={{ xs: 12, lg: 6 }} key={item.name}>
-                        <MenuItemDisplayCard
-                            menuItem={item}
-                            canEdit={hasPermission(permissions.EDIT_MENU_ITEM)}
-                            canAddInCart={hasPermission(permissions.SHOW_CART)}
-                            canDelete={hasPermission(
-                                permissions.DELETE_MENU_ITEM,
-                            )}
-                            onEdit={() => {
-                                handleItemEdit(item);
-                            }}
-                            onDelete={() => {
-                                handleDelete(item.id);
-                            }}
-                            onClick={() => handleAddToCart(item)}
-                        />
+                {selectedRestaurant?.cuisines.map((cuisineName) => (
+                    <Grid size={12} spacing={2} key={cuisineName}>
+                        <Typography variant="h4" color="textSecondary">
+                            {cuisineName}
+                        </Typography>
+                        <Divider />
+                        {menuItems?.map((item) => {
+                            if (item.cuisine == cuisineName) {
+                                return (
+                                    <Grid
+                                        size={{ xs: 12, lg: 6 }}
+                                        key={item.name}
+                                        mt={2}
+                                    >
+                                        <MenuItemDisplayCard
+                                            menuItem={item}
+                                            canEdit={hasPermission(
+                                                permissions.EDIT_MENU_ITEM,
+                                            )}
+                                            canAddInCart={hasPermission(
+                                                permissions.SHOW_CART,
+                                            )}
+                                            canDelete={hasPermission(
+                                                permissions.DELETE_MENU_ITEM,
+                                            )}
+                                            onEdit={() => {
+                                                handleItemEdit(item);
+                                            }}
+                                            onDelete={() => {
+                                                handleDelete(item.id);
+                                            }}
+                                            onClick={() =>
+                                                handleAddToCart(item)
+                                            }
+                                        />
+                                    </Grid>
+                                );
+                            }
+                        })}
                     </Grid>
                 ))}
             </MenuItemsContainer>

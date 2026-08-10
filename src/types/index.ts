@@ -33,7 +33,8 @@ export type OrderStatus =
     | 'preparing'
     | 'outForDelivery'
     | 'delivered'
-    | 'rejected';
+    | 'rejected'
+    | 'ready';
 export type Snackbar = 'success' | 'error' | 'warning' | 'info';
 export type Cuisine =
     | 'Indian'

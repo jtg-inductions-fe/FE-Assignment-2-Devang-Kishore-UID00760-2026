@@ -3,7 +3,7 @@
         "id": "R1",
         "ownerId": "U1",
         "name": "spice Route kitchen",
-        "cuisines": ["Indian", "Italian", "Chinese"],
+        "cuisines": ["Indian", "Chinese"],
         "address": {
             "street": "street",
             "city": "city",

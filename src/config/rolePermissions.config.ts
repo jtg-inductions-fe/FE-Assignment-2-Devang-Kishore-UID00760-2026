@@ -10,6 +10,11 @@ export const rolePermissions = {
         permissions.SHOW_TIMINGS_EDIT,
         permissions.EDIT_STOCK,
         permissions.SHOW_ADD_ITEM,
+        permissions.CAN_EDIT_STATUS,
     ],
-    customer: [permissions.SHOW_CART, permissions.SHOW_CUISINES_GRID],
+    customer: [
+        permissions.SHOW_CART,
+        permissions.SHOW_CUISINES_GRID,
+        permissions.SHOW_REORDER,
+    ],
 };

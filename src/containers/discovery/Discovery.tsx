@@ -123,15 +123,15 @@ export const Discovery = () => {
         });
         const workingDay = restaurant.workingDays.includes(today as Day);
 
-        if (workingDay && restaurant.isOpen) {
+        if (!workingDay && restaurant.isOpen) {
             handleToggleRestaurant(restaurant);
         }
     };
 
     const handleToggleConfirmation = (restaurant: Restaurant) => {
         const confirmToggle = () => {
-            setDialogData((state) => ({ ...state, open: !state.open }));
             handleToggleRestaurant(restaurant);
+            setDialogData((state) => ({ ...state, open: !state.open }));
         };
         setDialogData(() => ({
             open: true,

@@ -1,6 +1,6 @@
 import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react';
 
-import { Outlet, useSearchParams } from 'react-router-dom';
+import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
 import { ShoppingCartOutlined } from '@mui/icons-material';
@@ -16,8 +16,11 @@ import { UseAppDispatch, UseAppSelector } from '@hooks/storeHooks';
 import { logout } from '@store/slices/authSlice';
 import { showSnackbar } from '@store/slices/feedBackSlice';
 import { fetchMenu } from '@store/slices/menuSlice';
+import { fetchOrders } from '@store/slices/ordersSlice';
 import { fetchRestaurants } from '@store/slices/restaurantSlice';
 import { ConfirmationDialogProps, FoodType } from '@types';
+
+import { ROUTES } from '../constants';
 
 export const AppLayout = () => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -26,6 +29,8 @@ export const AppLayout = () => {
     const dispatch = UseAppDispatch();
     const hasPermission = usePermissions();
     const location = useLocation();
+    const navigate = useNavigate();
+    const orders = UseAppSelector((state) => state.orders.items);
 
     const currentLocation = location.pathname;
     const currentRoute = currentLocation.split('/')[1];
@@ -42,7 +47,7 @@ export const AppLayout = () => {
     const [searchParams, setSearchparams] = useSearchParams();
     const cartItems = UseAppSelector((state) => state.cart.items);
     const cartItemsCount = cartItems.length;
-
+    const ordersCount = orders.length;
     const handleCancel = () => {
         setDialogData((state) => ({
             open: !state.open,
@@ -78,6 +83,10 @@ export const AppLayout = () => {
         setCartOpen(true);
     };
 
+    const handleNavigateOrder = () => {
+        void navigate(ROUTES.ORDERS);
+    };
+
     const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.key != 'Enter') {
             return;
@@ -92,6 +101,13 @@ export const AppLayout = () => {
             search: query,
         });
     };
+
+    useEffect(() => {
+        if (!user?.id || !user.role) {
+            return;
+        }
+        void dispatch(fetchOrders({ userId: user.id, role: user.role }));
+    }, [dispatch, user]);
 
     useEffect(() => {
         const handleRestaurantFetch = () => {
@@ -170,7 +186,8 @@ export const AppLayout = () => {
                 }}
                 ordersButtonProps={{
                     icon: <ShoppingBagIcon />,
-                    badgeContent: 3,
+                    badgeContent: ordersCount,
+                    onClick: handleNavigateOrder,
                 }}
                 profileMenuProps={{
                     name: user?.name ?? 'User',
