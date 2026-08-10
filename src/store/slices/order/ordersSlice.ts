@@ -1,20 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getOrders, placeOrder, updateOrder } from '@services/orders.service';
-import { CartItem, Order, OrderStatus } from '@types';
-interface OrdersState {
-    items: Order[];
-    loading: boolean;
-}
-interface OrderData {
-    customerId: string;
-    restaurantId: string;
-    restaurantName: string;
-    items: CartItem[];
-}
+import { OrderStatus } from '@types';
+
+import { OrderData, OrdersState } from './orderSlice.types';
+
 const initialState: OrdersState = {
     items: [],
     loading: false,
 };
+
 export const fetchOrders = createAsyncThunk('orders/fetch', getOrders);
 export const createOrder = createAsyncThunk(
     'orders/create',

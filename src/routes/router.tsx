@@ -1,24 +1,23 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 
-import { ROUTES } from '@constant';
-import { ErrorPage } from '@containers/exception/ErrorPage.container';
-import { NotFoundPage } from '@containers/exception/NotFoundPage';
+import { ErrorPage } from '@containers/errors/Error.container';
+import { NotFoundPage } from '@containers/errors/NotFound.container';
 import { AppLayout } from '@layouts/AppLayout';
-import { AuthLayout } from '@layouts/AuthLayout';
 
-import { AuthRoute } from './AuthRoute';
-import { PrivateRoute } from './PrivateRoute';
+import { AuthRoute } from '../components/routeGaurds/AuthRoute';
+import { PrivateRoute } from '../components/routeGaurds/PrivateRoute';
+import { ROUTES } from '../constants';
 
 export const router = createBrowserRouter([
     {
         path: ROUTES.ROOT,
+        element: <AppLayout />,
         errorElement: <ErrorPage />,
         children: [
             {
                 element: <PrivateRoute />,
                 children: [
                     {
-                        element: <AppLayout />,
                         children: [
                             {
                                 index: true,
@@ -55,7 +54,6 @@ export const router = createBrowserRouter([
 
                 children: [
                     {
-                        element: <AuthLayout />,
                         children: [
                             {
                                 path: ROUTES.LOGIN,
@@ -69,7 +67,6 @@ export const router = createBrowserRouter([
                     },
                 ],
             },
-
             { path: ROUTES.ALL, element: <NotFoundPage /> },
         ],
     },

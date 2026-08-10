@@ -24,7 +24,7 @@ export const COLORS = {
     },
 
     INFO: {
-        MAIN: '#00299a',
+        MAIN: '#00299A',
         TEXT: '#FFFFFF',
     },
 
@@ -34,8 +34,8 @@ export const COLORS = {
     },
 
     WARNING: {
-        MAIN: '#e38006',
-        TEXT: '#FFFFFF',
+        MAIN: '#E38006',
+        TEXT: '#000000',
     },
 
     ERROR: {
@@ -56,19 +56,6 @@ export const COLORS = {
     },
 
     DIVIDER: '#E5E7EB',
-
-    RESTAURANT: {
-        OPEN: '#2E7D32',
-        CLOSED: '#D32F2F',
-    },
-
-    ORDER: {
-        PENDING: '#F5B301',
-        PREPARING: '#FB8C00',
-        OUT_FOR_DELIVERY: '#0288D1',
-        DELIVERED: '#2E7D32',
-        CANCELLED: '#D32F2F',
-    },
 };
 
 /**

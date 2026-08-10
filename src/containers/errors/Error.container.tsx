@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom';
 import { Button, Container, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 
-import { ComponentGrid, MainBox } from './Exceptions.styled';
-
+import { ComponentGrid, MainBox } from './Errors.styled';
+import { exceptionPagesContent } from '../../config';
+import { ROUTES } from '../../constants';
 /**
- * Not found page.
- * @returns  not found page.
+ * Error page.
+ * @returns  Error page.
  */
-export const NotFoundPage = () => (
+export const ErrorPage = () => (
     <MainBox>
         <Container maxWidth="md">
             <Grid
@@ -19,19 +20,23 @@ export const NotFoundPage = () => (
                 justifyContent="center"
             >
                 <ComponentGrid size={{ xs: 12, md: 6 }}>
-                    <Typography variant="h1">404</Typography>
-                    <Typography variant="h4">Page Not Found</Typography>
-                    <Typography variant="body1" color="text.primary">
-                        The page you are looking for might have been removed.
+                    <Typography variant="h1" color="error.main">
+                        {exceptionPagesContent.ERROR_STATUS_CODE}
+                    </Typography>
+                    <Typography variant="h4" color="error.main">
+                        {exceptionPagesContent.ERROR_TITLE}
+                    </Typography>
+                    <Typography variant="body1" color="text.secondary">
+                        {exceptionPagesContent.ERROR_CONTENT}
                     </Typography>
                     <Button
                         component={Link}
-                        to="/"
+                        to={ROUTES.ROOT}
                         variant="contained"
                         size="large"
                         disableElevation
                     >
-                        Back Home
+                        {exceptionPagesContent.BACK_BUTTON}
                     </Button>
                 </ComponentGrid>
             </Grid>

@@ -6,10 +6,8 @@ import {
     updateMenuItem,
 } from '@services/menu.service';
 import { MenuItem } from '@types';
-interface MenuState {
-    items: MenuItem[];
-    loading: boolean;
-}
+
+import { MenuState } from './menuSlice.types';
 
 const initialState: MenuState = {
     items: [],

@@ -7,7 +7,7 @@ import {
     DialogTitle,
 } from '@mui/material';
 
-import { ConfirmationDialogProps } from '@types';
+import { ConfirmationDialogProps } from './confirmationDialog.types';
 
 /**
  * Confirmation Dialog

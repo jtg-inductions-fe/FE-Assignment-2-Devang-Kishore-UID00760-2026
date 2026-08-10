@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom';
 import { Button, Container, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 
-import { ComponentGrid, MainBox } from './Exceptions.styled';
-
+import { ComponentGrid, MainBox } from './Errors.styled';
+import { exceptionPagesContent } from '../../config';
+import { ROUTES } from '../../constants';
 /**
- * Error page.
- * @returns  Error page.
+ * Not found page.
+ * @returns  not found page.
  */
-export const ErrorPage = () => (
+export const NotFoundPage = () => (
     <MainBox>
         <Container maxWidth="md">
             <Grid
@@ -19,24 +20,23 @@ export const ErrorPage = () => (
                 justifyContent="center"
             >
                 <ComponentGrid size={{ xs: 12, md: 6 }}>
-                    <Typography variant="h1" color="error.main">
-                        500
+                    <Typography variant="h1">
+                        {exceptionPagesContent.NOT_FOUND_STATUS_CODE}
                     </Typography>
-                    <Typography variant="h4" color="error.main">
-                        Internal Server Error!
+                    <Typography variant="h4">
+                        {exceptionPagesContent.NOT_FOUND_TITLE}
                     </Typography>
-                    <Typography variant="body1" color="text.secondary">
-                        Something went wrong at our end. Don&apos;t worry
-                        it&apos;s not you it&apos;s us, Sorry about that.
+                    <Typography variant="body1" color="text.primary">
+                        {exceptionPagesContent.NOT_FOUNT_CONTENT}
                     </Typography>
                     <Button
                         component={Link}
-                        to="/"
+                        to={ROUTES.ROOT}
                         variant="contained"
                         size="large"
                         disableElevation
                     >
-                        Back Home
+                        {exceptionPagesContent.BACK_BUTTON}
                     </Button>
                 </ComponentGrid>
             </Grid>

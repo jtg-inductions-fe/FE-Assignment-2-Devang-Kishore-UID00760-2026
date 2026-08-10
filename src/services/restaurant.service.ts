@@ -1,5 +1,5 @@
 import restaurantMock from '@data/restaurants.json';
-import type { Restaurant } from '@types';
+import { Restaurant } from '@types';
 import { readStorage, writeStorage } from '@utils/storage';
 
 const RESTAURANTS_KEY = 'restaurants';

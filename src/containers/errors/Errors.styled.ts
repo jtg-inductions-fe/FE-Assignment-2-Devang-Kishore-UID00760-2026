@@ -9,11 +9,11 @@ export const MainBox = styled(Box)(() => ({
     minHeight: '100vh',
 }));
 
-export const ComponentGrid = styled(Grid)(() => ({
+export const ComponentGrid = styled(Grid)(({ theme }) => ({
     textAlign: 'center',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    gap: '20px',
+    gap: theme.spacing(3),
 }));

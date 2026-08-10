@@ -1,7 +1,8 @@
 import { Alert, Snackbar } from '@mui/material';
 
-import type { FeedbackComponentType } from '@types';
+import { FeedbackComponentType } from '@types';
 
+import { SNACKBAR_OPEN_TIME } from '../../constants';
 /**
  * FeedBackComponent.
  * @param props Data to be shown in snackbar.
@@ -15,7 +16,7 @@ export const FeedbackComponent = (props: FeedbackComponentType) => {
         <>
             <Snackbar
                 open={snackbarOpen}
-                autoHideDuration={3500}
+                autoHideDuration={SNACKBAR_OPEN_TIME}
                 onClose={snackbarClose}
                 anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
             >

@@ -1,19 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CartItem, MenuItem } from '@types';
-import { readStorage, writeStorage } from '@utils/storage';
+import { readStorage } from '@utils/storage';
 
-interface CartState {
-    items: CartItem[];
-}
+import { CartState } from './cartSlice.types';
 
 const CART_KEY = 'cart_items';
 
 const initialState: CartState = {
     items: readStorage<CartItem[]>(CART_KEY, []),
-};
-
-const persist = (items: CartItem[]): void => {
-    writeStorage(CART_KEY, items);
 };
 
 export const cartSlice = createSlice({
@@ -29,7 +23,6 @@ export const cartSlice = createSlice({
             } else {
                 state.items.push({ item: action.payload, quantity: 1 });
             }
-            persist(state.items);
         },
         updateQuantity(
             state,
@@ -42,17 +35,14 @@ export const cartSlice = createSlice({
                         : cartItem,
                 )
                 .filter((cartItem) => cartItem.quantity > 0);
-            persist(state.items);
         },
         removeFromCart(state, action: PayloadAction<string>) {
             state.items = state.items.filter(
                 (cartItem) => cartItem.item.id !== action.payload,
             );
-            persist(state.items);
         },
         clearCart(state) {
             state.items = [];
-            persist(state.items);
         },
     },
 });

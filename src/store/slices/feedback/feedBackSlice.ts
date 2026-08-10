@@ -1,10 +1,12 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import type { FeedBackState, SnackbarTheme } from '@types';
+import { SnackbarTheme } from '@types';
+
+import { FeedBackState } from './feedBackSlice.types';
 
 const initialState: FeedBackState = {
     snackbarOpen: false,
     snackbarMessage: '',
-    snackbarSeverity: 'info',
+    snackbarSeverity: SnackbarTheme.info,
 };
 
 const feedbackSlice = createSlice({
@@ -20,7 +22,8 @@ const feedbackSlice = createSlice({
         ) {
             state.snackbarOpen = true;
             state.snackbarMessage = action.payload.message;
-            state.snackbarSeverity = action.payload.severity ?? 'success';
+            state.snackbarSeverity =
+                action.payload.severity ?? SnackbarTheme.success;
         },
 
         hideSnackbar(state) {

@@ -1,13 +1,6 @@
-import usersMock from '@data/user.json';
-import { Role, User } from '@types';
+import usersMock from '@data/users.json';
+import { User, UserData } from '@types';
 import { readStorage, writeStorage } from '@utils/storage';
-
-type UserData = {
-    name: string;
-    email: string;
-    password: string;
-    role: Role;
-};
 
 const USERS_KEY = 'users';
 const CURRENT_USER = 'crt_user';
@@ -54,9 +47,12 @@ export const login = (email: string, password: string): Promise<User> => {
  * @param props :user data
  * @returns data of user which is added in local storage
  */
-export const signUp = (props: UserData): Promise<User> => {
-    const { name, email, password, role } = props;
-
+export const signUp = ({
+    name,
+    email,
+    password,
+    role,
+}: UserData): Promise<User> => {
     const users = getUsers();
     const emailExists = users.some(
         (user) => user.email.toLowerCase() === email.toLowerCase(),

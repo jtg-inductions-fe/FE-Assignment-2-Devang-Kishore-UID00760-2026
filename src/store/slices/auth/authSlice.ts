@@ -1,27 +1,16 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getCurrentUser, login, signUp } from '@services/auth.service';
-import { Role, User } from '@types';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { login, signUp } from '@services/auth.service';
+import { User } from '@types';
 import { removeStorage } from '@utils/storage';
 
-interface AuthState {
-    user: User | null;
-    loading: boolean;
-    error: string | null;
-    isLoggedIn: boolean;
-}
+import { AuthState, UserData } from './authSlice.types';
 
 const initialState: AuthState = {
-    user: getCurrentUser(),
+    user: null,
     loading: false,
     error: null,
     isLoggedIn: false,
 };
-interface UserData {
-    name: string;
-    email: string;
-    password: string;
-    role: Role;
-}
 
 export const loginUser = createAsyncThunk(
     'auth/login',
@@ -56,6 +45,12 @@ export const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
+        setUser(state, action: PayloadAction<User | null>) {
+            state.user = action.payload;
+            if (action.payload != null) {
+                state.isLoggedIn = true;
+            }
+        },
         logout(state) {
             state.user = null;
             state.isLoggedIn = false;

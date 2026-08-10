@@ -1,13 +1,6 @@
 import ordersMock from '@data/orders.json';
-import type { CartItem, Order, OrderStatus } from '@types';
+import { Order, OrderData, OrderStatus } from '@types';
 import { readStorage, writeStorage } from '@utils/storage';
-
-interface OrderData {
-    customerId: string;
-    restaurantId: string;
-    restaurantName: string;
-    items: CartItem[];
-}
 
 const ORDERS_KEY = 'orders';
 
@@ -52,7 +45,7 @@ export const placeOrder = (payload: OrderData): Promise<Order> => {
         restaurantId: payload.restaurantId,
         restaurantName: payload.restaurantName,
         items: payload.items,
-        status: 'pending',
+        status: OrderStatus.pending,
         subtotal,
         createdAt: new Date().toISOString(),
     };

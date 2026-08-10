@@ -7,11 +7,7 @@ import {
 } from '@services/restaurant.service';
 import { Restaurant } from '@types';
 
-interface RestaurantState {
-    items: Restaurant[];
-    loading: boolean;
-    error: string | null;
-}
+import { RestaurantState } from './restaurantSlice.types';
 
 const initialState: RestaurantState = {
     items: [],
