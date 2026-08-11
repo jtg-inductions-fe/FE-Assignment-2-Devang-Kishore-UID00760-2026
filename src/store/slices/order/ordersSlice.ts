@@ -19,6 +19,7 @@ export const updateOrderStatus = createAsyncThunk(
     (payload: { id: string; status: OrderStatus }) =>
         updateOrder(payload.id, payload.status),
 );
+
 export const ordersSlice = createSlice({
     name: 'orders',
     initialState,

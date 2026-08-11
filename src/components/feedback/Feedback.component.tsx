@@ -2,7 +2,7 @@ import { Alert, Snackbar } from '@mui/material';
 
 import { FeedbackComponentType } from '@types';
 
-import { SNACKBAR_OPEN_TIME } from '../../constants';
+import { SNACKBAR_OPEN_TIME } from './feedback.constants';
 /**
  * FeedBackComponent.
  * @param props Data to be shown in snackbar.

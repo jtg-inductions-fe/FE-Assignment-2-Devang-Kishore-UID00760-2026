@@ -1,11 +1,11 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 
-import { ErrorPage } from '@containers/errors/Error.container';
-import { NotFoundPage } from '@containers/errors/NotFound.container';
 import { AppLayout } from '@layouts/AppLayout';
+import { ErrorPage } from '@pages/fallback/ErrorPage';
+import { NotFoundPage } from '@pages/fallback/NotFoundPage';
 
-import { AuthRoute } from '../components/routeGaurds/AuthRoute';
-import { PrivateRoute } from '../components/routeGaurds/PrivateRoute';
+import { AuthRoute } from '../components/routeGuards/AuthRoute';
+import { PrivateRoute } from '../components/routeGuards/PrivateRoute';
 import { ROUTES } from '../constants';
 
 export const router = createBrowserRouter([

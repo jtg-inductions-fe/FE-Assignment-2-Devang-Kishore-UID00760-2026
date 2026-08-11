@@ -3,14 +3,15 @@ import { Link } from 'react-router-dom';
 import { Button, Container, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 
-import { ComponentGrid, MainBox } from './Errors.styled';
-import { exceptionPagesContent } from '../../config';
-import { ROUTES } from '../../constants';
+import { ROUTES } from '@constants';
+
+import { exceptionPagesContent } from './fallbackPage.constants';
+import { ComponentGrid, MainBox } from './FallbackPage.styles';
 /**
- * Not found page.
- * @returns  not found page.
+ * Error page.
+ * @returns  Error page.
  */
-export const NotFoundPage = () => (
+export const ErrorPage = () => (
     <MainBox>
         <Container maxWidth="md">
             <Grid
@@ -20,14 +21,14 @@ export const NotFoundPage = () => (
                 justifyContent="center"
             >
                 <ComponentGrid size={{ xs: 12, md: 6 }}>
-                    <Typography variant="h1">
-                        {exceptionPagesContent.NOT_FOUND_STATUS_CODE}
+                    <Typography variant="h1" color="error.main">
+                        {exceptionPagesContent.ERROR_STATUS_CODE}
                     </Typography>
-                    <Typography variant="h4">
-                        {exceptionPagesContent.NOT_FOUND_TITLE}
+                    <Typography variant="h4" color="error.main">
+                        {exceptionPagesContent.ERROR_TITLE}
                     </Typography>
-                    <Typography variant="body1" color="text.primary">
-                        {exceptionPagesContent.NOT_FOUNT_CONTENT}
+                    <Typography variant="body1" color="text.secondary">
+                        {exceptionPagesContent.ERROR_CONTENT}
                     </Typography>
                     <Button
                         component={Link}
