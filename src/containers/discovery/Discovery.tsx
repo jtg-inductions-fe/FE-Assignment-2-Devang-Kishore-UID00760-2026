@@ -117,13 +117,24 @@ export const Discovery = () => {
             },
         }));
     };
+
+    const isWithinTimings = (openingTime: string, closingTime: string) => {
+        const currentTime = new Date().toLocaleTimeString('en-GB', {
+            hour: '2-digit',
+            minute: '2-digit',
+        });
+        return currentTime >= openingTime && currentTime < closingTime;
+    };
     const checkRestaurantOpen = (restaurant: Restaurant) => {
         const today = new Date().toLocaleDateString('en-US', {
             weekday: 'long',
         });
         const workingDay = restaurant.workingDays.includes(today as Day);
-
-        if (!workingDay && restaurant.isOpen) {
+        const isWorkingTime = isWithinTimings(
+            restaurant.openingTime,
+            restaurant.closingTime,
+        );
+        if (!isWorkingTime && !workingDay && restaurant.isOpen) {
             handleToggleRestaurant(restaurant);
         }
     };

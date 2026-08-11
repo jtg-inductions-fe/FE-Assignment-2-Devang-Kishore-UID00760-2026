@@ -1,12 +1,27 @@
 [
     {
-        "id": "O1",
-        "customerId": "U1",
+        "id": "O1786435793877",
+        "customerId": "U3",
         "restaurantId": "R1",
-        "restaurantName": "Spice Route Kitchen",
-        "items": [],
-        "status": "preparing",
-        "subtotal": 620,
-        "createdAt": ""
+        "restaurantName": "spice Route kitchen",
+        "items": [
+            {
+                "item": {
+                    "restaurantID": "R1",
+                    "name": "Veg Hakka Noodles",
+                    "description": "Noodles tossed with fresh vegetables and good spices",
+                    "price": 240,
+                    "category": "veg",
+                    "image": "https://www.indianhealthyrecipes.com/wp-content/uploads/2021/07/hakka-noodles-recipe.jpg",
+                    "cuisine": "Chinese",
+                    "stock": 20,
+                    "id": "M1"
+                },
+                "quantity": 2
+            }
+        ],
+        "status": "pending",
+        "subtotal": 480,
+        "createdAt": "2026-08-11T08:09:53.877Z"
     }
 ]

@@ -17,6 +17,10 @@ export interface MenuFormContainer {
 export interface MenuItemCardProps {
     menuItem: MenuItem;
     stock: number;
+    presentInCart: boolean;
+    quantity: number;
+    onChange: (id: string, quantity: number) => void;
+    onDecrease: (id: string) => void;
     canEdit: boolean;
     canDelete: boolean;
     canAddInCart: boolean;
@@ -42,6 +46,7 @@ export interface RestaurantMenuItemProps<T extends FieldValues> {
 
 export interface MenuItemsContainer {
     menuItem: MenuItem;
+    presentInCart: boolean;
     canEdit: boolean;
     canDelete: boolean;
     canAddInCart: boolean;

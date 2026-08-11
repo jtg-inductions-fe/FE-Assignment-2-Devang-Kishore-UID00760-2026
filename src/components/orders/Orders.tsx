@@ -4,8 +4,14 @@ import { OrdersProps } from '@types';
 import { OrderContainer } from './Orders.styled';
 
 export const Orders = (props: OrdersProps) => {
-    const { orders, canEditStatus, onReorder, onStatusChange, showReorder } =
-        props;
+    const {
+        orders,
+        canEditStatus,
+        onReorder,
+        onStatusChange,
+        showReorder,
+        getSteps,
+    } = props;
     return (
         <OrderContainer>
             {orders.map(({ order, statusLabel, bookingFee, total }) => (
@@ -21,6 +27,8 @@ export const Orders = (props: OrdersProps) => {
                     }
                     onReorder={onReorder}
                     showReorder={showReorder}
+                    steps={getSteps(order.status).steps}
+                    activeStep={getSteps(order.status).activeStep}
                 />
             ))}
         </OrderContainer>

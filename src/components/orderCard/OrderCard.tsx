@@ -3,10 +3,11 @@ import { useState } from 'react';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ReplayIcon from '@mui/icons-material/Replay';
-import { Chip, IconButton, Stack, Typography } from '@mui/material';
+import { Chip, Divider, IconButton, Stack, Typography } from '@mui/material';
 
 import { Button } from '@components/button';
-import { OrderStatusSelect } from '@components/orderStatusSelect/OrderStatusSelect';
+import { CustomStepper } from '@components/strapper/CustomStepper';
+import { ORDER_STATUS_CONFIG as orderStatusList } from '@config/orderStatus.config';
 import { OrderCardProps } from '@types';
 
 import {
@@ -25,61 +26,69 @@ import {
 export const OrderCard = (props: OrderCardProps) => {
     const {
         order,
-        statusLabel,
         bookingFee,
         total,
         canEditStatus,
         onReorder,
         onStatusChange,
         showReorder,
+        steps,
+        activeStep,
     } = props;
     const [expanded, setExpended] = useState(false);
     const firstItem = order.items[0];
     const remainingItems = order.items.length - 1;
     return (
         <OrderCardContainer>
-            <OrderHeader>
-                <RestaurantImage
-                    src={firstItem?.item.image}
-                    alt={order.restaurantName}
-                />
-                <RestaurantDetails>
-                    <Typography variant="h5">{order.restaurantName}</Typography>
-                    <Typography variant="h6">Restaurant</Typography>
-                </RestaurantDetails>
-                {canEditStatus ? (
-                    <OrderStatusSelect
-                        value={order.status}
-                        onChange={onStatusChange}
+            <Stack flexDirection="row" gap={4}>
+                <OrderHeader flex={1}>
+                    <RestaurantImage
+                        src={firstItem?.item.image}
+                        alt={order.restaurantName}
                     />
-                ) : (
-                    <Chip
-                        label={statusLabel}
-                        color={
-                            order.status === 'delivered' ||
-                            order.status === 'accepted'
-                                ? 'success'
-                                : order.status === 'rejected'
-                                  ? 'error'
-                                  : 'primary'
-                        }
-                    />
-                )}
-            </OrderHeader>
-            <OrderBody>
-                <OrderItem>
-                    <Typography variant="body2">
-                        {firstItem?.quantity} x {firstItem?.item.name}
-                    </Typography>
-                    {remainingItems > 0 && (
-                        <Typography variant="body2" color="text.secondary">
-                            + {remainingItems} more
+                    <RestaurantDetails>
+                        <Typography variant="h5">
+                            {order.restaurantName}
                         </Typography>
+                    </RestaurantDetails>
+                </OrderHeader>
+                <Stack alignItems="center">
+                    <CustomStepper
+                        orientation="vertical"
+                        steps={steps}
+                        activeStep={activeStep}
+                        alternativeLabel={false}
+                    />
+                </Stack>
+            </Stack>
+            <OrderBody>
+                <Typography variant="body1">Order Id: #{order.id}</Typography>
+                <OrderItem>
+                    <Stack flexDirection="row" gap={1}>
+                        <Typography variant="body2">
+                            {firstItem?.quantity} x {firstItem?.item.name}
+                        </Typography>
+                        {remainingItems > 0 && (
+                            <Typography variant="body2" color="text.secondary">
+                                + {remainingItems} more
+                            </Typography>
+                        )}
+                    </Stack>
+                    {(order.status === 'delivered' ||
+                        order.status === 'rejected') && (
+                        <Chip
+                            label={order.status.toUpperCase()}
+                            color={
+                                order.status === 'delivered'
+                                    ? 'success'
+                                    : 'error'
+                            }
+                        />
                     )}
                 </OrderItem>
                 <OrderMeta>
                     <Typography variant="body2" color="text.secondary">
-                        order placed on{' '}
+                        Order placed on{' '}
                         {new Date(order.createdAt).toLocaleString('en-In')}
                     </Typography>
                     <OrderBottom>
@@ -144,6 +153,56 @@ export const OrderCard = (props: OrderCardProps) => {
                             <Typography>&#8377;{total}</Typography>
                         </Stack>
                     </PriceBreakdown>
+                    {canEditStatus &&
+                        !(
+                            order.status === 'delivered' ||
+                            order.status === 'rejected'
+                        ) && (
+                            <Stack
+                                flexDirection="row"
+                                justifyContent="space-between"
+                            >
+                                {orderStatusList[order.status].nextStatuses.map(
+                                    (action) => {
+                                        const buttonColor =
+                                            action === 'accepted'
+                                                ? 'success'
+                                                : action === 'rejected'
+                                                  ? 'error'
+                                                  : 'primary';
+                                        return (
+                                            <Button
+                                                key={action}
+                                                variant="contained"
+                                                onClick={() =>
+                                                    void onStatusChange(action)
+                                                }
+                                                color={buttonColor}
+                                            >
+                                                {action.toUpperCase()}
+                                            </Button>
+                                        );
+                                    },
+                                )}
+                            </Stack>
+                        )}
+                    {order.status === 'rejected' && (
+                        <>
+                            <Divider />
+                            <Stack flexDirection="row" gap={2}>
+                                <Typography variant="body1">
+                                    Reason For Rejection:
+                                </Typography>
+                                <Typography
+                                    variant="body1"
+                                    color="error"
+                                    flex={1}
+                                >
+                                    {order.reason}
+                                </Typography>
+                            </Stack>
+                        </>
+                    )}
                 </ExpandedContent>
             )}
         </OrderCardContainer>

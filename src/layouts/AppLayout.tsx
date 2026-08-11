@@ -69,10 +69,18 @@ export const AppLayout = () => {
     const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         setSearchQuery(value);
+        const params = new URLSearchParams(searchParams);
+        params.delete('search');
+        setSearchparams(params);
     };
 
     const handleFoodType = (value: FoodType) => {
         setFoodPreference(value);
+        const search = searchParams.get('search');
+        setSearchparams({
+            ...(value !== 'both' && { type: value }),
+            ...(search && { search }),
+        });
     };
 
     const handleCartClose = () => {
@@ -97,8 +105,10 @@ export const AppLayout = () => {
             setSearchparams(searchParams);
             return;
         }
+        const type = searchParams.get('type');
         setSearchparams({
             search: query,
+            ...(type && { type }),
         });
     };
 
@@ -113,8 +123,9 @@ export const AppLayout = () => {
         const handleRestaurantFetch = () => {
             dispatch(
                 fetchRestaurants({
-                    search: searchQuery,
-                    type: foodPreference,
+                    search:
+                        searchQuery || searchParams.get('search') || undefined,
+                    type: foodPreference || searchParams.get('type'),
                     ownerId: user?.role === 'owner' ? user?.id : '',
                 }),
             )
@@ -134,7 +145,13 @@ export const AppLayout = () => {
             dispatch(
                 fetchMenu({
                     restaurantId: restaurantId,
-                    filters: { search: searchQuery, type: foodPreference },
+                    filters: {
+                        search:
+                            searchQuery ||
+                            searchParams.get('search') ||
+                            undefined,
+                        type: foodPreference || searchParams.get('type'),
+                    },
                 }),
             )
                 .unwrap()
@@ -163,6 +180,7 @@ export const AppLayout = () => {
         currentRoute,
         currentLocation,
         user,
+        searchParams,
     ]);
 
     return (

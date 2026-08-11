@@ -52,13 +52,14 @@ export const placeOrder = async (payload: OrderData): Promise<Order> => {
     const restaurantName = restaurant?.name;
 
     const order: Order = {
-        id: `O${orders.length + 1}`,
+        id: `O${Date.now()}`,
         customerId: payload.customerId,
         restaurantId: payload.restaurantId,
         restaurantName: restaurantName ?? payload.restaurantName,
         items: payload.items,
         status: 'pending',
         subtotal,
+        reason: '',
         createdAt: new Date().toISOString(),
     };
 
@@ -69,11 +70,12 @@ export const placeOrder = async (payload: OrderData): Promise<Order> => {
 export const updateOrder = (
     id: string,
     status: OrderStatus,
+    reason?: string,
 ): Promise<Order> => {
     const orders = getStoredOrders();
 
     const updated = orders.map((order) =>
-        order.id === id ? { ...order, status } : order,
+        order.id === id ? { ...order, status, reason } : order,
     );
 
     const order = updated.find((entry) => entry.id === id);

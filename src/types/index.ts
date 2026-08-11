@@ -116,5 +116,6 @@ export interface Order {
     items: CartItem[];
     status: OrderStatus;
     subtotal: number;
+    reason?: string;
     createdAt: string;
 }

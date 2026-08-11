@@ -17,3 +17,12 @@ export const MenuHeader = styled(Box)(({ theme }) => ({
     justifyContent: 'space-between',
     padding: theme.spacing(8, 4),
 }));
+
+export const EmptyMenu = styled(Box)(({ theme }) => ({
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: theme.spacing(150),
+    width: '100%',
+    gap: theme.spacing(2),
+}));

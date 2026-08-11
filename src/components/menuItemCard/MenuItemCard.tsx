@@ -1,6 +1,6 @@
 import { DeleteOutlined, EditOutlined } from '@mui/icons-material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import { Box, Chip, Typography } from '@mui/material';
+import { Box, Chip, Stack, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 
 import { Button } from '@components/button';
@@ -19,12 +19,16 @@ import {
 export const MenuItemCard = (props: MenuItemCardProps) => {
     const {
         menuItem,
+        presentInCart,
         stock,
         canEdit,
         canChangeStock,
         canDelete,
         canAddInCart,
         isCartDisabled,
+        quantity,
+        onChange,
+        onDecrease,
         onClick,
         onEdit,
         onDelete,
@@ -66,18 +70,28 @@ export const MenuItemCard = (props: MenuItemCardProps) => {
                     <Typography variant="h5">
                         &#8377; {menuItem?.price}
                     </Typography>
-                    <Box>
-                        {canAddInCart && (
-                            <Button
-                                variant="contained"
-                                color="warning"
-                                onClick={onClick}
-                                disabled={isCartDisabled}
-                            >
-                                Add
-                                <AddShoppingCartIcon />
-                            </Button>
-                        )}
+                    <Box padding={1}>
+                        {canAddInCart &&
+                            (presentInCart && quantity > 0 ? (
+                                <NumberStepper
+                                    value={quantity}
+                                    onChange={(value: number) =>
+                                        onChange(menuItem.id, value)
+                                    }
+                                    onDecrement={() => onDecrease(menuItem.id)}
+                                />
+                            ) : (
+                                <Button
+                                    variant="contained"
+                                    color="warning"
+                                    onClick={onClick}
+                                    disabled={isCartDisabled}
+                                >
+                                    Add
+                                    <AddShoppingCartIcon />
+                                </Button>
+                            ))}
+
                         {canChangeStock && (
                             <NumberStepper
                                 value={stock}
@@ -86,16 +100,18 @@ export const MenuItemCard = (props: MenuItemCardProps) => {
                                 onDecrement={onDecrement}
                             />
                         )}
-                        {canEdit && (
-                            <Button onClick={onEdit}>
-                                <EditOutlined />
-                            </Button>
-                        )}
-                        {canDelete && (
-                            <Button color="error" onClick={onDelete}>
-                                <DeleteOutlined />
-                            </Button>
-                        )}
+                        <Stack flexDirection="row" justifyContent="flex-end">
+                            {canEdit && (
+                                <Button onClick={onEdit}>
+                                    <EditOutlined />
+                                </Button>
+                            )}
+                            {canDelete && (
+                                <Button color="error" onClick={onDelete}>
+                                    <DeleteOutlined />
+                                </Button>
+                            )}
+                        </Stack>
                     </Box>
                 </Footer>
             </Content>

@@ -21,6 +21,8 @@ export interface OrderCardProps {
     showReorder: boolean;
     onStatusChange: (status: OrderStatus) => void;
     onReorder: (order: Order) => void;
+    steps: string[];
+    activeStep: number;
 }
 
 export interface OrderViewData {
@@ -29,11 +31,23 @@ export interface OrderViewData {
     bookingFee: number;
     total: number;
 }
-
+export interface OrderStepperData {
+    steps: string[];
+    activeStep: number;
+}
 export interface OrdersProps {
     orders: OrderViewData[];
     canEditStatus: boolean;
     showReorder: boolean;
     onStatusChange: (orderId: string, status: OrderStatus) => void;
     onReorder: (order: Order) => void;
+    getSteps: (status: OrderStatus) => OrderStepperData;
+}
+
+export interface RejectedOrderDialogProps {
+    open: boolean;
+    reason: string;
+    onReasonChange: (reason: string) => void;
+    onClose: () => void;
+    onConfirm: () => void;
 }

@@ -5,7 +5,7 @@ import { CartItem } from '@components/cartItem/CartItem';
 import { CartSummary } from '@components/cartSummary/CartSummary';
 import { CartContentProps } from '@types';
 
-import { CartContentContainer } from './CartContent.styled';
+import { CartCardsContainer, CartContentContainer } from './CartContent.styled';
 
 export const CartContent = (props: CartContentProps) => {
     const {
@@ -37,7 +37,7 @@ export const CartContent = (props: CartContentProps) => {
                 </Stack>
             ) : (
                 <>
-                    <Stack spacing={6}>
+                    <CartCardsContainer>
                         {items.map((cartItem) => (
                             <CartItem
                                 key={cartItem.item.id}
@@ -47,7 +47,7 @@ export const CartContent = (props: CartContentProps) => {
                                 onRemove={onRemove}
                             />
                         ))}
-                    </Stack>
+                    </CartCardsContainer>
                     <Divider />
                     <CartSummary
                         total={total}

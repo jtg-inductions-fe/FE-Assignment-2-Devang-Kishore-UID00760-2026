@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import { Error } from '@mui/icons-material';
 import { Box, Divider, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 
@@ -38,6 +39,7 @@ import {
 
 import { MenuItemSchema } from './AddMenuItem.validation';
 import {
+    EmptyMenu,
     MenuHeader,
     MenuItemsContainer,
     RestaurantMenuContainer,
@@ -55,6 +57,9 @@ export const RestaurantMenu = () => {
     const hasPermission = usePermissions();
     const menuItems = UseAppSelector((state) => state.menu.items);
     const items = UseAppSelector((state) => state.cart.items);
+    const currentCuisines = selectedRestaurant?.cuisines.filter((cuisine) =>
+        menuItems.some((item) => item.cuisine === cuisine),
+    );
 
     useEffect(() => {
         if (!id) return;
@@ -316,14 +321,23 @@ export const RestaurantMenu = () => {
                     )}
                 </Box>
             </MenuHeader>
+            {currentCuisines?.length === 0 && (
+                <EmptyMenu>
+                    <Error fontSize="large" color="error" />
+                    <Typography variant="h3">No Menu item Found</Typography>
+                </EmptyMenu>
+            )}
             <MenuItemsContainer container spacing={8}>
-                {selectedRestaurant?.cuisines.map((cuisineName) => (
+                {currentCuisines?.map((cuisineName) => (
                     <Grid size={12} spacing={2} key={cuisineName}>
                         <Typography variant="h4" color="textSecondary">
                             {cuisineName}
                         </Typography>
                         <Divider />
                         {menuItems?.map((item) => {
+                            const isPresent = items.find(
+                                (cartItem) => cartItem.item.id === item.id,
+                            );
                             if (item.cuisine == cuisineName) {
                                 return (
                                     <Grid
@@ -333,6 +347,9 @@ export const RestaurantMenu = () => {
                                     >
                                         <MenuItemDisplayCard
                                             menuItem={item}
+                                            presentInCart={
+                                                isPresent ? true : false
+                                            }
                                             canEdit={hasPermission(
                                                 permissions.EDIT_MENU_ITEM,
                                             )}

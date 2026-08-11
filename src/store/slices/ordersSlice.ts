@@ -5,29 +5,33 @@ interface OrdersState {
     items: Order[];
     loading: boolean;
 }
+
 interface OrderData {
     customerId: string;
     restaurantId: string;
     restaurantName: string;
     items: CartItem[];
 }
+
 const initialState: OrdersState = {
     items: [],
     loading: false,
 };
+
 export const fetchOrders = createAsyncThunk(
     'orders/fetch',
     ({ userId, role }: { userId: string; role: Role }) =>
         getOrders(userId, role),
 );
+
 export const createOrder = createAsyncThunk(
     'orders/create',
     (payload: OrderData) => placeOrder(payload),
 );
 export const updateOrderStatus = createAsyncThunk(
     'orders/status',
-    (payload: { id: string; status: OrderStatus }) =>
-        updateOrder(payload.id, payload.status),
+    (payload: { id: string; status: OrderStatus; reason?: string }) =>
+        updateOrder(payload.id, payload.status, payload.reason),
 );
 export const ordersSlice = createSlice({
     name: 'orders',
