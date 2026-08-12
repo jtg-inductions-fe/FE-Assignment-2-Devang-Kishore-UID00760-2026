@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getCurrentUser, login, signUp } from '@services/auth.service';
+import { login, signUp } from '@services/auth.service';
 import { User } from '@types';
 import { removeStorage } from '@utils/storage';
 
@@ -9,7 +9,7 @@ const initialState: AuthState = {
     user: null,
     loading: false,
     error: null,
-    isLoggedIn: getCurrentUser() ? true : false,
+    isLoggedIn: false,
 };
 
 export const loginUser = createAsyncThunk(

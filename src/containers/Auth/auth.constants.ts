@@ -7,7 +7,7 @@ export const authContent = {
     CONFIRM_PASSWORD_FIELD: 'Confirm Password',
     ROLE_FILED: 'Join as Restaurant Partner',
     LOGIN_BUTTON: 'Login',
-    LOGIN_HELPER_TEXT: 'Don&apos;t have an account?',
+    LOGIN_HELPER_TEXT: "Don't have an account?",
     SIGNUP_BUTTON: 'Sign Up',
     SIGNUP_HELPER_TEXT: 'Already have an account?',
     SIGNUP_HEADING: 'START ORDERING',
@@ -16,4 +16,19 @@ export const authContent = {
     EMAIL_PLACEHOLDER: 'Enter your email',
     PASSWORD_PLACEHOLDER: 'Enter your password',
     CONFIRM_PASSWORD_PLACEHOLDER: 'Enter password again',
+    LOGIN_SUCCESS: 'Login successful.',
+    SIGNUP_SUCCESS: 'Signup successful.',
+};
+
+export const authValidationFields = {
+    EMAIL_VALIDATION: 'please enter a valid email',
+    EMAIL_REQUIRED: 'email is required',
+    PASSWORD_REQUIRED: 'password is required',
+    PASSWORD_MIN_LENGTH: 'password must be at least 8 character',
+    PASSWORD_MAX_LENGTH: 'password cannot exceed 32 character.',
+    NAME_REQUIRED: 'full name is required',
+    NAME_MIN_LENGTH: 'name must be at least 2 characters.',
+    NAME_MAX_LENGTH: 'name cannot exceed 50 characters.',
+    CONFIRM_PASSWORD_REQUIRED: 'confirm password is required',
+    PASSWORD_MISMATCH: 'password do not match.',
 };

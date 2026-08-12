@@ -1,78 +1,94 @@
 import { Link } from 'react-router-dom';
 
-import { Box } from '@mui/material';
+import { Box, Stack } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 
-import backgroundDesktop from '@assets/images/auth_image_desktop.webp';
-import backgroundMobile from '@assets/images/auth_image_mobile.webp';
+import backgroundDesktop from '@assets/images/auth-image-desktop.webp';
+import backgroundMobile from '@assets/images/auth-image-mobile.webp';
+const backgroundGradient =
+    'linear-gradient(rgba(250,250, 248, 0.9), rgba(250,250, 248, 0.9))';
+export const AuthWrapper = styled(Box)(
+    ({ theme: { palette, breakpoints } }) => ({
+        minHeight: '100vh',
+        display: 'flex',
+        backgroundColor: palette.background.default,
+        background: `${backgroundGradient},url(${backgroundMobile}) bottom left/100% auto no-repeat`,
 
-export const AuthWrapper = styled(Box)(({ theme }) => ({
-    minHeight: '100vh',
+        [breakpoints.up('md')]: {
+            backgroundImage: `${backgroundGradient},url(${backgroundDesktop})`,
+            backgroundSize: '100% 100%',
+        },
+    }),
+);
+
+export const AuthHeader = styled(Box)(({ theme: { spacing } }) => ({
     display: 'flex',
-    backgroundColor: theme.palette.background.default,
-    background: `linear-gradient(rgba(250,250, 248, 0.9), rgba(250,250, 248, 0.9)),url(${backgroundMobile}) bottom left/100% auto no-repeat`,
+    flexDirection: 'column',
+    gap: spacing(3),
+}));
 
-    [theme.breakpoints.up('md')]: {
-        backgroundImage: `linear-gradient(rgba(250,250, 248, 0.9), rgba(250,250, 248, 0.9)),url(${backgroundDesktop})`,
-        backgroundSize: '100% 100%',
+export const AuthLink = styled(Link)(({ theme: { palette, typography } }) => ({
+    color: palette.secondary.main,
+    textDecoration: 'none',
+    fontWeight: typography.fontWeightBold,
+}));
+
+export const AuthContent = styled(Box)(
+    ({ theme: { spacing, breakpoints } }) => ({
+        flex: 1,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: spacing(3),
+
+        [breakpoints.up('md')]: {
+            padding: spacing(6),
+        },
+    }),
+);
+
+export const AuthCard = styled(Paper)(
+    ({ theme: { spacing, breakpoints } }) => ({
+        display: 'flex',
+        flexDirection: 'column',
+        gap: spacing(8),
+        width: '100%',
+        maxWidth: 480,
+        padding: spacing(3),
+        borderRadius: spacing(5),
+        backgroundColor: 'transparent',
+        boxShadow: 'none',
+
+        [breakpoints.up('md')]: {
+            padding: spacing(5),
+        },
+    }),
+);
+
+export const LogoImage = styled('img')(({ theme: { breakpoints } }) => ({
+    width: 100,
+
+    [breakpoints.up('md')]: {
+        width: 180,
     },
 }));
 
-export const AuthHeader = styled(Box)(({ theme }) => ({
-    display: 'flex',
-    flexDirection: 'column',
-    gap: theme.spacing(3),
-}));
+export const AuthForm = styled('form')(
+    ({ theme: { spacing, breakpoints } }) => ({
+        display: 'flex',
+        flexDirection: 'column',
+        gap: spacing(4),
 
-export const AuthLink = styled(Link)(({ theme }) => ({
-    color: theme.palette.secondary.main,
-    textDecoration: 'none',
-    fontWeight: theme.typography.fontWeightBold,
-}));
+        [breakpoints.up('md')]: {
+            gap: spacing(8),
+        },
+    }),
+);
 
-export const AuthContent = styled(Box)(({ theme }) => ({
-    flex: 1,
-    display: 'flex',
+export const AuthFooter = styled(Stack)(({ theme: { spacing } }) => ({
     justifyContent: 'center',
     alignItems: 'center',
-    padding: theme.spacing(3),
-
-    [theme.breakpoints.up('md')]: {
-        padding: theme.spacing(6),
-    },
-}));
-
-export const AuthCard = styled(Paper)(({ theme }) => ({
-    display: 'flex',
-    flexDirection: 'column',
-    gap: theme.spacing(8),
-    width: '100%',
-    maxWidth: 480,
-    padding: theme.spacing(3),
-    borderRadius: theme.spacing(5),
-    backgroundColor: 'transparent',
-    boxShadow: 'none',
-
-    [theme.breakpoints.up('md')]: {
-        padding: theme.spacing(5),
-    },
-}));
-
-export const LogoImage = styled('img')(({ theme }) => ({
-    width: theme.spacing(40),
-
-    [theme.breakpoints.up('md')]: {
-        width: theme.spacing(60),
-    },
-}));
-
-export const AuthForm = styled('form')(({ theme }) => ({
-    display: 'flex',
-    flexDirection: 'column',
-    gap: theme.spacing(4),
-
-    [theme.breakpoints.up('md')]: {
-        gap: theme.spacing(8),
-    },
+    flexDirection: 'row',
+    gap: spacing(0.5),
 }));
