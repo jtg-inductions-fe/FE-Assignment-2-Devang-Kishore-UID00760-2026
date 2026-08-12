@@ -1,0 +1,35 @@
+[
+    {
+        "id": "M1",
+        "restaurantID": "R1",
+        "name": "Paneer Tikka",
+        "category": "veg",
+        "price": 280,
+        "description": "Good paneer dish",
+        "image": "",
+        "stock": 18,
+        "cuisine": "Indian"
+    },
+    {
+        "id": "M2",
+        "restaurantID": "R1",
+        "name": "Veg Hakka Noodles",
+        "category": "veg",
+        "price": 240,
+        "description": "Noodles tossed with fresh vegetables",
+        "image": "",
+        "stock": 20,
+        "cuisine": "Chinese"
+    },
+    {
+        "id": "M3",
+        "restaurantID": "R2",
+        "name": "Margherita Pizza",
+        "category": "veg",
+        "price": 320,
+        "description": "Classic pizza",
+        "image": "",
+        "stock": 15,
+        "cuisine": "Italian"
+    }
+]
