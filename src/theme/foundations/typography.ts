@@ -1,10 +1,10 @@
-import type { Theme } from '@mui/material/styles';
-import type {
+import { Theme } from '@mui/material/styles';
+import {
     TypographyOptions,
     TypographyUtils,
 } from '@mui/material/styles/createTypography';
 
-import { HTML_FONT_SIZE } from '@constant';
+import { HTML_FONT_SIZE } from '../../constants';
 
 /* Custom px to rem function */
 const typographyUtil: TypographyUtils = {
@@ -24,7 +24,6 @@ const typographyUtil: TypographyUtils = {
 const typographyStyle = (theme: Theme): TypographyOptions => ({
     fontFamily: 'Inter',
     htmlFontSize: HTML_FONT_SIZE,
-    fontWeightLight: 400,
     fontWeightRegular: 500,
     fontWeightMedium: 600,
     fontWeightBold: 700,

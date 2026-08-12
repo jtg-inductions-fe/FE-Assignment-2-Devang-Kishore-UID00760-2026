@@ -6,22 +6,20 @@ import { RouterProvider } from 'react-router-dom';
 
 import { CssBaseline, ThemeProvider } from '@mui/material';
 
+import { Feedback } from '@containers/feedback/Feedback.container';
 import { theme } from '@theme';
 
-import { SnackbarProvider } from './components/common/snackbar/SnackBar';
 import { router } from './routes/router';
 import { store } from './store/store';
 
 const rootElement = document.getElementById('root') as HTMLElement;
-
 createRoot(rootElement).render(
     <StrictMode>
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <Provider store={store}>
-                <SnackbarProvider>
-                    <RouterProvider router={router} />
-                </SnackbarProvider>
+                <RouterProvider router={router} />
+                <Feedback />
             </Provider>
         </ThemeProvider>
     </StrictMode>,

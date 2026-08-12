@@ -1,25 +1,25 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 
-import { ROUTES } from '@constant';
-import { Login } from '@container/Auth/Login';
-import { Signup } from '@container/Auth/Signup';
-import { ErrorPage } from '@container/exceptions/ErrorPage';
-import { NotFoundPage } from '@container/exceptions/NotFoundPage';
+import { ROUTES } from '@constants';
+import { Login } from '@containers/Auth/Login';
+import { Signup } from '@containers/Auth/Signup';
 import { AppLayout } from '@layouts/AppLayout';
-import { AuthLayout } from '@layouts/AuthLayout';
+import { ErrorPage } from '@pages/fallback/ErrorPage';
+import { NotFoundPage } from '@pages/fallback/NotFoundPage';
 
-import { AuthRoute } from './AuthRoute';
-import { PrivateRoute } from './PrivateRoute';
+import { AuthRoute } from '../components/routeGuards/AuthRoute';
+import { PrivateRoute } from '../components/routeGuards/PrivateRoute';
+
 export const router = createBrowserRouter([
     {
         path: ROUTES.ROOT,
+        element: <AppLayout />,
         errorElement: <ErrorPage />,
         children: [
             {
                 element: <PrivateRoute />,
                 children: [
                     {
-                        element: <AppLayout />,
                         children: [
                             {
                                 index: true,
@@ -56,7 +56,6 @@ export const router = createBrowserRouter([
 
                 children: [
                     {
-                        element: <AuthLayout />,
                         children: [
                             {
                                 path: ROUTES.LOGIN,
@@ -70,7 +69,6 @@ export const router = createBrowserRouter([
                     },
                 ],
             },
-
             { path: ROUTES.ALL, element: <NotFoundPage /> },
         ],
     },

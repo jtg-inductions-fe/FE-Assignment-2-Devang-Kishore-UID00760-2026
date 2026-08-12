@@ -2,9 +2,9 @@
     "compilerOptions": {
         "paths": {
             "@assets/*": ["./src/assets/*"],
-            "@constant": ["./src/constant/index"],
+            "@constants": ["./src/constants/index"],
             "@components/*": ["./src/components/*"],
-            "@container/*": ["./src/container/*"],
+            "@containers/*": ["./src/containers/*"],
             "@theme": ["./src/theme/index"],
             "@types": ["./src/types/index"],
             "@services/*": ["./src/services/*"],
@@ -12,7 +12,8 @@
             "@utils/*": ["./src/utils/*"],
             "@hooks/*": ["./src/hooks/*"],
             "@layouts/*": ["./src/layouts/*"],
-            "@data/*": ["./src/data/*"]
+            "@data/*": ["./src/data/*"],
+            "@pages/*": ["./src/pages/*"]
         }
     }
 }
