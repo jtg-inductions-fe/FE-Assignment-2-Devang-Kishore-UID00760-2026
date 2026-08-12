@@ -5,37 +5,57 @@ export type {
     MenuItemFormData,
     AddRestaurantFormData,
 } from './AddRestaurant.types';
-export type { FeedBackState, FeedbackComponentType } from './feedback.types';
 export type { ConfirmationDialogProps } from './confirmationDialog.types';
-export type Role = 'customer' | 'owner';
-export type FoodType = 'veg' | 'nonVeg' | 'both';
-export type OrderStatus =
-    | 'pending'
-    | 'accepted'
-    | 'preparing'
-    | 'outForDelivery'
-    | 'delivered'
-    | 'rejected';
-export type Snackbar = 'success' | 'error' | 'warning' | 'info';
-export type Cuisine =
-    | 'Indian'
-    | 'Chinese'
-    | 'Italian'
-    | 'Mexican'
-    | 'Thai'
-    | 'Japanese'
-    | 'American'
-    | 'Fast Food'
-    | 'Desserts'
-    | 'Beverages';
-export type Day =
-    | 'Monday'
-    | 'Tuesday'
-    | 'Wednesday'
-    | 'Thursday'
-    | 'Friday'
-    | 'Saturday'
-    | 'Sunday';
+
+export type { FeedbackComponentType } from './feedback.types';
+export type { UserData } from './users.types';
+export type { OrderData } from './orders.types';
+export enum Role {
+    customer = 'customer',
+    owner = 'owner',
+}
+export enum FoodType {
+    veg = 'veg',
+    nonVeg = 'nonVeg',
+    both = 'both',
+}
+export enum OrderStatus {
+    pending = 'pending',
+    accepted = 'accepted',
+    preparing = 'preparing',
+    outForDelivery = 'outForDelivery',
+    delivered = 'delivered',
+    rejected = 'rejected',
+}
+
+export enum SnackbarTheme {
+    success = 'success',
+    error = 'error',
+    warning = 'warning',
+    info = 'info',
+}
+export enum Cuisine {
+    indians = 'Indians',
+    chinese = 'Chinese',
+    italian = 'Italian',
+    mexican = 'Mexican',
+    thai = 'Thai',
+    japanese = 'Japanese',
+    american = 'American',
+    fast_Food = 'Fast Food',
+    desserts = 'Desserts',
+    beverages = 'Beverages',
+}
+
+export enum Day {
+    monday = 'Monday',
+    tuesday = 'Tuesday',
+    wednesday = 'Wednesday',
+    thursday = 'Thursday',
+    friday = 'Friday',
+    saturday = 'Saturday',
+    sunday = 'Sunday',
+}
 
 export interface Address {
     street: string;
@@ -56,10 +76,10 @@ export interface MenuItem {
     id: string;
     name: string;
     restaurantID: string;
-    description: string;
+    description?: string;
     category: FoodType;
     price: number;
-    image: string;
+    image?: string;
     stock: number;
     cuisine: Cuisine;
 }
@@ -68,15 +88,15 @@ export interface Restaurant {
     id: string;
     ownerId: string;
     name: string;
-    description: string;
+    description?: string;
     contactNumber: string;
     email: string;
     fssaiCertificateId: string;
     gstNumber: string;
     cuisines: Cuisine[];
     category: FoodType;
-    image: string;
-    logo: string;
+    image?: string;
+    logo?: string;
     address: Address;
     isOpen: boolean;
     openingTime: string;

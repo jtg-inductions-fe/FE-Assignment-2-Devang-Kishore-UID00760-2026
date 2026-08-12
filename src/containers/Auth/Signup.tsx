@@ -4,15 +4,18 @@ import { useNavigate } from 'react-router-dom';
 import { Box, Checkbox } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
-import { Button } from '@components/common/button';
-import { Logo } from '@components/common/logo';
-import { PasswordField } from '@components/common/passwordField/PasswordField';
-import { TextField } from '@components/common/textField';
+import { Button } from '@components/button';
+import { Logo } from '@components/logo';
+import { PasswordField } from '@components/passwordField';
+import { TextField } from '@components/textField';
+import { ROUTES } from '@constants';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { UseAppDispatch, UseAppSelector } from '@hooks/storeHooks';
-import { signupUser } from '@store/slices/authSlice';
-import { showSnackbar } from '@store/slices/feedBackSlice';
+import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
+import { signupUser } from '@store/slices/auth/authSlice';
+import { showSnackbar } from '@store/slices/feedback/feedBackSlice';
+import { Role, SnackbarTheme } from '@types';
 
+import { authContent } from './auth.constants';
 import {
     AuthCard,
     AuthContent,
@@ -20,14 +23,13 @@ import {
     AuthHeader,
     AuthLink,
     AuthWrapper,
-} from './auth.styled';
+} from './auth.styles';
 import { SignupFormData, signupSchema } from './auth.validation';
-import { ROUTES } from '../../constants';
 
 export const Signup = () => {
-    const dispatch = UseAppDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const { loading } = UseAppSelector((state) => state.auth);
+    const { loading } = useAppSelector((state) => state.auth);
 
     const { control, handleSubmit } = useForm<SignupFormData>({
         resolver: yupResolver(signupSchema),
@@ -36,7 +38,7 @@ export const Signup = () => {
             email: '',
             password: '',
             confirmPassword: '',
-            role: 'customer',
+            role: Role.customer,
         },
     });
 
@@ -46,7 +48,7 @@ export const Signup = () => {
             dispatch(
                 showSnackbar({
                     message: 'SignUP successful.',
-                    severity: 'success',
+                    severity: SnackbarTheme.success,
                 }),
             );
             await navigate(ROUTES.DISCOVERY, { replace: true });
@@ -54,7 +56,7 @@ export const Signup = () => {
             dispatch(
                 showSnackbar({
                     message: `${error as string}`,
-                    severity: 'error',
+                    severity: SnackbarTheme.error,
                 }),
             );
         }
@@ -66,9 +68,11 @@ export const Signup = () => {
                 <AuthCard>
                     <AuthHeader>
                         <Logo />
-                        <Typography variant="h1">START ORDERING</Typography>
+                        <Typography variant="h1">
+                            {authContent.SIGNUP_HEADING}
+                        </Typography>
                         <Typography variant="body1" color="secondary.light">
-                            Sign up to start ordering you favourite food
+                            {authContent.SIGNUP_SUBHEADING}
                         </Typography>
                     </AuthHeader>
                     <AuthForm
@@ -78,7 +82,7 @@ export const Signup = () => {
                     >
                         <Box>
                             <Typography variant="subtitle1" mb={1}>
-                                Name
+                                {authContent.NAME_FIELD}
                             </Typography>
                             <Controller
                                 name="name"
@@ -86,7 +90,9 @@ export const Signup = () => {
                                 render={({ field, fieldState }) => (
                                     <TextField
                                         {...field}
-                                        placeholder="Enter your name"
+                                        placeholder={
+                                            authContent.NAME_PLACEHOLDER
+                                        }
                                         type="name"
                                         error={!!fieldState.error}
                                         helperText={fieldState.error?.message}
@@ -96,7 +102,7 @@ export const Signup = () => {
                         </Box>
                         <Box>
                             <Typography variant="subtitle1" mb={1}>
-                                Email
+                                {authContent.EMAIL_FIELD}
                             </Typography>
                             <Controller
                                 name="email"
@@ -104,7 +110,9 @@ export const Signup = () => {
                                 render={({ field, fieldState }) => (
                                     <TextField
                                         {...field}
-                                        placeholder="Enter your email"
+                                        placeholder={
+                                            authContent.EMAIL_PLACEHOLDER
+                                        }
                                         type="email"
                                         error={!!fieldState.error}
                                         helperText={fieldState.error?.message}
@@ -114,7 +122,7 @@ export const Signup = () => {
                         </Box>
                         <Box>
                             <Typography variant="subtitle1" mb={1}>
-                                Password
+                                {authContent.PASSWORD_FIELD}
                             </Typography>
                             <Controller
                                 name="password"
@@ -122,7 +130,9 @@ export const Signup = () => {
                                 render={({ field, fieldState }) => (
                                     <PasswordField
                                         {...field}
-                                        placeholder="Enter your password"
+                                        placeholder={
+                                            authContent.PASSWORD_PLACEHOLDER
+                                        }
                                         error={!!fieldState.error}
                                         helperText={fieldState.error?.message}
                                     />
@@ -131,7 +141,7 @@ export const Signup = () => {
                         </Box>
                         <Box>
                             <Typography variant="subtitle1" mb={1}>
-                                Confirm Password
+                                {authContent.CONFIRM_PASSWORD_FIELD}
                             </Typography>
                             <Controller
                                 name="confirmPassword"
@@ -139,7 +149,9 @@ export const Signup = () => {
                                 render={({ field, fieldState }) => (
                                     <PasswordField
                                         {...field}
-                                        placeholder="Enter password again"
+                                        placeholder={
+                                            authContent.CONFIRM_PASSWORD_PLACEHOLDER
+                                        }
                                         error={!!fieldState.error}
                                         helperText={fieldState.error?.message}
                                     />
@@ -156,7 +168,7 @@ export const Signup = () => {
                                 }) => (
                                     <Checkbox
                                         {...field}
-                                        checked={value === 'owner'}
+                                        checked={value === Role.owner}
                                         onChange={(e) =>
                                             onChange(
                                                 e.target.checked
@@ -169,7 +181,7 @@ export const Signup = () => {
                                 )}
                             />
                             <Typography variant="h6">
-                                Join as Restaurant Partner
+                                {authContent.ROLE_FILED}
                             </Typography>
                         </Box>
 
@@ -181,7 +193,7 @@ export const Signup = () => {
                             loading={loading}
                             disabled={loading}
                         >
-                            Sign Up
+                            {authContent.SIGNUP_BUTTON}
                         </Button>
                         <Box
                             display="Flex"
@@ -190,14 +202,14 @@ export const Signup = () => {
                             gap={0.5}
                         >
                             <Typography variant="body2">
-                                Already have an account?
+                                {authContent.SIGNUP_HELPER_TEXT}
                             </Typography>
                             <AuthLink to={ROUTES.LOGIN}>
                                 <Typography
                                     variant="body2"
                                     fontWeight="inherit"
                                 >
-                                    Login
+                                    {authContent.LOGIN_BUTTON}
                                 </Typography>
                             </AuthLink>
                         </Box>

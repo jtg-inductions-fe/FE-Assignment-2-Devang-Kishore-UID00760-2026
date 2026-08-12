@@ -6,7 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import type { AddRestaurantFormData } from '@types';
 
 import { defaultValues } from './AddRestaurant.defaultValues';
-import { addRestaurantSchema } from './AddRestaurant.validation';
+import { addRestaurantSchema } from './AddRestaurant.validations';
 
 export const useAddRestaurantForm = () => {
     const methods = useForm<AddRestaurantFormData>({

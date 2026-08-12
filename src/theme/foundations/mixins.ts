@@ -1,4 +1,4 @@
-import type {
+import {
     CSSProperties,
     MixinsOptions,
 } from '@mui/material/styles/createMixins';

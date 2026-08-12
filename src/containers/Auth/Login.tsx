@@ -4,15 +4,18 @@ import { useNavigate } from 'react-router-dom';
 import { Box } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
-import { Button } from '@components/common/button';
-import { Logo } from '@components/common/logo';
-import { PasswordField } from '@components/common/passwordField/PasswordField';
-import { TextField } from '@components/common/textField';
+import { Button } from '@components/button';
+import { Logo } from '@components/logo';
+import { PasswordField } from '@components/passwordField';
+import { TextField } from '@components/textField';
+import { ROUTES } from '@constants';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { UseAppDispatch, UseAppSelector } from '@hooks/storeHooks';
-import { loginUser } from '@store/slices/authSlice';
-import { showSnackbar } from '@store/slices/feedBackSlice';
+import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
+import { loginUser } from '@store/slices/auth/authSlice';
+import { showSnackbar } from '@store/slices/feedback/feedBackSlice';
+import { SnackbarTheme } from '@types';
 
+import { authContent } from './auth.constants';
 import {
     AuthCard,
     AuthContent,
@@ -20,14 +23,13 @@ import {
     AuthHeader,
     AuthLink,
     AuthWrapper,
-} from './auth.styled';
+} from './auth.styles';
 import { LoginFormData, loginSchema } from './auth.validation';
-import { ROUTES } from '../../constants';
 
 export const Login = () => {
-    const dispatch = UseAppDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const { loading } = UseAppSelector((state) => state.auth);
+    const { loading } = useAppSelector((state) => state.auth);
 
     const { control, handleSubmit } = useForm<LoginFormData>({
         resolver: yupResolver(loginSchema),
@@ -43,7 +45,7 @@ export const Login = () => {
             dispatch(
                 showSnackbar({
                     message: 'Login successful.',
-                    severity: 'success',
+                    severity: SnackbarTheme.success,
                 }),
             );
             await navigate(ROUTES.DISCOVERY, { replace: true });
@@ -51,7 +53,7 @@ export const Login = () => {
             dispatch(
                 showSnackbar({
                     message: `${error as string}`,
-                    severity: 'error',
+                    severity: SnackbarTheme.error,
                 }),
             );
         }
@@ -63,9 +65,11 @@ export const Login = () => {
                 <AuthCard>
                     <AuthHeader>
                         <Logo />
-                        <Typography variant="h1">WELCOME BACK</Typography>
+                        <Typography variant="h1">
+                            {authContent.LOGIN_HEADING}
+                        </Typography>
                         <Typography variant="body1" color="secondary.light">
-                            Sign in to continue ordering you favourite food
+                            {authContent.LOGIN_SUBHEADING}
                         </Typography>
                     </AuthHeader>
                     <AuthForm
@@ -75,7 +79,7 @@ export const Login = () => {
                     >
                         <Box>
                             <Typography variant="subtitle1" mb={1}>
-                                Email
+                                {authContent.EMAIL_FIELD}
                             </Typography>
                             <Controller
                                 name="email"
@@ -83,7 +87,9 @@ export const Login = () => {
                                 render={({ field, fieldState }) => (
                                     <TextField
                                         {...field}
-                                        placeholder="Enter your email"
+                                        placeholder={
+                                            authContent.EMAIL_PLACEHOLDER
+                                        }
                                         type="email"
                                         error={!!fieldState.error}
                                         helperText={fieldState.error?.message}
@@ -93,7 +99,7 @@ export const Login = () => {
                         </Box>
                         <Box>
                             <Typography variant="subtitle1" mb={1}>
-                                Password
+                                {authContent.PASSWORD_FIELD}
                             </Typography>
                             <Controller
                                 name="password"
@@ -101,7 +107,9 @@ export const Login = () => {
                                 render={({ field, fieldState }) => (
                                     <PasswordField
                                         {...field}
-                                        placeholder="Enter your password"
+                                        placeholder={
+                                            authContent.PASSWORD_PLACEHOLDER
+                                        }
                                         error={!!fieldState.error}
                                         helperText={fieldState.error?.message}
                                     />
@@ -116,7 +124,7 @@ export const Login = () => {
                             loading={loading}
                             disabled={loading}
                         >
-                            Login
+                            {authContent.LOGIN_BUTTON}
                         </Button>
                         <Box
                             display="Flex"
@@ -125,14 +133,14 @@ export const Login = () => {
                             gap={0.5}
                         >
                             <Typography variant="body2">
-                                Don&apos;t have an account?
+                                {authContent.LOGIN_HELPER_TEXT}
                             </Typography>
                             <AuthLink to={ROUTES.SIGNUP}>
                                 <Typography
                                     variant="body2"
                                     fontWeight="inherit"
                                 >
-                                    Sign Up
+                                    {authContent.SIGNUP_BUTTON}
                                 </Typography>
                             </AuthLink>
                         </Box>

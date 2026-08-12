@@ -35,7 +35,7 @@ export const signupSchema = yup.object({
         .string()
         .required('confirm password is required')
         .oneOf([yup.ref('password')], 'password do not match.'),
-    role: yup.mixed<Role>().oneOf(['customer', 'owner']).required(),
+    role: yup.mixed<Role>().oneOf([Role.customer, Role.owner]).required(),
 });
 
 export type LoginFormData = yup.InferType<typeof loginSchema>;

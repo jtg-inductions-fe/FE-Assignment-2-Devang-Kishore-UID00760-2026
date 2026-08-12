@@ -1,10 +1,10 @@
-import { FeedbackComponent } from '@components/common/feedback/Feedback';
-import { UseAppDispatch, UseAppSelector } from '@hooks/storeHooks';
-import { hideSnackbar } from '@store/slices/feedBackSlice';
+import { FeedbackComponent } from '@components/feedback';
+import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
+import { hideSnackbar } from '@store/slices/feedback/feedBackSlice';
 
 export const FeedbackProvider = () => {
-    const dispatch = UseAppDispatch();
-    const feedback = UseAppSelector((state) => state.feedback);
+    const dispatch = useAppDispatch();
+    const feedback = useAppSelector((state) => state.feedback);
 
     return (
         <FeedbackComponent

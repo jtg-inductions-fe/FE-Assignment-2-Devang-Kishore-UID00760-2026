@@ -1,31 +1,29 @@
 import { useState } from 'react';
 
 import { FieldPath, FormProvider } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { Typography } from '@mui/material';
 
-import { Button } from '@components/common/button';
-import { ConfirmDialog } from '@components/common/confirmationDialog/ConfirmationDialog';
-import { Logo } from '@components/common/logo';
-import { CustomStepper } from '@components/common/strapper/CustomStepper';
-import { UseAppDispatch, UseAppSelector } from '@hooks/storeHooks';
-import { showSnackbar } from '@store/slices/feedBackSlice';
-import { createMenuEntry } from '@store/slices/menuSlice';
-import { saveRestaurant } from '@store/slices/restaurantSlice';
-import { AddRestaurantFormData } from '@types';
+import { Button } from '@components/button';
+import { ConfirmDialog } from '@components/confirmationDialog';
+import { CustomStepper } from '@components/strapper/CustomStepper';
+import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
+import { showSnackbar } from '@store/slices/feedback/feedBackSlice';
+import { createMenuEntry } from '@store/slices/menu/menuSlice';
+import { saveRestaurant } from '@store/slices/restaurant/restaurantSlice';
+import { AddRestaurantFormData, SnackbarTheme } from '@types';
 
 import {
     ActionWrapper,
     AddRestaurantContainer,
-    AddRestaurantHeader,
     FormWrapper,
     RestaurantForm,
     StyledPaper,
-} from './AddRestaurant.styled';
-import { MenuSection } from './fromSections/MenuSection';
-import { RestaurantInfoSection } from './fromSections/RestaurantInfoSection';
-import { RestaurantSection } from './fromSections/RestaurantSection';
+} from './AddRestaurant.styles';
+import { MenuSection } from './formSections/MenuSection';
+import { RestaurantInfoSection } from './formSections/RestaurantInfoSection';
+import { RestaurantSection } from './formSections/RestaurantSection';
 import { useAddRestaurantForm } from './useAddRestaurantForm';
 import { ROUTES } from '../../constants';
 
@@ -56,9 +54,9 @@ export const AddRestaurant = () => {
 
     const ActiveStep = STEPS[activeStep];
     const { trigger } = methods;
-    const dispatch = UseAppDispatch();
-    const { user } = UseAppSelector((store) => store.auth);
-    const { loading } = UseAppSelector((state) => state.restaurants);
+    const dispatch = useAppDispatch();
+    const { user } = useAppSelector((store) => store.auth);
+    const { loading } = useAppSelector((state) => state.restaurants);
     const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
     const handleCancel = () => {
@@ -107,7 +105,7 @@ export const AddRestaurant = () => {
             dispatch(
                 showSnackbar({
                     message: 'Item Added successful.',
-                    severity: 'success',
+                    severity: SnackbarTheme.success,
                 }),
             );
             await navigate(ROUTES.DISCOVERY, { replace: true });
@@ -115,7 +113,7 @@ export const AddRestaurant = () => {
             dispatch(
                 showSnackbar({
                     message: `${error as string}`,
-                    severity: 'error',
+                    severity: SnackbarTheme.error,
                 }),
             );
         }
@@ -132,11 +130,6 @@ export const AddRestaurant = () => {
 
     return (
         <AddRestaurantContainer maxWidth="lg">
-            <AddRestaurantHeader>
-                <Link to="/">
-                    <Logo />
-                </Link>
-            </AddRestaurantHeader>
             <StyledPaper elevation={2}>
                 <Typography variant="h3" mb={4}>
                     ADD NEW RESTAURANT
@@ -174,7 +167,7 @@ export const AddRestaurant = () => {
                                 type="button"
                                 variant="contained"
                                 onClick={() => {
-                                    void handleNext;
+                                    void handleNext();
                                 }}
                                 loading={loading}
                             >

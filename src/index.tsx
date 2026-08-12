@@ -6,7 +6,7 @@ import { RouterProvider } from 'react-router-dom';
 
 import { CssBaseline, ThemeProvider } from '@mui/material';
 
-import { FeedbackProvider } from '@containers/feedback/Feedback';
+import { Feedback } from '@containers/feedback/Feedback.container';
 import { theme } from '@theme';
 
 import { router } from './routes/router';
@@ -19,7 +19,7 @@ createRoot(rootElement).render(
             <CssBaseline />
             <Provider store={store}>
                 <RouterProvider router={router} />
-                <FeedbackProvider />
+                <Feedback />
             </Provider>
         </ThemeProvider>
     </StrictMode>,

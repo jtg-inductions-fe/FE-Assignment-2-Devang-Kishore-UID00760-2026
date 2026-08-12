@@ -1,27 +1,27 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 
+import { AuthRoute } from '@components/routeGuards/AuthRoute';
+import { PrivateRoute } from '@components/routeGuards/PrivateRoute';
+import { ROUTES } from '@constants';
 import { AddRestaurant } from '@containers/AddRestaurant/AddRestaurant';
 import { Login } from '@containers/Auth/Login';
 import { Signup } from '@containers/Auth/Signup';
-import { ErrorPage } from '@containers/exceptions/ErrorPage';
-import { NotFoundPage } from '@containers/exceptions/NotFoundPage';
 import { AppLayout } from '@layouts/AppLayout';
-import { AuthLayout } from '@layouts/AuthLayout';
+import { ErrorPage } from '@pages/fallback/ErrorPage';
+import { NotFoundPage } from '@pages/fallback/NotFoundPage';
 
-import { AuthRoute } from './AuthRoutes';
-import { PrivateRoute } from './PrivateRoutes';
-import { ProtectedRoutes } from './ProtectedRoutes';
-import { ROUTES } from '../constants';
+import { ProtectedRoutes } from '../components/routeGuards/ProtectedRoutes';
+
 export const router = createBrowserRouter([
     {
         path: ROUTES.ROOT,
+        element: <AppLayout />,
         errorElement: <ErrorPage />,
         children: [
             {
                 element: <PrivateRoute />,
                 children: [
                     {
-                        element: <AppLayout />,
                         children: [
                             {
                                 index: true,
@@ -69,7 +69,6 @@ export const router = createBrowserRouter([
 
                 children: [
                     {
-                        element: <AuthLayout />,
                         children: [
                             {
                                 path: ROUTES.LOGIN,
@@ -83,7 +82,6 @@ export const router = createBrowserRouter([
                     },
                 ],
             },
-
             { path: ROUTES.ALL, element: <NotFoundPage /> },
         ],
     },
