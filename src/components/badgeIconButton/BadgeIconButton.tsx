@@ -1,9 +1,9 @@
 import { Badge } from '@mui/material';
 import { IconButton } from '@mui/material';
 
-import type { BadgeIconButtonProps } from '@types';
+import { BadgeIconButtonProps } from '@types';
 
-import { BadgeIconButtonContainer } from './BadgeIconButton.styled';
+import { BadgeIconButtonContainer } from './BadgeIconButton.styles';
 
 export const BadgeIconButton = ({
     icon,

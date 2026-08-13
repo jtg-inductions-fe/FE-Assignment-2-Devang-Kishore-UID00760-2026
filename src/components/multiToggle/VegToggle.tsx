@@ -1,11 +1,12 @@
-import type { VegToggleProps } from '@types';
+import { VegToggleProps } from '@types';
 import { FoodType } from '@types';
 
+import { foodCategory } from './vegToggle.constant';
 import {
     MultiToggleContainer,
     StyledToggleButton,
     StyledToggleButtonGroup,
-} from './VegToggle.styled';
+} from './VegToggle.styles';
 
 export const MultiToggle = ({ value, onChange, ...props }: VegToggleProps) => (
     <MultiToggleContainer>
@@ -20,13 +21,13 @@ export const MultiToggle = ({ value, onChange, ...props }: VegToggleProps) => (
             {...props}
         >
             <StyledToggleButton value="both" color="primary">
-                Both
+                {foodCategory.BOTH}
             </StyledToggleButton>
             <StyledToggleButton value="veg" color="secondary">
-                Veg
+                {foodCategory.VEG}
             </StyledToggleButton>
             <StyledToggleButton value="nonVeg" color="error">
-                Non Veg
+                {foodCategory.NON_VEG}
             </StyledToggleButton>
         </StyledToggleButtonGroup>
     </MultiToggleContainer>

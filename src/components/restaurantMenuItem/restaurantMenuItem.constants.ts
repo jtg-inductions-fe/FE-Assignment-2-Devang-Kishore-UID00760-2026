@@ -1,0 +1,75 @@
+import { CUISINES, FOOD_TYPES } from '@constants';
+
+export const menuItemContent = {
+    MENU_ITEMS_TITLE: 'Menu Item',
+    DISH_NAME_LABEL: 'Dish Name',
+    DISH_CUISINE_LABEL: 'Cuisine *',
+    DISH_CATEGORY_LABEL: 'Category *',
+    DISH_PRICE_LABEL: 'Dish Price',
+    DISH_STOCK_LABEL: 'Stock',
+    DISH_IMAGE_LABEL: 'Image url..',
+    DISH_IMAGE_ALT: 'Dish Image',
+    DISH_DESCRIPTION_LABEL: 'Description',
+    MENU_FORM_HEADING: 'Menu Item',
+};
+
+export const menuFields = [
+    {
+        name: 'name',
+        type: 'text',
+        label: menuItemContent.DISH_NAME_LABEL,
+        grid: { xs: 12, md: 6 },
+        multiline: false,
+        rows: undefined,
+    },
+    {
+        name: 'cuisine',
+        type: 'select',
+        label: menuItemContent.DISH_CUISINE_LABEL,
+        grid: { xs: 12, md: 6 },
+        multiline: false,
+        rows: undefined,
+        options: CUISINES,
+    },
+    {
+        name: 'category',
+        type: 'select',
+        label: menuItemContent.DISH_CATEGORY_LABEL,
+        grid: { xs: 12, md: 6 },
+        multiline: false,
+        rows: undefined,
+        options: FOOD_TYPES,
+    },
+    {
+        name: 'price',
+        type: 'number',
+        label: menuItemContent.DISH_PRICE_LABEL,
+        grid: { xs: 12, md: 6 },
+        multiline: false,
+        rows: undefined,
+    },
+    {
+        name: 'stock',
+        type: 'number',
+        label: menuItemContent.DISH_STOCK_LABEL,
+        grid: { xs: 12, md: 6 },
+        multiline: false,
+        rows: undefined,
+    },
+    {
+        name: 'image',
+        type: 'image',
+        label: menuItemContent.DISH_IMAGE_LABEL,
+        grid: { xs: 12, md: 6 },
+        multiline: false,
+        rows: undefined,
+    },
+    {
+        name: 'description',
+        type: 'text',
+        label: menuItemContent.DISH_DESCRIPTION_LABEL,
+        grid: { xs: 12 },
+        multiline: false,
+        rows: undefined,
+    },
+];

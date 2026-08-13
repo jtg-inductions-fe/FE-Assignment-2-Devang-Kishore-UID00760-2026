@@ -10,7 +10,8 @@ import { Box, Button, Chip, Link, Stack, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 
 import { ToggleSwitch } from '@components/toggleSwitch';
-import { RestaurantCardProps } from '@types';
+import { RESTAURANT_STATE } from '@constants';
+import { FoodType } from '@types';
 
 import {
     ClosedIcon,
@@ -28,7 +29,8 @@ import {
     RestaurantTimings,
     StatusBadge,
     VegChip,
-} from './RestaurantCard.styled';
+} from './RestaurantCard.styles';
+import { RestaurantCardProps } from './restaurantCard.types';
 
 export const RestaurantCard = (props: RestaurantCardProps) => {
     const {
@@ -81,7 +83,7 @@ export const RestaurantCard = (props: RestaurantCardProps) => {
                         <VegChip
                             label={Restaurant.category}
                             color={
-                                Restaurant.category === 'veg'
+                                Restaurant.category === FoodType.VEG
                                     ? 'secondary'
                                     : 'error'
                             }
@@ -134,7 +136,11 @@ export const RestaurantCard = (props: RestaurantCardProps) => {
             <RestaurantFooter>
                 {canOpen && (
                     <ToggleSwitch
-                        label={Restaurant.isOpen ? 'Open' : 'Closed'}
+                        label={
+                            Restaurant.isOpen
+                                ? RESTAURANT_STATE.OPEN
+                                : RESTAURANT_STATE.CLOSE
+                        }
                         color="secondary"
                         checked={Restaurant.isOpen}
                         onChange={onToggle}

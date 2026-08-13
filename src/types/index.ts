@@ -1,57 +1,67 @@
-export type { ImagePreviewProps } from './imagePreview.types';
-export type { CustomSelectProps } from './customSelect.types';
-export type { ToggleSwitchProps } from './toggleSwitch.types';
-export type {
-    MenuItemFormData,
-    AddRestaurantFormData,
-} from './AddRestaurant.types';
-export type { FeedBackState, FeedbackComponentType } from './feedback.types';
+export type { FeedbackComponentType } from './feedback.types';
 export type { FiltersData } from './filters.type';
 export type { ConfirmationDialogProps } from './confirmationDialog.types';
 export type { VegToggleProps } from './vegToggle.types';
 export type { BadgeIconButtonProps } from './badgeIconButton.types';
+export type { SearchbarProps } from './searchbarProps.types';
 export type { ProfileMenuProps } from './profileMenu.types';
-export type { HeaderProps } from './header.types';
-export type {
-    RestaurantCardProps,
-    RestaurantBannerProps,
-} from './restaurantCard.types';
 export type {
     MenuFormContainer,
     MenuItemCardProps,
     RestaurantMenuItemProps,
     MenuItemsContainer,
+    MenuItemFormData,
 } from './MenuItemCard.types';
-export type { NumberStepperProps } from './numberStepper.types';
-export type Role = 'customer' | 'owner';
-export type FoodType = 'veg' | 'nonVeg' | 'both';
-export type OrderStatus =
-    | 'pending'
-    | 'accepted'
-    | 'preparing'
-    | 'outForDelivery'
-    | 'delivered'
-    | 'rejected';
-export type Snackbar = 'success' | 'error' | 'warning' | 'info';
-export type Cuisine =
-    | 'Indian'
-    | 'Chinese'
-    | 'Italian'
-    | 'Mexican'
-    | 'Thai'
-    | 'Japanese'
-    | 'American'
-    | 'Fast Food'
-    | 'Desserts'
-    | 'Beverages';
-export type Day =
-    | 'Monday'
-    | 'Tuesday'
-    | 'Wednesday'
-    | 'Thursday'
-    | 'Friday'
-    | 'Saturday'
-    | 'Sunday';
+
+export type { UserData } from './users.types';
+export type { OrderData } from './orders.types';
+
+export enum Role {
+    CUSTOMER = 'customer',
+    OWNER = 'owner',
+}
+export enum FoodType {
+    VEG = 'veg',
+    NON_VEG = 'nonVeg',
+    BOTH = 'both',
+}
+export enum OrderStatus {
+    PENDING = 'pending',
+    ACCEPTED = 'accepted',
+    PREPARING = 'preparing',
+    OUT_FOR_DELIVERY = 'outForDelivery',
+    DELIVERY = 'delivered',
+    REJECTED = 'rejected',
+}
+
+export enum SnackbarTheme {
+    SUCCESS = 'success',
+    ERROR = 'error',
+    WARNING = 'warning',
+    INFO = 'info',
+}
+export enum Cuisine {
+    INDIAN = 'Indian',
+    CHINESE = 'Chinese',
+    ITALIAN = 'Italian',
+    MEXICAN = 'Mexican',
+    THAI = 'Thai',
+    JAPANESE = 'Japanese',
+    AMERICAN = 'American',
+    FAST_FOOD = 'Fast Food',
+    DESSERT = 'Desserts',
+    BEVERAGE = 'Beverages',
+}
+
+export enum Day {
+    MONDAY = 'Monday',
+    TUESDAY = 'Tuesday',
+    WEDNESDAY = 'Wednesday',
+    THURSDAY = 'Thursday',
+    FRIDAY = 'Friday',
+    SATURDAY = 'Saturday',
+    SUNDAY = 'Sunday',
+}
 
 export interface Address {
     street: string;
@@ -84,15 +94,15 @@ export interface Restaurant {
     id: string;
     ownerId: string;
     name: string;
-    description: string;
+    description?: string;
     contactNumber: string;
     email: string;
     fssaiCertificateId: string;
     gstNumber: string;
     cuisines: Cuisine[];
     category: FoodType;
-    image: string;
-    logo: string;
+    image?: string;
+    logo?: string;
     address: Address;
     isOpen: boolean;
     openingTime: string;

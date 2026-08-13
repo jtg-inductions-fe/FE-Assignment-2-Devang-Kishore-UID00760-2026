@@ -1,2 +1,10 @@
-export { COLORS, HTML_FONT_SIZE, SCALING_FACTOR } from './themeConstant';
+export { COLORS, HTML_FONT_SIZE, SCALING_FACTOR } from './themeConstants';
 export { ROUTES } from './routeConstants';
+export {
+    FOOD_TYPES,
+    CUISINES,
+    DAYS,
+    RESTAURANT_STATE,
+} from './restaurantsConstants';
+export { ACTION_BUTTONS } from './actionButton.constants';
+export { USERS } from './userConstants';

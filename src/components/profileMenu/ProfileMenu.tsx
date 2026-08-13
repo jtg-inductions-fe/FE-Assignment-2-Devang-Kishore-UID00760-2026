@@ -9,9 +9,9 @@ import {
     Typography,
 } from '@mui/material';
 
-import { ProfileMenuProps } from '@types';
-
-import { StyledMenu, StyledMenuItem } from './ProfileMenu.styled';
+import { LOGOUT } from './profileMenu.constants';
+import { StyledMenu, StyledMenuItem } from './ProfileMenu.styles';
+import { ProfileMenuProps } from '../../types/profileMenu.types';
 
 export const ProfileMenu = ({ name, onLogout }: ProfileMenuProps) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -55,7 +55,7 @@ export const ProfileMenu = ({ name, onLogout }: ProfileMenuProps) => {
                     <ListItemIcon>
                         <LogoutOutlined fontSize="small" />
                     </ListItemIcon>
-                    Logout
+                    {LOGOUT}
                 </StyledMenuItem>
             </StyledMenu>
         </>
