@@ -34,7 +34,7 @@ export const login = (email: string, password: string): Promise<User> => {
     );
 
     if (!user) {
-        throw new Error('User not found');
+        throw new Error('Email or password is incorrect');
     }
 
     writeStorage(CURRENT_USER, user);

@@ -7,6 +7,7 @@ import { ROUTES } from '@constants';
 
 import { exceptionPagesContent } from './fallbackPage.constants';
 import { ComponentGrid, MainBox } from './FallbackPage.styles';
+
 /**
  * Error page.
  * @returns  Error page.
