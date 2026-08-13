@@ -1,23 +1,20 @@
 import { useState } from 'react';
 
-import { Resolver, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import type { AddRestaurantFormData } from '@types';
 
-import { defaultValues } from './AddRestaurant.defaultValues';
-import { addRestaurantSchema } from './AddRestaurant.validation';
+import { defaultValues } from './addRestaurant.defaultValues';
+import { AddRestaurantFormData } from './AddRestaurant.types';
+import { addRestaurantSchema } from './addRestaurant.validations';
 
 export const useAddRestaurantForm = () => {
     const methods = useForm<AddRestaurantFormData>({
-        resolver: yupResolver(
-            addRestaurantSchema,
-        ) as Resolver<AddRestaurantFormData>,
+        resolver: yupResolver(addRestaurantSchema),
         defaultValues,
         mode: 'onTouched',
         reValidateMode: 'onChange',
     });
-
     const [activeStep, setActiveStep] = useState(0);
 
     const nextStep = () => {

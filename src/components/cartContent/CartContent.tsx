@@ -5,7 +5,8 @@ import { CartItem } from '@components/cartItem/CartItem';
 import { CartSummary } from '@components/cartSummary/CartSummary';
 import { CartContentProps } from '@types';
 
-import { CartContentContainer } from './CartContent.styled';
+import { cartTextContent } from './cartContent.constants';
+import { CartContentContainer } from './CartContent.styles';
 
 export const CartContent = (props: CartContentProps) => {
     const {
@@ -23,7 +24,9 @@ export const CartContent = (props: CartContentProps) => {
     return (
         <CartContentContainer>
             <Stack direction="row" justifyContent="space-between">
-                <Typography variant="h5">Your Cart({items.length})</Typography>
+                <Typography variant="h5">
+                    {cartTextContent.CART_HEADING}({items.length})
+                </Typography>
                 <IconButton onClick={onClose}>
                     <CloseIcon />
                 </IconButton>
@@ -31,9 +34,11 @@ export const CartContent = (props: CartContentProps) => {
             {isEmpty ? (
                 <Stack alignItems="center" gap={4}>
                     <Typography variant="h3" color="error">
-                        No Item in Cart
+                        {cartTextContent.NO_ITEM_HEADING}
                     </Typography>
-                    <Typography variant="body1">Add items in cart</Typography>
+                    <Typography variant="body1">
+                        {cartTextContent.NO_ITEM_SUBHEADING}
+                    </Typography>
                 </Stack>
             ) : (
                 <>

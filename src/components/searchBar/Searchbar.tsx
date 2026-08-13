@@ -2,8 +2,9 @@ import { Search } from '@mui/icons-material';
 import { InputAdornment } from '@mui/material';
 import { TextFieldProps } from '@mui/material';
 
+import { TextField } from '@components/textField';
+
 import { SearchBarContainer } from './Searchbar.styled';
-import { TextField } from '../textField';
 
 export const Searchbar = (props: TextFieldProps) => {
     const { slotProps, ...rest } = props;

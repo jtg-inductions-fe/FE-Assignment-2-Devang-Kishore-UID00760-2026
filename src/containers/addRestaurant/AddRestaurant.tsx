@@ -1,60 +1,44 @@
 import { useEffect, useState } from 'react';
 
-import { FieldPath, FormProvider, useFieldArray } from 'react-hook-form';
+import { FormProvider, useFieldArray } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { Typography } from '@mui/material';
 
 import { Button } from '@components/button';
-import { ConfirmDialog } from '@components/confirmationDialog/ConfirmationDialog';
-import { CustomStepper } from '@components/strapper/CustomStepper';
-import { UseAppDispatch, UseAppSelector } from '@hooks/storeHooks';
-import { showSnackbar } from '@store/slices/feedBackSlice';
+import { ConfirmDialog } from '@components/confirmationDialog';
+import { CustomStepper } from '@components/stepper/CustomStepper';
+import { ROUTES } from '@constants';
+import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
+import { showSnackbar } from '@store/slices/feedback/feedBackSlice';
 import {
     createMenuEntry,
     fetchMenu,
     removeMenuEntry,
-} from '@store/slices/menuSlice';
+} from '@store/slices/menu/menuSlice';
 import {
     fetchRestaurantByID,
     saveRestaurant,
     updateRestaurantData,
-} from '@store/slices/restaurantSlice';
-import { AddRestaurantFormData } from '@types';
+} from '@store/slices/restaurant/restaurantSlice';
+import { SnackbarTheme } from '@types';
 
+import { addRestaurantContent } from './addRestaurant.constants';
+import { STEP_FIELDS } from './addRestaurant.constants';
 import {
     ActionWrapper,
     AddRestaurantContainer,
     FormWrapper,
     RestaurantForm,
     StyledPaper,
-} from './AddRestaurant.styled';
+} from './AddRestaurant.styles';
+import { AddRestaurantFormData } from './AddRestaurant.types';
 import { MenuSection } from './formSections/MenuSection';
 import { RestaurantInfoSection } from './formSections/RestaurantInfoSection';
 import { RestaurantSection } from './formSections/RestaurantSection';
 import { useAddRestaurantForm } from './useAddRestaurantForm';
-import { ROUTES } from '../../constants';
-
 const STEPS = [RestaurantSection, RestaurantInfoSection, MenuSection];
 const STEPS_TITLES = ['Restaurant', 'Restaurant Info', 'Menu'];
-const STEP_FIELDS: FieldPath<AddRestaurantFormData>[][] = [
-    ['name', 'email', 'description', 'contactNumber', 'category', 'cuisines'],
-    [
-        'logo',
-        'image',
-        'fssaiCertificateId',
-        'gstNumber',
-        'openingTime',
-        'closingTime',
-        'isOpen',
-        'workingDays',
-        'address.street',
-        'address.city',
-        'address.state',
-        'address.pincode',
-    ],
-    ['menu'],
-];
 
 export const AddRestaurant = () => {
     const { methods, activeStep, nextStep, previousStep } =
@@ -66,9 +50,9 @@ export const AddRestaurant = () => {
     const { id } = useParams();
     const ActiveStep = STEPS[activeStep];
     const { trigger } = methods;
-    const dispatch = UseAppDispatch();
-    const { user } = UseAppSelector((store) => store.auth);
-    const { loading } = UseAppSelector((state) => state.restaurants);
+    const dispatch = useAppDispatch();
+    const { user } = useAppSelector((store) => store.auth);
+    const { loading } = useAppSelector((state) => state.restaurants);
     const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
     const handleCancel = () => {
@@ -76,12 +60,10 @@ export const AddRestaurant = () => {
     };
 
     const isEditMode = !!id;
-
-    const selectedRestaurant = UseAppSelector(
+    const selectedRestaurant = useAppSelector(
         (state) => state.restaurants.selectedRestaurant,
     );
-
-    const menuItem = UseAppSelector((state) => state.menu.items);
+    const menuItem = useAppSelector((state) => state.menu.items);
     const onSubmit = async (data: AddRestaurantFormData) => {
         const restaurantData = {
             ownerId: user!.id,
@@ -136,7 +118,7 @@ export const AddRestaurant = () => {
             dispatch(
                 showSnackbar({
                     message: 'Item Added successful.',
-                    severity: 'success',
+                    severity: SnackbarTheme.SUCCESS,
                 }),
             );
             await navigate(ROUTES.DISCOVERY, { replace: true });
@@ -144,7 +126,7 @@ export const AddRestaurant = () => {
             dispatch(
                 showSnackbar({
                     message: `${error as string}`,
-                    severity: 'error',
+                    severity: SnackbarTheme.ERROR,
                 }),
             );
         }
@@ -175,8 +157,8 @@ export const AddRestaurant = () => {
             .catch(() => {
                 dispatch(
                     showSnackbar({
-                        message: 'Error while fetching restaurant data.',
-                        severity: 'error',
+                        message: addRestaurantContent.SNACKBAR_ERROR_MESSAGE,
+                        severity: SnackbarTheme.ERROR,
                     }),
                 );
             });
@@ -193,11 +175,12 @@ export const AddRestaurant = () => {
         <AddRestaurantContainer maxWidth="lg">
             <StyledPaper elevation={2}>
                 <Typography variant="h3" mb={4}>
-                    {isEditMode ? 'EDIT RESTAURANT' : 'ADD NEW RESTAURANT'}
+                    {!isEditMode
+                        ? addRestaurantContent.RESTAURANT_HEADING
+                        : addRestaurantContent.RESTAURANT_EDIT}
                 </Typography>
                 <Typography variant="body1" mb={4} color="secondary.main">
-                    Add your restaurant and start serving customers through our
-                    platform
+                    {addRestaurantContent.RESTAURANT_SUBHEADING}
                 </Typography>
                 <FormProvider {...methods}>
                     <RestaurantForm
@@ -222,7 +205,9 @@ export const AddRestaurant = () => {
                                         : previousStep
                                 }
                             >
-                                {activeStep === 0 ? 'Cancel' : 'Back'}
+                                {activeStep === 0
+                                    ? `${addRestaurantContent.CANCEL}`
+                                    : `${addRestaurantContent.BACK}`}
                             </Button>
                             <Button
                                 type="button"
@@ -233,8 +218,8 @@ export const AddRestaurant = () => {
                                 loading={loading}
                             >
                                 {activeStep === STEPS.length - 1
-                                    ? 'Submit'
-                                    : 'Next'}
+                                    ? `${addRestaurantContent.SUBMIT}`
+                                    : `${addRestaurantContent.NEXT}`}
                             </Button>
                         </ActionWrapper>
                     </RestaurantForm>
@@ -242,17 +227,9 @@ export const AddRestaurant = () => {
             </StyledPaper>
             <ConfirmDialog
                 open={isOpen}
-                title={
-                    isEditMode
-                        ? 'Cancel Editing Restaurant.'
-                        : 'Cancel Adding New Restaurant.'
-                }
-                message={
-                    isEditMode
-                        ? 'Do you want to cancel editing restaurant?'
-                        : 'Do you want to cancel adding new restaurant?'
-                }
-                confirmLabel={'Confirm'}
+                title={`${addRestaurantContent.DIALOG_TITLE}`}
+                message={`${addRestaurantContent.DIALOG_SUBTITLE}`}
+                confirmLabel={`${addRestaurantContent.DIALOG_LABEL}`}
                 onCancel={() => setIsOpen((state) => !state)}
                 onConfirm={() => void handleConfirm()}
             />

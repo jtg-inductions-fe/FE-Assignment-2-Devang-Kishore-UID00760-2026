@@ -1,28 +1,38 @@
 import ordersMock from '@data/orders.json';
-import type { CartItem, Order, OrderStatus } from '@types';
+import { Order, OrderData, OrderStatus } from '@types';
 import { readStorage, writeStorage } from '@utils/storage';
 
 import { getRestaurant } from './restaurant.service';
 
-interface OrderData {
-    customerId: string;
-    restaurantId: string;
-    restaurantName: string;
-    items: CartItem[];
-}
-
 const ORDERS_KEY = 'orders';
 
+/**
+ * Fetches data of orders from local storage.
+ * @returns Data of orders fetched from local storage.
+ */
 const getStoredOrders = (): Order[] =>
     readStorage<Order[]>(ORDERS_KEY, ordersMock as Order[]);
 
+/**
+ * stores data in local storage.
+ * @param orders Data of order to be stored in local storage.
+ */
 const saveOrders = (orders: Order[]): void => {
     writeStorage(ORDERS_KEY, orders);
 };
 
+/**
+ * Fetches orders form local storage.
+ * @returns Data of orders.
+ */
 export const getOrders = (): Promise<Order[]> =>
     Promise.resolve(getStoredOrders());
 
+/**
+ * saves the order data in local storage.
+ * @param payload Data of order.
+ * @returns Data of order stored in local storage.
+ */
 export const placeOrder = async (payload: OrderData): Promise<Order> => {
     const subtotal = payload.items.reduce(
         (sum, cartItem) => sum + cartItem.item.price * cartItem.quantity,
@@ -39,7 +49,7 @@ export const placeOrder = async (payload: OrderData): Promise<Order> => {
         restaurantId: payload.restaurantId,
         restaurantName: restaurantName ?? payload.restaurantName,
         items: payload.items,
-        status: 'pending',
+        status: OrderStatus.PENDING,
         subtotal,
         createdAt: new Date().toISOString(),
     };
@@ -48,6 +58,12 @@ export const placeOrder = async (payload: OrderData): Promise<Order> => {
     return order;
 };
 
+/**
+ * updated the state of order.
+ * @param id Id of order to be updated.
+ * @param status Status of order to be set.
+ * @returns Data of order after update.
+ */
 export const updateOrder = (
     id: string,
     status: OrderStatus,

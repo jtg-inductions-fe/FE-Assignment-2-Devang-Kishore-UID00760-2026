@@ -1,8 +1,7 @@
 import { Close } from '@mui/icons-material';
 
-import { ImagePreviewProps } from '@types';
-
 import { RemoveButton, StyledImage, StyledPaper } from './ImagePreview.styles';
+import { ImagePreviewProps } from './imagePreview.types';
 
 export const ImagePreview = ({ src, alt, onRemove }: ImagePreviewProps) => (
     <StyledPaper elevation={1}>

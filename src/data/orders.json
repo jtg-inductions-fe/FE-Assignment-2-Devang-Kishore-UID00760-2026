@@ -1,12 +1,27 @@
 [
     {
-        "id": "O1",
-        "customerId": "U1",
-        "restaurantId": "R1",
-        "restaurantName": "Spice Route Kitchen",
-        "items": [],
-        "status": "preparing",
-        "subtotal": 620,
-        "createdAt": ""
+        "id": "O2",
+        "customerId": "U2",
+        "restaurantId": "R2",
+        "restaurantName": "Lajawaab",
+        "items": [
+            {
+                "item": {
+                    "id": "M3",
+                    "restaurantID": "R2",
+                    "name": "Margherita Pizza",
+                    "category": "veg",
+                    "price": 320,
+                    "description": "Classic pizza",
+                    "image": "https://www.savoringitaly.com/wp-content/uploads/2024/09/sourdough-pizza-5.jpg",
+                    "stock": 3,
+                    "cuisine": "Italian"
+                },
+                "quantity": 1
+            }
+        ],
+        "status": "pending",
+        "subtotal": 320,
+        "createdAt": "2026-08-13T17:31:57.931Z"
     }
 ]

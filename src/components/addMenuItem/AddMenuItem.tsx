@@ -4,19 +4,13 @@ import { DialogActions, DialogContent, DialogTitle } from '@mui/material';
 
 import { Button } from '@components/button';
 import { RestaurantMenuItem } from '@components/restaurantMenuItem/RestaurantMenuItem';
+import { ACTION_BUTTONS } from '@constants';
 import { MenuFormContainer } from '@types';
 
-import { CustomDialog } from './AddMenuItem.styled';
+import { menuContent } from './addMenuItem.constants';
+import { CustomDialog } from './AddMenuItem.styles';
 export const AddMenuItem = (props: MenuFormContainer) => {
-    const {
-        open,
-        handleClose,
-        handleSubmitForm,
-        control,
-        cuisines,
-        foodTypes,
-        errors,
-    } = props;
+    const { open, handleClose, handleSubmitForm, control, isEditMode } = props;
     return (
         <CustomDialog
             open={open}
@@ -27,17 +21,11 @@ export const AddMenuItem = (props: MenuFormContainer) => {
             disableRestoreFocus
         >
             <DialogTitle id="alert-dialog-title">
-                {'Add New Menu Item'}
+                {isEditMode ? menuContent.EDIT_TITLE : menuContent.ADD_TITLE}
             </DialogTitle>
             <Form onSubmit={handleSubmitForm}>
                 <DialogContent>
-                    <RestaurantMenuItem
-                        showDelete={false}
-                        control={control}
-                        cuisines={cuisines}
-                        foodTypes={foodTypes}
-                        errors={errors}
-                    />
+                    <RestaurantMenuItem showDelete={false} control={control} />
                 </DialogContent>
                 <DialogActions>
                     <Button
@@ -45,10 +33,10 @@ export const AddMenuItem = (props: MenuFormContainer) => {
                         variant="contained"
                         color="error"
                     >
-                        Cancel
+                        {ACTION_BUTTONS.CANCEL}
                     </Button>
                     <Button type="submit" variant="contained" color="secondary">
-                        Submit
+                        {ACTION_BUTTONS.SUBMIT}
                     </Button>
                 </DialogActions>
             </Form>

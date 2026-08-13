@@ -1,6 +1,6 @@
-import type { TextFieldProps } from '@mui/material';
+import { TextFieldProps } from '@mui/material';
 
-import { StyledTextField } from './TextField.styled';
+import { StyledTextField } from './TextField.styles';
 
 export const TextField = ({
     fullWidth = true,

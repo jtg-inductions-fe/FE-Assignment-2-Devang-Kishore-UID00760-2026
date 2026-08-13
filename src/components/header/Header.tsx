@@ -7,7 +7,7 @@ import { Logo } from '@components/logo';
 import { MultiToggle } from '@components/multiToggle';
 import { ProfileMenu } from '@components/profileMenu';
 import { Searchbar } from '@components/searchBar';
-import type { HeaderProps } from '@types';
+import { ROUTES } from '@constants';
 
 import {
     DesktopHeader,
@@ -18,7 +18,8 @@ import {
     HeaderTop,
     LogoContainer,
     MobileHeader,
-} from './Header.styled';
+} from './Header.styles';
+import { HeaderProps } from './header.types';
 
 export const Header = ({
     searchBarProps,
@@ -57,7 +58,7 @@ export const Header = ({
             </MobileHeader>
             <DesktopHeader>
                 <LogoContainer>
-                    <Link to="/">
+                    <Link to={ROUTES.ROOT}>
                         <Logo />
                     </Link>
                 </LogoContainer>
