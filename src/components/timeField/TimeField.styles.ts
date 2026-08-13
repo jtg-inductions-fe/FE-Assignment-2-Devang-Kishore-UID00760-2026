@@ -2,9 +2,11 @@ import { styled } from '@mui/material';
 
 import { TextField } from '../textField';
 
-export const StyledTimeField = styled(TextField)(({ theme }) => ({
-    '& .MuiOutlinedInput-root': {
-        borderRadius: theme.shape.borderRadius,
-        padding: theme.spacing(20),
-    },
-}));
+export const StyledTimeField = styled(TextField)(
+    ({ theme: { shape, spacing } }) => ({
+        '& .MuiOutlinedInput-root': {
+            borderRadius: shape.borderRadius,
+            padding: spacing(20),
+        },
+    }),
+);

@@ -1,40 +1,24 @@
 import { useState } from 'react';
 
-import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
+import { Path, useFieldArray, useFormContext } from 'react-hook-form';
 
 import DeleteIcon from '@mui/icons-material/Delete';
-import { MenuItem } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 
 import { Button } from '@components/button';
 import { ConfirmDialog } from '@components/confirmationDialog';
-import { CustomSelect } from '@components/customSelect';
-import { ImagePreview } from '@components/imagePreview';
-import { TextField } from '@components/textField';
-import { type AddRestaurantFormData, Cuisine, FoodType } from '@types';
+import { FormImageField } from '@components/FormImageField';
+import { FormSelectField } from '@components/FormSelectField';
+import { FormTextField } from '@components/FormTextField';
+import { Cuisine, FoodType } from '@types';
 
+import { menuFields } from '../addRestaurant.config';
+import { addRestaurantContent } from '../addRestaurant.constants';
 import { MenuCard } from '../AddRestaurant.styles';
-
-const FOOD_TYPES = ['veg', 'nonVeg', 'both'];
-
-const CUISINES = [
-    'Indian',
-    'Chinese',
-    'Italian',
-    'Mexican',
-    'Thai',
-    'Japanese',
-    'American',
-    'Fast Food',
-    'Desserts',
-    'Beverages',
-];
+import { AddRestaurantFormData } from '../AddRestaurant.types';
 
 export const MenuSection = () => {
-    const {
-        control,
-        formState: { errors },
-    } = useFormContext<AddRestaurantFormData>();
+    const { control } = useFormContext<AddRestaurantFormData>();
     const { fields, append, remove } = useFieldArray({ control, name: 'menu' });
     const [deleteIndex, setDeleteIndex] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
@@ -43,8 +27,8 @@ export const MenuSection = () => {
         append({
             name: '',
             description: '',
-            cuisine: Cuisine.indians,
-            category: FoodType.veg,
+            cuisine: Cuisine.INDIAN,
+            category: FoodType.VEG,
             price: 0,
             stock: 0,
             image: '',
@@ -60,7 +44,10 @@ export const MenuSection = () => {
         <Grid container spacing={3}>
             {fields.map((item, index) => (
                 <MenuCard container spacing={3} key={item.id}>
-                    <Grid size={10}> Menu Item {index + 1}</Grid>
+                    <Grid size={10}>
+                        {' '}
+                        {addRestaurantContent.MENU_ITEMS_TITLE} {index + 1}
+                    </Grid>
                     <Grid size={2}>
                         <Button
                             color="error"
@@ -70,168 +57,50 @@ export const MenuSection = () => {
                             <DeleteIcon />
                         </Button>
                     </Grid>
-                    <Grid size={{ xs: 12, md: 6 }}>
-                        <Controller
-                            name={`menu.${index}.name`}
-                            control={control}
-                            render={({ field }) => (
-                                <TextField
-                                    {...field}
-                                    label="Dish Name"
-                                    fullWidth
-                                    required
-                                    error={!!errors.menu?.[index]?.name}
-                                    helperText={
-                                        errors.menu?.[index]?.name?.message
-                                    }
-                                />
-                            )}
-                        />
-                    </Grid>
-                    <Grid size={{ xs: 12, md: 6 }}>
-                        <Controller
-                            name={`menu.${index}.cuisine`}
-                            control={control}
-                            render={({ field }) => (
-                                <CustomSelect
-                                    {...field}
-                                    label="Cuisine *"
-                                    error={!!errors.menu?.[index]?.cuisine}
-                                    helperText={
-                                        errors.menu?.[index]?.cuisine?.message
-                                    }
-                                >
-                                    {CUISINES.map((type) => (
-                                        <MenuItem key={type} value={type}>
-                                            {type}
-                                        </MenuItem>
-                                    ))}
-                                </CustomSelect>
-                            )}
-                        />
-                    </Grid>
-                    <Grid size={{ xs: 12, md: 6 }}>
-                        <Controller
-                            name={`menu.${index}.category`}
-                            control={control}
-                            render={({ field }) => (
-                                <CustomSelect
-                                    {...field}
-                                    label="Category *"
-                                    error={!!errors.menu?.[index]?.category}
-                                    helperText={
-                                        errors.menu?.[index]?.category?.message
-                                    }
-                                >
-                                    {FOOD_TYPES.map((type) => (
-                                        <MenuItem key={type} value={type}>
-                                            {type}
-                                        </MenuItem>
-                                    ))}
-                                </CustomSelect>
-                            )}
-                        />
-                    </Grid>
-                    <Grid size={{ xs: 12, md: 6 }}>
-                        <Controller
-                            name={`menu.${index}.price`}
-                            control={control}
-                            render={({ field }) => (
-                                <TextField
-                                    {...field}
-                                    label="Dish Price"
-                                    type="number"
-                                    fullWidth
-                                    required
-                                    error={!!errors.menu?.[index]?.price}
-                                    helperText={
-                                        errors.menu?.[index]?.price?.message
-                                    }
-                                    onChange={(e) =>
-                                        field.onChange(Number(e.target.value))
-                                    }
-                                    slotProps={{ htmlInput: { min: 0 } }}
-                                />
-                            )}
-                        />
-                    </Grid>
-                    <Grid size={{ xs: 12, md: 6 }}>
-                        <Controller
-                            name={`menu.${index}.stock`}
-                            control={control}
-                            render={({ field }) => (
-                                <TextField
-                                    {...field}
-                                    label="Stock"
-                                    type="number"
-                                    fullWidth
-                                    required
-                                    error={!!errors.menu?.[index]?.stock}
-                                    helperText={
-                                        errors.menu?.[index]?.stock?.message
-                                    }
-                                    onChange={(e) =>
-                                        field.onChange(Number(e.target.value))
-                                    }
-                                    slotProps={{ htmlInput: { min: 0 } }}
-                                />
-                            )}
-                        />
-                    </Grid>
-                    <Grid size={{ xs: 12, md: 6 }}>
-                        <Controller
-                            name={`menu.${index}.image`}
-                            control={control}
-                            render={({ field }) =>
-                                field.value ? (
-                                    <ImagePreview
-                                        src={field.value}
-                                        alt="Dish Image"
-                                        onRemove={() => field.onChange('')}
+                    {menuFields.map((field) => {
+                        const fieldName =
+                            `menu.${index}.${field.name}` as Path<AddRestaurantFormData>;
+                        return (
+                            <Grid key={field.name} size={field.grid}>
+                                {field.type === 'select' ? (
+                                    <FormSelectField
+                                        name={fieldName}
+                                        control={control}
+                                        label={field.label}
+                                        options={field.options ?? []}
                                     />
-                                ) : (
-                                    <TextField
-                                        {...field}
-                                        label="Image URL"
-                                        fullWidth
-                                        error={!!errors.menu?.[index]?.image}
-                                        helperText={
-                                            errors.menu?.[index]?.image?.message
+                                ) : field.type === 'image' ? (
+                                    <FormImageField
+                                        name={fieldName}
+                                        control={control}
+                                        label={field.label}
+                                        alt={
+                                            addRestaurantContent.DISH_IMAGE_ALT
                                         }
                                     />
-                                )
-                            }
-                        />
-                    </Grid>
-                    <Grid size={12}>
-                        <Controller
-                            name={`menu.${index}.description`}
-                            control={control}
-                            render={({ field }) => (
-                                <TextField
-                                    {...field}
-                                    label="Description"
-                                    multiline
-                                    rows={4}
-                                    fullWidth
-                                    error={!!errors.menu?.[index]?.description}
-                                    helperText={
-                                        errors.menu?.[index]?.description
-                                            ?.message
-                                    }
-                                />
-                            )}
-                        />
-                    </Grid>
+                                ) : (
+                                    <FormTextField
+                                        name={fieldName}
+                                        control={control}
+                                        label={field.label}
+                                        type={field.type}
+                                        multiline={field.multiline}
+                                        rows={field.rows}
+                                        required
+                                    />
+                                )}
+                            </Grid>
+                        );
+                    })}
                 </MenuCard>
             ))}
             <Button variant="outlined" onClick={addMenuItem}>
-                Add Menu Item
+                {addRestaurantContent.ADD_MENU_BUTTON}
             </Button>
             <ConfirmDialog
                 open={isOpen}
-                title={'Delete Menu Item.'}
-                message={'Do you want to delete menu item?'}
+                title={`${addRestaurantContent.MENU_DIALOG_TITLE}`}
+                message={`${addRestaurantContent.MENU_DIALOG_SUBTITLE}`}
                 confirmLabel={'Yes Delete'}
                 onCancel={() => setIsOpen((state) => !state)}
                 onConfirm={() => {

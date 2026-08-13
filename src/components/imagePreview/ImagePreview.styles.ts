@@ -1,24 +1,24 @@
 import { IconButton, Paper } from '@mui/material';
 import { styled } from '@mui/material';
 
-export const StyledPaper = styled(Paper)(({ theme }) => ({
+export const StyledPaper = styled(Paper)(({ theme: { spacing, shape } }) => ({
     position: 'relative',
-    padding: theme.spacing(2),
+    padding: spacing(2),
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: theme.shape.borderRadius,
+    borderRadius: shape.borderRadius,
 }));
 
-export const StyledImage = styled('img')(({ theme }) => ({
+export const StyledImage = styled('img')(({ theme: { shape } }) => ({
     width: '100%',
-    height: 180,
+    maxHeight: 180,
     objectFit: 'cover',
-    BorderRadius: theme.shape.borderRadius,
+    BorderRadius: shape.borderRadius,
 }));
 
-export const RemoveButton = styled(IconButton)(({ theme }) => ({
+export const RemoveButton = styled(IconButton)(({ theme: { spacing } }) => ({
     position: 'absolute',
-    top: theme.spacing(1),
-    right: theme.spacing(1),
+    top: spacing(1),
+    right: spacing(1),
 }));

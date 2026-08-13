@@ -5,6 +5,6 @@ export const exceptionPagesContent = {
     ERROR_TITLE: 'Internal Server Error!',
     NOT_FOUNT_CONTENT: 'The page you are looking for might have been removed.',
     ERROR_CONTENT:
-        'Something went wrong at our end. Don&apos;t worry it&apos;s not you it&apos;s us, Sorry about that.',
+        "Something went wrong at our end. Don't worry it's not you it's us, Sorry about that.",
     BACK_BUTTON: 'Back Home',
 };

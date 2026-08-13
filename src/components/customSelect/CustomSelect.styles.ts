@@ -6,8 +6,8 @@ export const StyledFormControl = styled(FormControl)({
 });
 export const StyledInputLabel = styled(InputLabel)({});
 
-export const StyledSelect = styled(Select)(({ theme }) => ({
-    borderRadius: theme.spacing(2),
+export const StyledSelect = styled(Select)(({ theme: { spacing } }) => ({
+    borderRadius: spacing(2),
 }));
 
 export const StyledHelperText = styled(FormHelperText)({});

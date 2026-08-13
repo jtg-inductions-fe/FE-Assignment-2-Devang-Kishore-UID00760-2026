@@ -1,10 +1,14 @@
 import { Navigate, Outlet } from 'react-router-dom';
 
 import { ROUTES } from '@constants';
-import { useAuth } from '@hooks/authHooks';
+import { useAuth } from '@hooks/useAuth';
 
 export const AuthRoute = () => {
-    const user = useAuth();
+    const { isLoggedIn } = useAuth();
 
-    return !user ? <Outlet /> : <Navigate to={ROUTES.DISCOVERY} replace />;
+    return !isLoggedIn ? (
+        <Outlet />
+    ) : (
+        <Navigate to={ROUTES.DISCOVERY} replace />
+    );
 };

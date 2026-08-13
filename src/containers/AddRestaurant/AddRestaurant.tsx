@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { FieldPath, FormProvider } from 'react-hook-form';
+import { FormProvider } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 import { Typography } from '@mui/material';
@@ -8,12 +8,15 @@ import { Typography } from '@mui/material';
 import { Button } from '@components/button';
 import { ConfirmDialog } from '@components/confirmationDialog';
 import { CustomStepper } from '@components/strapper/CustomStepper';
+import { ROUTES } from '@constants';
 import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
 import { showSnackbar } from '@store/slices/feedback/feedBackSlice';
 import { createMenuEntry } from '@store/slices/menu/menuSlice';
 import { saveRestaurant } from '@store/slices/restaurant/restaurantSlice';
-import { AddRestaurantFormData, SnackbarTheme } from '@types';
+import { SnackbarTheme } from '@types';
 
+import { addRestaurantContent } from './addRestaurant.constants';
+import { STEP_FIELDS } from './addRestaurant.constants';
 import {
     ActionWrapper,
     AddRestaurantContainer,
@@ -21,32 +24,13 @@ import {
     RestaurantForm,
     StyledPaper,
 } from './AddRestaurant.styles';
+import { AddRestaurantFormData } from './AddRestaurant.types';
 import { MenuSection } from './formSections/MenuSection';
 import { RestaurantInfoSection } from './formSections/RestaurantInfoSection';
 import { RestaurantSection } from './formSections/RestaurantSection';
 import { useAddRestaurantForm } from './useAddRestaurantForm';
-import { ROUTES } from '../../constants';
-
 const STEPS = [RestaurantSection, RestaurantInfoSection, MenuSection];
 const STEPS_TITLES = ['Restaurant', 'Restaurant Info', 'Menu'];
-const STEP_FIELDS: FieldPath<AddRestaurantFormData>[][] = [
-    ['name', 'email', 'description', 'contactNumber', 'category', 'cuisines'],
-    [
-        'logo',
-        'image',
-        'fssaiCertificateId',
-        'gstNumber',
-        'openingTime',
-        'closingTime',
-        'isOpen',
-        'workingDays',
-        'address.street',
-        'address.city',
-        'address.state',
-        'address.pincode',
-    ],
-    ['menu'],
-];
 
 export const AddRestaurant = () => {
     const { methods, activeStep, nextStep, previousStep } =
@@ -105,7 +89,7 @@ export const AddRestaurant = () => {
             dispatch(
                 showSnackbar({
                     message: 'Item Added successful.',
-                    severity: SnackbarTheme.success,
+                    severity: SnackbarTheme.SUCCESS,
                 }),
             );
             await navigate(ROUTES.DISCOVERY, { replace: true });
@@ -113,7 +97,7 @@ export const AddRestaurant = () => {
             dispatch(
                 showSnackbar({
                     message: `${error as string}`,
-                    severity: SnackbarTheme.error,
+                    severity: SnackbarTheme.ERROR,
                 }),
             );
         }
@@ -132,11 +116,10 @@ export const AddRestaurant = () => {
         <AddRestaurantContainer maxWidth="lg">
             <StyledPaper elevation={2}>
                 <Typography variant="h3" mb={4}>
-                    ADD NEW RESTAURANT
+                    {addRestaurantContent.RESTAURANT_HEADING}
                 </Typography>
                 <Typography variant="body1" mb={4} color="secondary.main">
-                    Add your restaurant and start serving customers through our
-                    platform
+                    {addRestaurantContent.RESTAURANT_SUBHEADING}
                 </Typography>
                 <FormProvider {...methods}>
                     <RestaurantForm
@@ -161,7 +144,9 @@ export const AddRestaurant = () => {
                                         : previousStep
                                 }
                             >
-                                {activeStep === 0 ? 'Cancel' : 'Back'}
+                                {activeStep === 0
+                                    ? `${addRestaurantContent.CANCEL}`
+                                    : `${addRestaurantContent.BACK}`}
                             </Button>
                             <Button
                                 type="button"
@@ -172,8 +157,8 @@ export const AddRestaurant = () => {
                                 loading={loading}
                             >
                                 {activeStep === STEPS.length - 1
-                                    ? 'Submit'
-                                    : 'Next'}
+                                    ? `${addRestaurantContent.SUBMIT}`
+                                    : `${addRestaurantContent.NEXT}`}
                             </Button>
                         </ActionWrapper>
                     </RestaurantForm>
@@ -181,9 +166,9 @@ export const AddRestaurant = () => {
             </StyledPaper>
             <ConfirmDialog
                 open={isOpen}
-                title={'Cancel Adding New Restaurant.'}
-                message={'Do you want to cancel adding new restaurant?'}
-                confirmLabel={'Confirm'}
+                title={`${addRestaurantContent.DIALOG_TITLE}`}
+                message={`${addRestaurantContent.DIALOG_SUBTITLE}`}
+                confirmLabel={`${addRestaurantContent.DIALOG_LABEL}`}
                 onCancel={() => setIsOpen((state) => !state)}
                 onConfirm={() =>
                     void (async () => {

@@ -1,11 +1,10 @@
-import { CustomSelectProps } from '@types';
-
 import {
     StyledFormControl,
     StyledHelperText,
     StyledInputLabel,
     StyledSelect,
-} from './CustomSelect.styled';
+} from './CustomSelect.styles';
+import { CustomSelectProps } from './customSelect.types';
 
 export const CustomSelect = ({
     label,

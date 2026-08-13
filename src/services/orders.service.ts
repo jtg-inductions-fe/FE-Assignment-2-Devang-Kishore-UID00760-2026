@@ -45,7 +45,7 @@ export const placeOrder = (payload: OrderData): Promise<Order> => {
         restaurantId: payload.restaurantId,
         restaurantName: payload.restaurantName,
         items: payload.items,
-        status: OrderStatus.pending,
+        status: OrderStatus.PENDING,
         subtotal,
         createdAt: new Date().toISOString(),
     };

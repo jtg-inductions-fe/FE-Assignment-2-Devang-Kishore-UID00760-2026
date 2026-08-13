@@ -1,60 +1,54 @@
-export type { ImagePreviewProps } from './imagePreview.types';
-export type { CustomSelectProps } from './customSelect.types';
-export type { ToggleSwitchProps } from './toggleSwitch.types';
-export type {
-    MenuItemFormData,
-    AddRestaurantFormData,
-} from './AddRestaurant.types';
 export type { ConfirmationDialogProps } from './confirmationDialog.types';
 
 export type { FeedbackComponentType } from './feedback.types';
 export type { UserData } from './users.types';
 export type { OrderData } from './orders.types';
+
 export enum Role {
-    customer = 'customer',
-    owner = 'owner',
+    CUSTOMER = 'customer',
+    OWNER = 'owner',
 }
 export enum FoodType {
-    veg = 'veg',
-    nonVeg = 'nonVeg',
-    both = 'both',
+    VEG = 'veg',
+    NON_VEG = 'nonVeg',
+    BOTH = 'both',
 }
 export enum OrderStatus {
-    pending = 'pending',
-    accepted = 'accepted',
-    preparing = 'preparing',
-    outForDelivery = 'outForDelivery',
-    delivered = 'delivered',
-    rejected = 'rejected',
+    PENDING = 'pending',
+    ACCEPTED = 'accepted',
+    PREPARING = 'preparing',
+    OUT_FOR_DELIVERY = 'outForDelivery',
+    DELIVERY = 'delivered',
+    REJECTED = 'rejected',
 }
 
 export enum SnackbarTheme {
-    success = 'success',
-    error = 'error',
-    warning = 'warning',
-    info = 'info',
+    SUCCESS = 'success',
+    ERROR = 'error',
+    WARNING = 'warning',
+    INFO = 'info',
 }
 export enum Cuisine {
-    indians = 'Indians',
-    chinese = 'Chinese',
-    italian = 'Italian',
-    mexican = 'Mexican',
-    thai = 'Thai',
-    japanese = 'Japanese',
-    american = 'American',
-    fast_Food = 'Fast Food',
-    desserts = 'Desserts',
-    beverages = 'Beverages',
+    INDIAN = 'Indians',
+    CHINESE = 'Chinese',
+    ITALIAN = 'Italian',
+    MEXICAN = 'Mexican',
+    THAI = 'Thai',
+    JAPANESE = 'Japanese',
+    AMERICAN = 'American',
+    FAST_FOOD = 'Fast Food',
+    DESSERT = 'Desserts',
+    BEVERAGE = 'Beverages',
 }
 
 export enum Day {
-    monday = 'Monday',
-    tuesday = 'Tuesday',
-    wednesday = 'Wednesday',
-    thursday = 'Thursday',
-    friday = 'Friday',
-    saturday = 'Saturday',
-    sunday = 'Sunday',
+    MONDAY = 'Monday',
+    TUESDAY = 'Tuesday',
+    WEDNESDAY = 'Wednesday',
+    THURSDAY = 'Thursday',
+    FRIDAY = 'Friday',
+    SATURDAY = 'Saturday',
+    SUNDAY = 'Sunday',
 }
 
 export interface Address {

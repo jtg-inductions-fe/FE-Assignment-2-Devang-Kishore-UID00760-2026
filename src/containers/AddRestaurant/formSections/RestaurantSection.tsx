@@ -1,26 +1,18 @@
-import { Controller, useFormContext } from 'react-hook-form';
+import { Controller, Path, useFormContext } from 'react-hook-form';
 
 import { MenuItem } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 
 import { CustomSelect } from '@components/customSelect';
+import { FormSelectField } from '@components/FormSelectField';
+import { FormTextField } from '@components/FormTextField';
 import { TextField } from '@components/textField';
+import { CUISINES } from '@constants';
 import { useAppSelector } from '@hooks/storeHooks';
-import type { AddRestaurantFormData } from '@types';
 
-const FOOD_TYPES = ['veg', 'nonVeg', 'both'];
-const CUISINES = [
-    'Indian',
-    'Chinese',
-    'Italian',
-    'Mexican',
-    'Thai',
-    'Japanese',
-    'American',
-    'Fast Food',
-    'Desserts',
-    'Beverages',
-];
+import { restaurantInfoFields } from '../addRestaurant.config';
+import { addRestaurantContent } from '../addRestaurant.constants';
+import { AddRestaurantFormData } from '../AddRestaurant.types';
 
 export const RestaurantSection = () => {
     const {
@@ -32,103 +24,38 @@ export const RestaurantSection = () => {
         <Grid container spacing={3}>
             <Grid size={{ xs: 12, md: 6 }}>
                 <TextField
-                    label="Owner Name (Read only)"
+                    label={`${addRestaurantContent.OWNER_NAME_LABEL}`}
                     fullWidth
                     value={user?.name}
                     disabled
                 />
             </Grid>
 
-            <Grid size={{ xs: 12, md: 6 }}>
-                <Controller
-                    name="name"
-                    control={control}
-                    render={({ field }) => (
-                        <TextField
-                            {...field}
-                            label="Restaurant Name"
-                            fullWidth
-                            error={!!errors.name}
-                            helperText={errors.name?.message}
-                            required
-                        />
-                    )}
-                />
-            </Grid>
-
-            <Grid size={12}>
-                <Controller
-                    name="description"
-                    control={control}
-                    render={({ field }) => (
-                        <TextField
-                            {...field}
-                            label="Description"
-                            multiline
-                            rows={4}
-                            fullWidth
-                            error={!!errors.description}
-                            helperText={errors.description?.message}
-                        />
-                    )}
-                />
-            </Grid>
-
-            <Grid size={{ xs: 12, md: 6 }}>
-                <Controller
-                    name="contactNumber"
-                    control={control}
-                    render={({ field }) => (
-                        <TextField
-                            {...field}
-                            label="Contact Number"
-                            fullWidth
-                            error={!!errors.contactNumber}
-                            helperText={errors.contactNumber?.message}
-                            required
-                        />
-                    )}
-                />
-            </Grid>
-
-            <Grid size={{ xs: 12, md: 6 }}>
-                <Controller
-                    name="email"
-                    control={control}
-                    render={({ field }) => (
-                        <TextField
-                            {...field}
-                            label="Email"
-                            fullWidth
-                            error={!!errors.email}
-                            helperText={errors.email?.message}
-                            required
-                        />
-                    )}
-                />
-            </Grid>
-
-            <Grid size={{ xs: 12, md: 6 }}>
-                <Controller
-                    name="category"
-                    control={control}
-                    render={({ field }) => (
-                        <CustomSelect
-                            {...field}
-                            label="category *"
-                            error={!!errors.category}
-                            helperText={errors.category?.message}
-                            required
-                        >
-                            {FOOD_TYPES.map((type) => (
-                                <MenuItem key={type} value={type}>
-                                    {type}
-                                </MenuItem>
-                            ))}
-                        </CustomSelect>
-                    )}
-                />
-            </Grid>
+            {restaurantInfoFields.map((field) => {
+                const fieldName = field.name as Path<AddRestaurantFormData>;
+                return (
+                    <Grid key={field.name} size={field.grid}>
+                        {field.type === 'select' ? (
+                            <FormSelectField
+                                name={fieldName}
+                                control={control}
+                                label={field.label}
+                                options={field.options ?? []}
+                            />
+                        ) : (
+                            <FormTextField
+                                name={fieldName}
+                                control={control}
+                                label={field.label}
+                                type={field.type}
+                                multiline={field.multiline}
+                                rows={field.rows}
+                                required
+                            />
+                        )}
+                    </Grid>
+                );
+            })}
 
             <Grid size={{ xs: 12, md: 6 }}>
                 <Controller
@@ -138,7 +65,7 @@ export const RestaurantSection = () => {
                         <CustomSelect
                             {...field}
                             multiple
-                            label="cuisines *"
+                            label={`${addRestaurantContent.RESTAURANT_CUISINES_LABEL}`}
                             error={!!errors.cuisines}
                             helperText={errors.cuisines?.message}
                             required

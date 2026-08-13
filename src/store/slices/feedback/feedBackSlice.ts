@@ -6,7 +6,7 @@ import { FeedBackState } from './feedBackSlice.types';
 const initialState: FeedBackState = {
     snackbarOpen: false,
     snackbarMessage: '',
-    snackbarSeverity: SnackbarTheme.info,
+    snackbarSeverity: SnackbarTheme.INFO,
 };
 
 const feedbackSlice = createSlice({
@@ -23,7 +23,7 @@ const feedbackSlice = createSlice({
             state.snackbarOpen = true;
             state.snackbarMessage = action.payload.message;
             state.snackbarSeverity =
-                action.payload.severity ?? SnackbarTheme.success;
+                action.payload.severity ?? SnackbarTheme.SUCCESS;
         },
 
         hideSnackbar(state) {

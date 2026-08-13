@@ -2,15 +2,14 @@ import { createBrowserRouter, Navigate } from 'react-router-dom';
 
 import { AuthRoute } from '@components/routeGuards/AuthRoute';
 import { PrivateRoute } from '@components/routeGuards/PrivateRoute';
+import { ProtectedRoutes } from '@components/routeGuards/ProtectedRoutes';
 import { ROUTES } from '@constants';
 import { AddRestaurant } from '@containers/AddRestaurant/AddRestaurant';
-import { Login } from '@containers/Auth/Login';
-import { Signup } from '@containers/Auth/Signup';
 import { AppLayout } from '@layouts/AppLayout';
+import { LoginPage } from '@pages/auth/LoginPage';
+import { SignupPage } from '@pages/auth/SignupPage';
 import { ErrorPage } from '@pages/fallback/ErrorPage';
 import { NotFoundPage } from '@pages/fallback/NotFoundPage';
-
-import { ProtectedRoutes } from '../components/routeGuards/ProtectedRoutes';
 
 export const router = createBrowserRouter([
     {
@@ -55,7 +54,7 @@ export const router = createBrowserRouter([
                                 ),
                                 children: [
                                     {
-                                        path: ROUTES.ADDRESTAURANT,
+                                        path: ROUTES.ADD_RESTAURANT,
                                         element: <AddRestaurant />,
                                     },
                                 ],
@@ -72,11 +71,11 @@ export const router = createBrowserRouter([
                         children: [
                             {
                                 path: ROUTES.LOGIN,
-                                element: <Login />,
+                                element: <LoginPage />,
                             },
                             {
                                 path: ROUTES.SIGNUP,
-                                element: <Signup />,
+                                element: <SignupPage />,
                             },
                         ],
                     },

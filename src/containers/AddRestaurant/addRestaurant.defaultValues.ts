@@ -1,4 +1,6 @@
-import type { AddRestaurantFormData } from '@types';
+import { Cuisine, FoodType } from '@types';
+
+import { AddRestaurantFormData } from './AddRestaurant.types';
 export const defaultValues: AddRestaurantFormData = {
     name: '',
     description: '',
@@ -7,7 +9,7 @@ export const defaultValues: AddRestaurantFormData = {
     fssaiCertificateId: '',
     gstNumber: '',
     cuisines: [],
-    category: 'veg',
+    category: FoodType.VEG,
     image: '',
     logo: '',
     address: {
@@ -24,8 +26,8 @@ export const defaultValues: AddRestaurantFormData = {
         {
             name: '',
             description: '',
-            category: 'veg',
-            cuisine: 'Indian',
+            category: FoodType.VEG,
+            cuisine: Cuisine.INDIAN,
             price: 0,
             stock: 0,
             image: '',
