@@ -1,4 +1,4 @@
-import type { PaletteOptions } from '@mui/material/styles';
+import { PaletteOptions } from '@mui/material/styles';
 
 import { COLORS } from '../../constants';
 

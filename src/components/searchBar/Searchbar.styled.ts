@@ -1,12 +1,12 @@
 import { Box, styled } from '@mui/material';
 
-export const SearchBarContainer = styled(Box)(({ theme }) => ({
+export const SearchBarContainer = styled(Box)(({ theme: { spacing } }) => ({
     width: '100%',
     '& .MuiOutlinedInput-root': {
-        height: theme.spacing(13),
-        borderRadius: theme.spacing(30),
+        height: spacing(13),
+        borderRadius: spacing(30),
         '& fieldset': {
-            borderRadius: theme.spacing(30),
+            borderRadius: spacing(30),
         },
     },
 }));

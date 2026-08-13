@@ -7,22 +7,27 @@ import { ShoppingCartOutlined } from '@mui/icons-material';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import { Box } from '@mui/material';
 
-import { ConfirmDialog } from '@components/confirmationDialog/ConfirmationDialog';
+import { ConfirmDialog } from '@components/confirmationDialog';
 import { Header } from '@components/header/Header';
 import { permissions } from '@config/permissions.config';
-import { usePermissions } from '@hooks/permissionsHook';
-import { UseAppDispatch, UseAppSelector } from '@hooks/storeHooks';
-import { logout } from '@store/slices/authSlice';
-import { showSnackbar } from '@store/slices/feedBackSlice';
-import { fetchMenu } from '@store/slices/menuSlice';
-import { fetchRestaurants } from '@store/slices/restaurantSlice';
-import { ConfirmationDialogProps, FoodType } from '@types';
+import { ROUTES } from '@constants';
+import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
+import { usePermissions } from '@hooks/usePermissions';
+import { logout } from '@store/slices/auth/authSlice';
+import { showSnackbar } from '@store/slices/feedback/feedBackSlice';
+import { fetchMenu } from '@store/slices/menu/menuSlice';
+import { fetchRestaurants } from '@store/slices/restaurant/restaurantSlice';
+import { ConfirmationDialogProps, FoodType, Role, SnackbarTheme } from '@types';
+
+import { appLayoutContent } from './appLayout.constants';
 
 export const AppLayout = () => {
     const [searchQuery, setSearchQuery] = useState('');
-    const [foodPreference, setFoodPreference] = useState<FoodType>('both');
-    const { user } = UseAppSelector((state) => state.auth);
-    const dispatch = UseAppDispatch();
+    const [foodPreference, setFoodPreference] = useState<FoodType>(
+        FoodType.BOTH,
+    );
+    const { user } = useAppSelector((state) => state.auth);
+    const dispatch = useAppDispatch();
     const hasPermission = usePermissions();
     const location = useLocation();
 
@@ -49,8 +54,8 @@ export const AppLayout = () => {
     const handleLogout = () => {
         setDialogData(() => ({
             open: true,
-            title: 'Logout',
-            message: 'Do you want to logout?',
+            title: appLayoutContent.LOGOUT_TITLE,
+            message: appLayoutContent.LOGOUT_MESSAGE,
             onConfirm: () => void dispatch(logout()),
         }));
     };
@@ -70,15 +75,15 @@ export const AppLayout = () => {
                 fetchRestaurants({
                     search: searchQuery,
                     type: foodPreference,
-                    ownerId: user?.role === 'owner' ? user?.id : '',
+                    ownerId: user?.role === Role.OWNER ? user?.id : '',
                 }),
             )
                 .unwrap()
                 .catch(() => {
                     dispatch(
                         showSnackbar({
-                            message: 'Error while fetching restaurants.',
-                            severity: 'error',
+                            message: appLayoutContent.FETCH_RESTAURANT_ERROR,
+                            severity: SnackbarTheme.ERROR,
                         }),
                     );
                 });
@@ -96,8 +101,8 @@ export const AppLayout = () => {
                 .catch(() => {
                     dispatch(
                         showSnackbar({
-                            message: 'Error while fetching menu items.',
-                            severity: 'error',
+                            message: appLayoutContent.FETCH_MENU_ERROR,
+                            severity: SnackbarTheme.ERROR,
                         }),
                     );
                 });
@@ -125,7 +130,7 @@ export const AppLayout = () => {
             <Header
                 searchBarProps={{
                     value: searchQuery,
-                    placeholder: `${currentLocation === '/discovery' ? 'Search Restaurants....' : 'Search menu items...'}`,
+                    placeholder: `${currentLocation === `${ROUTES.DISCOVERY}` ? appLayoutContent.RESTAURANT_SEARCH_PLACEHOLDER : appLayoutContent.MENU_SEARCH_PLACEHOLDER}`,
                     fullWidth: true,
                     onChange: handleSearch,
                 }}
@@ -142,7 +147,7 @@ export const AppLayout = () => {
                     badgeContent: 3,
                 }}
                 profileMenuProps={{
-                    name: user?.name ?? 'User',
+                    name: user?.name ?? appLayoutContent.USER,
                     onLogout: () => {
                         handleLogout();
                     },

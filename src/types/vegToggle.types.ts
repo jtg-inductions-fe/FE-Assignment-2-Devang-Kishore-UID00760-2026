@@ -1,4 +1,4 @@
-import type { ToggleButtonGroupProps } from '@mui/material';
+import { ToggleButtonGroupProps } from '@mui/material';
 
 import { FoodType } from '@types';
 export interface VegToggleProps

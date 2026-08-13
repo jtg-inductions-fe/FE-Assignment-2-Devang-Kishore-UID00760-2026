@@ -1,12 +1,13 @@
 import { Step, StepLabel, Stepper } from '@mui/material';
+
+import { CustomStepperProps } from './CustomStepper.types';
+
 export const CustomStepper = ({
     activeStep,
     steps,
-}: {
-    activeStep: number;
-    steps: string[];
-}) => (
-    <Stepper activeStep={activeStep} alternativeLabel>
+    ...stepperProps
+}: CustomStepperProps) => (
+    <Stepper activeStep={activeStep} alternativeLabel {...stepperProps}>
         {steps.map((step) => (
             <Step key={step}>
                 <StepLabel>{step}</StepLabel>

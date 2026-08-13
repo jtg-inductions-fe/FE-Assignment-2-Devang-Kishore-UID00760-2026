@@ -1,14 +1,8 @@
-import type { Snackbar } from '@types';
-
-export interface FeedBackState {
-    snackbarOpen: boolean;
-    snackbarMessage: string;
-    snackbarSeverity: Snackbar;
-}
+import { SnackbarTheme } from '@types';
 
 export interface FeedbackComponentType {
     snackbarOpen: boolean;
-    snackbarSeverity: Snackbar;
+    snackbarSeverity: SnackbarTheme;
     snackbarMessage: string;
     snackbarClose: () => void;
 }

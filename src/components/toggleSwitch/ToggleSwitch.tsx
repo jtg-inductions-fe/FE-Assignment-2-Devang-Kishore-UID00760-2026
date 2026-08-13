@@ -1,10 +1,8 @@
-import { ToggleSwitchProps } from '@types';
+import { FormControlLabel } from '@mui/material';
 
-import { StyledFormControlLabel, StyledSwitch } from './ToggleSwitch.styles';
+import { StyledSwitch } from './ToggleSwitch.styles';
+import { ToggleSwitchProps } from './toggleSwitch.types';
 
 export const ToggleSwitch = ({ label, ...props }: ToggleSwitchProps) => (
-    <StyledFormControlLabel
-        label={label}
-        control={<StyledSwitch {...props} />}
-    />
+    <FormControlLabel label={label} control={<StyledSwitch {...props} />} />
 );
