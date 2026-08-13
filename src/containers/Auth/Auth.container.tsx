@@ -42,7 +42,7 @@ export const Auth = ({ isSignUp = false }: { isSignUp: boolean }) => {
         email: '',
         password: '',
         confirmPassword: '',
-        role: Role.customer,
+        role: Role.CUSTOMER,
     };
     const loginDefaultValues = {
         email: '',
@@ -61,7 +61,7 @@ export const Auth = ({ isSignUp = false }: { isSignUp: boolean }) => {
             dispatch(
                 showSnackbar({
                     message: `${authContent.SIGNUP_SUCCESS}`,
-                    severity: SnackbarTheme.success,
+                    severity: SnackbarTheme.SUCCESS,
                 }),
             );
             await navigate(ROUTES.DISCOVERY, { replace: true });
@@ -69,7 +69,7 @@ export const Auth = ({ isSignUp = false }: { isSignUp: boolean }) => {
             dispatch(
                 showSnackbar({
                     message: `${error as string}`,
-                    severity: SnackbarTheme.error,
+                    severity: SnackbarTheme.ERROR,
                 }),
             );
         }
@@ -81,7 +81,7 @@ export const Auth = ({ isSignUp = false }: { isSignUp: boolean }) => {
             dispatch(
                 showSnackbar({
                     message: `${authContent.LOGIN_SUCCESS}`,
-                    severity: SnackbarTheme.success,
+                    severity: SnackbarTheme.SUCCESS,
                 }),
             );
             await navigate(ROUTES.DISCOVERY, { replace: true });
@@ -89,7 +89,7 @@ export const Auth = ({ isSignUp = false }: { isSignUp: boolean }) => {
             dispatch(
                 showSnackbar({
                     message: `${error as string}`,
-                    severity: SnackbarTheme.error,
+                    severity: SnackbarTheme.ERROR,
                 }),
             );
         }
@@ -213,7 +213,7 @@ export const Auth = ({ isSignUp = false }: { isSignUp: boolean }) => {
                                     }) => (
                                         <Checkbox
                                             {...field}
-                                            checked={value === Role.owner}
+                                            checked={value === Role.OWNER}
                                             onChange={(e) =>
                                                 onChange(
                                                     e.target.checked

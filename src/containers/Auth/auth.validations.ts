@@ -37,7 +37,7 @@ export const signupSchema = yup.object({
         .string()
         .required(authValidationFields.CONFIRM_PASSWORD_REQUIRED)
         .oneOf([yup.ref('password')], authValidationFields.PASSWORD_MISMATCH),
-    role: yup.mixed<Role>().oneOf([Role.customer, Role.owner]).required(),
+    role: yup.mixed<Role>().oneOf([Role.CUSTOMER, Role.OWNER]).required(),
 });
 
 export type LoginFormData = yup.InferType<typeof loginSchema>;
