@@ -1,24 +1,20 @@
-import { Controller, useFormContext } from 'react-hook-form';
+import { Controller, Path, useFormContext } from 'react-hook-form';
 
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { MenuItem, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 
 import { CustomSelect } from '@components/customSelect';
-import { ImagePreview } from '@components/imagePreview';
-import { TextField } from '@components/textField';
+import { FormImageField } from '@components/FormImageField';
+import { FormTextField } from '@components/FormTextField';
 import { TimeField } from '@components/timeField';
-import type { AddRestaurantFormData } from '@types';
-
-const DAYS = [
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-    'Sunday',
-];
+import { DAYS } from '@constants';
+import {
+    addressFields,
+    restaurantBasicInfoFields,
+} from '@containers/addRestaurant/addRestaurant.config';
+import { addRestaurantContent } from '@containers/addRestaurant/addRestaurant.constants';
+import { AddRestaurantFormData } from '@containers/addRestaurant/AddRestaurant.types';
 
 export const RestaurantInfoSection = () => {
     const {
@@ -30,157 +26,59 @@ export const RestaurantInfoSection = () => {
         <Grid container spacing={4}>
             <Grid size={12}>
                 <Typography variant="h5">
-                    Basic Restaurant Information
+                    {addRestaurantContent.RESTAURANT_INFO_HEADING}
                 </Typography>
             </Grid>
-            <Grid size={6}>
-                <Controller
-                    name="logo"
-                    control={control}
-                    render={({ field }) =>
-                        field.value ? (
-                            <ImagePreview
-                                src={field.value}
-                                alt="Restaurant logo"
-                                onRemove={() => field.onChange('')}
+            {restaurantBasicInfoFields.map((field) => {
+                const fieldName = field.name as Path<AddRestaurantFormData>;
+                return (
+                    <Grid key={field.name} size={field.grid}>
+                        {field.type === 'image' ? (
+                            <FormImageField
+                                name={fieldName}
+                                control={control}
+                                label={field.label}
+                                alt={addRestaurantContent.DISH_IMAGE_ALT}
                             />
                         ) : (
-                            <TextField
-                                {...field}
-                                label="Logo URL "
-                                fullWidth
-                                error={!!errors.logo}
-                                helperText={errors.logo?.message}
+                            <FormTextField
+                                name={fieldName}
+                                control={control}
+                                label={field.label}
+                                type={field.type}
+                                multiline={field.multiline}
+                                rows={field.rows}
+                                required
                             />
-                        )
-                    }
-                />
-            </Grid>
-            <Grid size={6}>
-                <Controller
-                    name="image"
-                    control={control}
-                    render={({ field }) =>
-                        field.value ? (
-                            <ImagePreview
-                                src={field.value}
-                                alt="Restaurant banner image"
-                                onRemove={() => field.onChange('')}
-                            />
-                        ) : (
-                            <TextField
-                                {...field}
-                                label="Image URL"
-                                fullWidth
-                                error={!!errors.image}
-                                helperText={errors.image?.message}
-                            />
-                        )
-                    }
-                />
-            </Grid>
-            <Grid size={6}>
-                <Controller
-                    name="fssaiCertificateId"
-                    control={control}
-                    render={({ field }) => (
-                        <TextField
-                            {...field}
-                            label="FSSAI Id"
-                            fullWidth
-                            error={!!errors.fssaiCertificateId}
-                            helperText={errors.fssaiCertificateId?.message}
-                            required
-                        />
-                    )}
-                />
-            </Grid>
-            <Grid size={6}>
-                <Controller
-                    name="gstNumber"
-                    control={control}
-                    render={({ field }) => (
-                        <TextField
-                            {...field}
-                            label="GST Number"
-                            fullWidth
-                            error={!!errors.gstNumber}
-                            helperText={errors.gstNumber?.message}
-                            required
-                        />
-                    )}
-                />
-            </Grid>
+                        )}
+                    </Grid>
+                );
+            })}
             <Grid container spacing={4}>
-                <Typography variant="h5">Address</Typography>
-                <Grid size={12}>
-                    <Controller
-                        name="address.street"
-                        control={control}
-                        render={({ field }) => (
-                            <TextField
-                                {...field}
-                                label="Street "
-                                fullWidth
-                                error={!!errors.address?.street}
-                                helperText={errors.address?.street?.message}
+                <Typography variant="h5">
+                    {addRestaurantContent.ADDRESS_HEADING}
+                </Typography>
+                {addressFields.map((field) => {
+                    const fieldName = field.name as Path<AddRestaurantFormData>;
+                    return (
+                        <Grid key={field.name} size={field.grid}>
+                            <FormTextField
+                                name={fieldName}
+                                control={control}
+                                label={field.label}
+                                type={field.type}
+                                multiline={field.multiline}
+                                rows={field.rows}
                                 required
                             />
-                        )}
-                    />
-                </Grid>
-
-                <Grid size={4}>
-                    <Controller
-                        name="address.city"
-                        control={control}
-                        render={({ field }) => (
-                            <TextField
-                                {...field}
-                                label="City"
-                                fullWidth
-                                error={!!errors.address?.city}
-                                helperText={errors.address?.city?.message}
-                                required
-                            />
-                        )}
-                    />
-                </Grid>
-                <Grid size={4}>
-                    <Controller
-                        name="address.state"
-                        control={control}
-                        render={({ field }) => (
-                            <TextField
-                                {...field}
-                                label="State"
-                                fullWidth
-                                error={!!errors.address?.state}
-                                helperText={errors.address?.state?.message}
-                                required
-                            />
-                        )}
-                    />
-                </Grid>
-                <Grid size={4}>
-                    <Controller
-                        name="address.pincode"
-                        control={control}
-                        render={({ field }) => (
-                            <TextField
-                                {...field}
-                                label="Pincode "
-                                fullWidth
-                                error={!!errors.address?.pincode}
-                                helperText={errors.address?.pincode?.message}
-                                required
-                            />
-                        )}
-                    />
-                </Grid>
+                        </Grid>
+                    );
+                })}
             </Grid>
             <Grid size={12}>
-                <Typography variant="h5">Restaurant Hours</Typography>
+                <Typography variant="h5">
+                    {addRestaurantContent.TIMINGS_HEADING}
+                </Typography>
             </Grid>
             <Grid container spacing={8} size={12}>
                 <Grid size={{ xs: 12, md: 4 }}>
@@ -190,7 +88,7 @@ export const RestaurantInfoSection = () => {
                         render={({ field }) => (
                             <Grid>
                                 <Typography variant="body1">
-                                    Opening Time *
+                                    {addRestaurantContent.OPENING_TIME_LABEL}
                                 </Typography>
                                 <TimeField
                                     {...field}
@@ -217,7 +115,7 @@ export const RestaurantInfoSection = () => {
                         render={({ field }) => (
                             <Grid>
                                 <Typography variant="body1">
-                                    Closing Time *
+                                    {addRestaurantContent.CLOSING_TIME_LABEL}
                                 </Typography>
                                 <TimeField
                                     {...field}
@@ -239,7 +137,7 @@ export const RestaurantInfoSection = () => {
                         <CustomSelect
                             {...field}
                             multiple
-                            label="Working Days *"
+                            label={`${addRestaurantContent.WORKING_DAYS_LABEL}`}
                             error={!!errors.workingDays}
                             helperText={errors.workingDays?.message}
                             MenuProps={{

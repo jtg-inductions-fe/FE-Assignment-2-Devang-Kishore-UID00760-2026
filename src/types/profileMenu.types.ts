@@ -1,4 +1,4 @@
-import type { AvatarProps } from '@mui/material';
+import { AvatarProps } from '@mui/material';
 
 export interface ProfileMenuProps extends AvatarProps {
     name: string;

@@ -4,8 +4,9 @@ import { Box, Chip, Stack, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 
 import { Button } from '@components/button';
-import { NumberStepper } from '@components/numberStepper/NumberStepper';
-import { MenuItemCardProps } from '@types';
+import { NumberStepper } from '@components/numberStepper';
+import { ACTION_BUTTONS } from '@constants';
+import { FoodType, MenuItemCardProps } from '@types';
 
 import {
     CardContainer,
@@ -15,7 +16,7 @@ import {
     MenuImage,
     MenuTypography,
     OutOfStockText,
-} from './MenuItemCard.styled';
+} from './MenuItemCard.styles';
 export const MenuItemCard = (props: MenuItemCardProps) => {
     const {
         menuItem,
@@ -56,7 +57,9 @@ export const MenuItemCard = (props: MenuItemCardProps) => {
                     <Chip
                         label={menuItem?.category}
                         color={
-                            menuItem?.category === 'veg' ? 'secondary' : 'error'
+                            menuItem?.category === FoodType.VEG
+                                ? 'secondary'
+                                : 'error'
                         }
                     />
                 </Header>
@@ -83,11 +86,11 @@ export const MenuItemCard = (props: MenuItemCardProps) => {
                             ) : (
                                 <Button
                                     variant="contained"
-                                    color="warning"
+                                    color="primary"
                                     onClick={onClick}
                                     disabled={isCartDisabled}
                                 >
-                                    Add
+                                    {ACTION_BUTTONS.ADD}
                                     <AddShoppingCartIcon />
                                 </Button>
                             ))}

@@ -6,10 +6,11 @@ import ReplayIcon from '@mui/icons-material/Replay';
 import { Chip, Divider, IconButton, Stack, Typography } from '@mui/material';
 
 import { Button } from '@components/button';
-import { CustomStepper } from '@components/strapper/CustomStepper';
-import { ORDER_STATUS_CONFIG as orderStatusList } from '@config/orderStatus.config';
-import { OrderCardProps } from '@types';
+import { ORDER_STATUS_CONFIG as orderStatusList } from '@components/orderCard/orderStatus.config';
+import { CustomStepper } from '@components/stepper';
+import { OrderCardProps, OrderStatus } from '@types';
 
+import { orderCardTextContent } from './orderCard.constants';
 import {
     ExpandedContent,
     OrderBody,
@@ -21,7 +22,7 @@ import {
     PriceBreakdown,
     RestaurantDetails,
     RestaurantImage,
-} from './OrderCard.styled';
+} from './OrderCard.styles';
 
 export const OrderCard = (props: OrderCardProps) => {
     const {
@@ -62,7 +63,10 @@ export const OrderCard = (props: OrderCardProps) => {
                 </Stack>
             </Stack>
             <OrderBody>
-                <Typography variant="body1">Order Id: #{order.id}</Typography>
+                <Typography variant="body1">
+                    {orderCardTextContent.ORDER_ID_LABEL}
+                    {order.id}
+                </Typography>
                 <OrderItem>
                     <Stack flexDirection="row" gap={1}>
                         <Typography variant="body2">
@@ -70,16 +74,16 @@ export const OrderCard = (props: OrderCardProps) => {
                         </Typography>
                         {remainingItems > 0 && (
                             <Typography variant="body2" color="text.secondary">
-                                + {remainingItems} more
+                                + {remainingItems} {orderCardTextContent.MORE}
                             </Typography>
                         )}
                     </Stack>
-                    {(order.status === 'delivered' ||
-                        order.status === 'rejected') && (
+                    {(order.status === OrderStatus.DELIVERED ||
+                        order.status === OrderStatus.REJECTED) && (
                         <Chip
                             label={order.status.toUpperCase()}
                             color={
-                                order.status === 'delivered'
+                                order.status === OrderStatus.DELIVERED
                                     ? 'success'
                                     : 'error'
                             }
@@ -88,25 +92,29 @@ export const OrderCard = (props: OrderCardProps) => {
                 </OrderItem>
                 <OrderMeta>
                     <Typography variant="body2" color="text.secondary">
-                        Order placed on{' '}
+                        {orderCardTextContent.ORDER_TIME_LABEL}{' '}
                         {new Date(order.createdAt).toLocaleString('en-In')}
                     </Typography>
                     <OrderBottom>
                         <Typography variant="body2">&#8377;{total}</Typography>
                         <Stack flexDirection="row" gap={2}>
-                            {order.status === 'delivered' && showReorder && (
-                                <Button
-                                    variant="contained"
-                                    onClick={() => onReorder(order)}
-                                    size="small"
-                                >
-                                    <ReplayIcon fontSize="small" /> Reorder
-                                </Button>
-                            )}
+                            {order.status === OrderStatus.DELIVERED &&
+                                showReorder && (
+                                    <Button
+                                        variant="contained"
+                                        onClick={() => onReorder(order)}
+                                        size="small"
+                                    >
+                                        <ReplayIcon fontSize="small" />{' '}
+                                        {orderCardTextContent.REORDER}
+                                    </Button>
+                                )}
                             <IconButton
                                 onClick={() => setExpended((prev) => !prev)}
                                 aria-label={
-                                    expanded ? 'Collapse order' : 'Expend order'
+                                    expanded
+                                        ? orderCardTextContent.CLOSED_ARIA_LABEL
+                                        : orderCardTextContent.OPENED_ARIA_LABEL
                                 }
                             >
                                 {expanded ? (
@@ -121,7 +129,9 @@ export const OrderCard = (props: OrderCardProps) => {
             </OrderBody>
             {expanded && (
                 <ExpandedContent>
-                    <Typography variant="h6">Order Summary</Typography>
+                    <Typography variant="h6">
+                        {orderCardTextContent.ORDER_SUMMARY_HEADING}
+                    </Typography>
                     <Stack spacing={1}>
                         {order.items.map((cartItem) => (
                             <Stack
@@ -141,22 +151,28 @@ export const OrderCard = (props: OrderCardProps) => {
                     </Stack>
                     <PriceBreakdown>
                         <Stack direction="row" justifyContent="space-between">
-                            <Typography variant="h6">Sub Total</Typography>
+                            <Typography variant="h6">
+                                {orderCardTextContent.SUBTOTAL_LABEL}
+                            </Typography>
                             <Typography>&#8377;{order.subtotal}</Typography>
                         </Stack>
                         <Stack direction="row" justifyContent="space-between">
-                            <Typography variant="h6">Booking Fee</Typography>
+                            <Typography variant="h6">
+                                {orderCardTextContent.BOOKING_FEE_LABEL}
+                            </Typography>
                             <Typography>&#8377;{bookingFee}</Typography>
                         </Stack>
                         <Stack direction="row" justifyContent="space-between">
-                            <Typography variant="h6">Total</Typography>
+                            <Typography variant="h6">
+                                {orderCardTextContent.TOTAL_LABEL}
+                            </Typography>
                             <Typography>&#8377;{total}</Typography>
                         </Stack>
                     </PriceBreakdown>
                     {canEditStatus &&
                         !(
-                            order.status === 'delivered' ||
-                            order.status === 'rejected'
+                            order.status === OrderStatus.DELIVERED ||
+                            order.status === OrderStatus.REJECTED
                         ) && (
                             <Stack
                                 flexDirection="row"
@@ -165,9 +181,10 @@ export const OrderCard = (props: OrderCardProps) => {
                                 {orderStatusList[order.status].nextStatuses.map(
                                     (action) => {
                                         const buttonColor =
-                                            action === 'accepted'
+                                            action === OrderStatus.ACCEPTED
                                                 ? 'success'
-                                                : action === 'rejected'
+                                                : action ===
+                                                    OrderStatus.REJECTED
                                                   ? 'error'
                                                   : 'primary';
                                         return (
@@ -186,12 +203,14 @@ export const OrderCard = (props: OrderCardProps) => {
                                 )}
                             </Stack>
                         )}
-                    {order.status === 'rejected' && (
+                    {order.status === OrderStatus.REJECTED && (
                         <>
                             <Divider />
                             <Stack flexDirection="row" gap={2}>
                                 <Typography variant="body1">
-                                    Reason For Rejection:
+                                    {
+                                        orderCardTextContent.REJECTION_REASON_LABEL
+                                    }
                                 </Typography>
                                 <Typography
                                     variant="body1"

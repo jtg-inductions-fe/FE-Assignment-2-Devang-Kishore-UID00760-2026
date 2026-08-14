@@ -1,7 +1,7 @@
-import { CartContent } from '@components/cartContent/CartContent';
+import { CartContent } from '@components/cartContent';
 import { CartDialogProps } from '@types';
 
-import { StyledCartDialog } from './CartDialog.styled';
+import { StyledCartDialog } from './CartDialog.styles';
 
 export const CartDialog = (props: CartDialogProps) => {
     const {

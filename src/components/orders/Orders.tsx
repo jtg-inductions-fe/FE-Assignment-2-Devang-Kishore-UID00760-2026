@@ -1,7 +1,7 @@
 import { OrderCard } from '@components/orderCard';
 import { OrdersProps } from '@types';
 
-import { OrderContainer } from './Orders.styled';
+import { OrderContainer } from './Orders.styles';
 
 export const Orders = (props: OrdersProps) => {
     const {

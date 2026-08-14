@@ -1,11 +1,11 @@
-import { MenuItemCard } from '@components/menuItemCard/MenuItemCard';
+import { MenuItemCard } from '@components/menuItemCard';
 import { permissions } from '@config/permissions.config';
-import { usePermissions } from '@hooks/permissionsHook';
-import { UseAppDispatch, UseAppSelector } from '@hooks/storeHooks';
-import { updateQuantity } from '@store/slices/cartSlice';
-import { showSnackbar } from '@store/slices/feedBackSlice';
-import { updateMenuEntry } from '@store/slices/menuSlice';
-import { MenuItemsContainer } from '@types';
+import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
+import { usePermissions } from '@hooks/usePermissions';
+import { updateQuantity } from '@store/slices/cart/cartSlice';
+import { showSnackbar } from '@store/slices/feedback/feedBackSlice';
+import { updateMenuEntry } from '@store/slices/menu/menuSlice';
+import { MenuItemsContainer, SnackbarTheme } from '@types';
 
 export const MenuItemDisplayCard = (props: MenuItemsContainer) => {
     const {
@@ -19,12 +19,12 @@ export const MenuItemDisplayCard = (props: MenuItemsContainer) => {
         onDelete,
     } = props;
     const stock = menuItem.stock;
-    const dispatch = UseAppDispatch();
+    const dispatch = useAppDispatch();
     const hasPermission = usePermissions();
-    const selectedRestaurant = UseAppSelector(
+    const selectedRestaurant = useAppSelector(
         (state) => state.restaurants.selectedRestaurant,
     );
-    const cart = UseAppSelector((state) => state.cart);
+    const cart = useAppSelector((state) => state.cart);
     const quantity = cart.items.find(
         (cartItem) => cartItem.item.id === menuItem.id,
     )?.quantity;
@@ -37,7 +37,7 @@ export const MenuItemDisplayCard = (props: MenuItemsContainer) => {
             dispatch(
                 showSnackbar({
                     message: `${error as string}`,
-                    severity: 'error',
+                    severity: SnackbarTheme.ERROR,
                 }),
             );
         }
@@ -47,8 +47,19 @@ export const MenuItemDisplayCard = (props: MenuItemsContainer) => {
         const newValue = Math.max(0, stock - 1);
         await stockChange(newValue);
     };
-    const handleItemChange = (itemId: string, ItemQuantity: number) => {
-        dispatch(updateQuantity({ itemId, quantity: ItemQuantity }));
+    const handleItemChange = async (itemId: string, ItemQuantity: number) => {
+        try {
+            await dispatch(
+                updateQuantity({ itemId, quantity: ItemQuantity }),
+            ).unwrap();
+        } catch (error) {
+            dispatch(
+                showSnackbar({
+                    message: `${error as string}`,
+                    severity: SnackbarTheme.ERROR,
+                }),
+            );
+        }
     };
 
     const handleDecrease = (itemId: string) => {
@@ -56,7 +67,7 @@ export const MenuItemDisplayCard = (props: MenuItemsContainer) => {
         if (!cartItem) {
             return;
         }
-        handleItemChange(itemId, cartItem.quantity - 1);
+        void handleItemChange(itemId, cartItem.quantity - 1);
     };
 
     return (
@@ -69,7 +80,9 @@ export const MenuItemDisplayCard = (props: MenuItemsContainer) => {
             onDelete={onDelete}
             onClick={onClick}
             stock={stock}
-            onChange={handleItemChange}
+            onChange={(itemId: string, ItemQuantity: number) =>
+                void handleItemChange(itemId, ItemQuantity)
+            }
             onDecrease={handleDecrease}
             quantity={quantity ?? 0}
             presentInCart={presentInCart}

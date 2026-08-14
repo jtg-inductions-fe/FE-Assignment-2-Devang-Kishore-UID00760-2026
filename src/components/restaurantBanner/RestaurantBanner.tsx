@@ -4,22 +4,25 @@ import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import { Button, Chip, Stack, Typography } from '@mui/material';
 
-import { EllipsisTypography } from '@components/restaurantCard/RestaurantCard.styled';
-import { RestaurantBannerProps } from '@types';
+import { ACTION_BUTTONS } from '@constants';
+import { FoodType } from '@types';
 
+import { restaurantBannerContent } from './restaurantBanner.constants';
 import {
     BackButton,
     BannerContainer,
     BannerContent,
     BannerImage,
     CuisineWrapper,
+    EllipsisTypography,
     InfoRow,
     RestaurantActions,
     RestaurantInfo,
     RestaurantLogo,
     TimeInput,
     TopRow,
-} from './RestaurantBanner.styled';
+} from './RestaurantBanner.styles';
+import { RestaurantBannerProps } from './restaurantBanner.types';
 
 export const RestaurantBanner = (props: RestaurantBannerProps) => {
     const {
@@ -86,12 +89,14 @@ export const RestaurantBanner = (props: RestaurantBannerProps) => {
                     <Chip
                         label={restaurant?.category}
                         color={
-                            restaurant?.category === 'veg'
+                            restaurant?.category === FoodType.VEG
                                 ? 'secondary'
                                 : 'error'
                         }
                     />
-                    <Typography variant="h5">Restaurant Timings</Typography>
+                    <Typography variant="h5">
+                        {restaurantBannerContent.TIMINGS_LABEL}
+                    </Typography>
                     <InfoRow>
                         {isEditingTime ? (
                             <Stack>
@@ -120,10 +125,10 @@ export const RestaurantBanner = (props: RestaurantBannerProps) => {
                                         onClick={() => setIsEditingTime(false)}
                                         color="error"
                                     >
-                                        Cancel
+                                        {ACTION_BUTTONS.CANCEL}
                                     </Button>
                                     <Button onClick={handleSaveTimings}>
-                                        Save
+                                        {ACTION_BUTTONS.SAVE}
                                     </Button>
                                 </Stack>
                             </Stack>
@@ -139,7 +144,7 @@ export const RestaurantBanner = (props: RestaurantBannerProps) => {
                                         onClick={() => setIsEditingTime(true)}
                                         variant="outlined"
                                     >
-                                        Edit
+                                        {ACTION_BUTTONS.EDIT}
                                     </Button>
                                 )}
                             </Stack>

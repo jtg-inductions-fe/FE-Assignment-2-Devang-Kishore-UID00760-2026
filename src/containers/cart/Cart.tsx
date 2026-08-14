@@ -4,32 +4,38 @@ import { useNavigate } from 'react-router-dom';
 
 import { useMediaQuery, useTheme } from '@mui/material';
 
-import { CartDialog } from '@components/cartDialog/CartDialog';
-import { CartDrawer } from '@components/cartDrawer/CartDrawer';
-import { ConfirmDialog } from '@components/confirmationDialog/ConfirmationDialog';
-import { UseAppDispatch, UseAppSelector } from '@hooks/storeHooks';
+import { CartDialog } from '@components/cartDialog';
+import { CartDrawer } from '@components/cartDrawer';
+import { ConfirmDialog } from '@components/confirmationDialog';
+import { ROUTES } from '@constants';
+import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
 import {
     clearCart,
     removeFromCart,
     updateQuantity,
-} from '@store/slices/cartSlice';
-import { showSnackbar } from '@store/slices/feedBackSlice';
-import { createOrder } from '@store/slices/ordersSlice';
-import { fetchRestaurantByID } from '@store/slices/restaurantSlice';
-import { CartContainerProps, ConfirmationDialogProps, OrderData } from '@types';
+} from '@store/slices/cart/cartSlice';
+import { showSnackbar } from '@store/slices/feedback/feedBackSlice';
+import { createOrder } from '@store/slices/order/ordersSlice';
+import { fetchRestaurantByID } from '@store/slices/restaurant/restaurantSlice';
+import {
+    CartContainerProps,
+    ConfirmationDialogProps,
+    OrderData,
+    SnackbarTheme,
+} from '@types';
 
-import { ROUTES } from '../../constants';
+import { cartContent } from './cart.constants';
 
 export const CartContainer = (props: CartContainerProps) => {
     const { open, onClose } = props;
-    const dispatch = UseAppDispatch();
+    const dispatch = useAppDispatch();
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
-    const cart = UseAppSelector((state) => state.cart);
-    const currentRestaurant = UseAppSelector(
+    const cart = useAppSelector((state) => state.cart);
+    const currentRestaurant = useAppSelector(
         (state) => state.restaurants.selectedRestaurant,
     );
-    const userId = UseAppSelector((state) => state.auth.user?.id);
+    const userId = useAppSelector((state) => state.auth.user?.id);
     const subtotal = cart.items.reduce(
         (sum, cartItem) => sum + cartItem.item.price * cartItem.quantity,
         0,
@@ -46,8 +52,19 @@ export const CartContainer = (props: CartContainerProps) => {
         onConfirm: () => {},
     });
 
-    const handleChange = (itemId: string, quantity: number) => {
-        dispatch(updateQuantity({ itemId, quantity }));
+    const handleChange = async (itemId: string, quantity: number) => {
+        try {
+            await dispatch(
+                updateQuantity({ itemId, quantity: quantity }),
+            ).unwrap();
+        } catch (error) {
+            dispatch(
+                showSnackbar({
+                    message: `${error as string}`,
+                    severity: SnackbarTheme.ERROR,
+                }),
+            );
+        }
     };
 
     const handleDecrease = (itemId: string) => {
@@ -55,20 +72,29 @@ export const CartContainer = (props: CartContainerProps) => {
         if (!cartItem) {
             return;
         }
-        handleChange(itemId, cartItem.quantity - 1);
+        void handleChange(itemId, cartItem.quantity - 1);
     };
 
     const handleRemove = (itemId: string) => {
-        const confirmDelete = () => {
+        const confirmDelete = async () => {
             setDialogData((state) => ({ ...state, open: !state.open }));
-            dispatch(removeFromCart(itemId));
+            try {
+                await dispatch(removeFromCart(itemId)).unwrap();
+            } catch (error) {
+                dispatch(
+                    showSnackbar({
+                        message: `${error as string}`,
+                        severity: SnackbarTheme.ERROR,
+                    }),
+                );
+            }
         };
 
         setDialogData((state) => ({
             open: !state.open,
-            title: 'Delete Items',
-            message: 'DO you really want to delete item ?',
-            onConfirm: confirmDelete,
+            title: `${cartContent.DELETE_ALERT_TITLE}`,
+            message: `${cartContent.DELETE_ALERT_MESSAGE}`,
+            onConfirm: () => void confirmDelete(),
         }));
     };
     const handleCancel = () => {
@@ -89,8 +115,8 @@ export const CartContainer = (props: CartContainerProps) => {
         } catch {
             dispatch(
                 showSnackbar({
-                    message: 'Failed to order',
-                    severity: 'error',
+                    message: `${cartContent.FAILED_ORDER_MESSAGE}`,
+                    severity: SnackbarTheme.ERROR,
                 }),
             );
         }
@@ -106,21 +132,21 @@ export const CartContainer = (props: CartContainerProps) => {
             await dispatch(createOrder(orderData))
                 .unwrap()
                 .then(() => {
-                    dispatch(clearCart());
+                    void dispatch(clearCart());
                 });
             onClose();
             void navigate(ROUTES.ORDERS);
             dispatch(
                 showSnackbar({
-                    message: 'Order placed successfully.',
-                    severity: 'success',
+                    message: `${cartContent.SUCCESS_ORDER_MESSAGE}`,
+                    severity: SnackbarTheme.SUCCESS,
                 }),
             );
         } catch {
             dispatch(
                 showSnackbar({
-                    message: 'Failed to order',
-                    severity: 'error',
+                    message: `${cartContent.FAILED_ORDER_MESSAGE}`,
+                    severity: SnackbarTheme.ERROR,
                 }),
             );
         }

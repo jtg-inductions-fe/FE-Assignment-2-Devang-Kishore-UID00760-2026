@@ -1,30 +1,29 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 
+import { AuthRoute } from '@components/routeGuards/AuthRoute';
+import { PrivateRoute } from '@components/routeGuards/PrivateRoute';
+import { ProtectedRoutes } from '@components/routeGuards/ProtectedRoutes';
+import { ROUTES } from '@constants';
 import { AddRestaurant } from '@containers/addRestaurant/AddRestaurant';
-import { Login } from '@containers/auth/Login';
-import { Signup } from '@containers/auth/Signup';
-import { Discovery } from '@containers/discovery/Discovery';
-import { ErrorPage } from '@containers/exceptions/ErrorPage';
-import { NotFoundPage } from '@containers/exceptions/NotFoundPage';
-import { OrdersContainer } from '@containers/orders/OrdersContainer';
-import { RestaurantMenu } from '@containers/restaurantMenu/RestaurantMenu';
 import { AppLayout } from '@layouts/AppLayout';
-import { AuthLayout } from '@layouts/AuthLayout';
+import { LoginPage } from '@pages/auth/LoginPage';
+import { SignupPage } from '@pages/auth/SignupPage';
+import { DiscoveryPage } from '@pages/discovery/Discovery';
+import { ErrorPage } from '@pages/fallback/ErrorPage';
+import { NotFoundPage } from '@pages/fallback/NotFoundPage';
+import { OrdersPage } from '@pages/orders/Orders';
+import { RestaurantMenuPage } from '@pages/restaurantMenu/RestaurantMenu';
 
-import { AuthRoute } from './AuthRoutes';
-import { PrivateRoute } from './PrivateRoutes';
-import { ProtectedRoutes } from './ProtectedRoutes';
-import { ROUTES } from '../constants';
 export const router = createBrowserRouter([
     {
         path: ROUTES.ROOT,
+        element: <AppLayout />,
         errorElement: <ErrorPage />,
         children: [
             {
                 element: <PrivateRoute />,
                 children: [
                     {
-                        element: <AppLayout />,
                         children: [
                             {
                                 index: true,
@@ -34,15 +33,15 @@ export const router = createBrowserRouter([
                             },
                             {
                                 path: ROUTES.DISCOVERY,
-                                element: <Discovery />,
+                                element: <DiscoveryPage />,
                             },
                             {
                                 path: ROUTES.RESTAURANT,
-                                element: <RestaurantMenu />,
+                                element: <RestaurantMenuPage />,
                             },
                             {
                                 path: ROUTES.ORDERS,
-                                element: <OrdersContainer />,
+                                element: <OrdersPage />,
                             },
                             {
                                 element: (
@@ -68,21 +67,19 @@ export const router = createBrowserRouter([
 
                 children: [
                     {
-                        element: <AuthLayout />,
                         children: [
                             {
                                 path: ROUTES.LOGIN,
-                                element: <Login />,
+                                element: <LoginPage />,
                             },
                             {
                                 path: ROUTES.SIGNUP,
-                                element: <Signup />,
+                                element: <SignupPage />,
                             },
                         ],
                     },
                 ],
             },
-
             { path: ROUTES.ALL, element: <NotFoundPage /> },
         ],
     },

@@ -8,7 +8,7 @@ import {
     DialogContainer,
     OrderDialogAction,
     OrderDialogContent,
-} from './RejectedOrderDialog.styled';
+} from './RejectedOrderDialog.styles';
 
 export const RejectedOrderDialog = (props: RejectedOrderDialogProps) => {
     const { open, onClose, onConfirm, onReasonChange, reason } = props;

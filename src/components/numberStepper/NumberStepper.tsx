@@ -2,9 +2,8 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { IconButton, Stack, Typography } from '@mui/material';
 
-import { NumberStepperProps } from '@types';
-
-import { StepperInput } from './NumberStepper.styled';
+import { StepperInput } from './NumberStepper.styles';
+import { NumberStepperProps } from './numberStepper.types';
 
 export const NumberStepper = (props: NumberStepperProps) => {
     const { label, value, disabled, onChange, onBlur, onDecrement } = props;

@@ -7,32 +7,37 @@ import { ShoppingCartOutlined } from '@mui/icons-material';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import { Box } from '@mui/material';
 
-import { ConfirmDialog } from '@components/confirmationDialog/ConfirmationDialog';
-import { Header } from '@components/header/Header';
+import { ConfirmDialog } from '@components/confirmationDialog';
+import { Header } from '@components/header';
 import { permissions } from '@config/permissions.config';
+import { ROUTES } from '@constants';
 import { CartContainer } from '@containers/cart/Cart';
-import { usePermissions } from '@hooks/permissionsHook';
-import { UseAppDispatch, UseAppSelector } from '@hooks/storeHooks';
-import { logout } from '@store/slices/authSlice';
-import { showSnackbar } from '@store/slices/feedBackSlice';
-import { fetchMenu } from '@store/slices/menuSlice';
-import { fetchOrders } from '@store/slices/ordersSlice';
-import { fetchRestaurants } from '@store/slices/restaurantSlice';
-import { ConfirmationDialogProps, FoodType } from '@types';
+import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
+import { usePermissions } from '@hooks/usePermissions';
+import { logout } from '@store/slices/auth/authSlice';
+import { showSnackbar } from '@store/slices/feedback/feedBackSlice';
+import { fetchMenu } from '@store/slices/menu/menuSlice';
+import { fetchOrders } from '@store/slices/order/ordersSlice';
+import { fetchRestaurants } from '@store/slices/restaurant/restaurantSlice';
+import { ConfirmationDialogProps, FoodType, Role, SnackbarTheme } from '@types';
 
-import { ROUTES } from '../constants';
+import { appLayoutContent } from './appLayout.constants';
 
 export const AppLayout = () => {
     const [searchQuery, setSearchQuery] = useState('');
-    const [foodPreference, setFoodPreference] = useState<FoodType>('both');
-    const { user } = UseAppSelector((state) => state.auth);
-    const dispatch = UseAppDispatch();
+    const [foodPreference, setFoodPreference] = useState<FoodType>(
+        FoodType.BOTH,
+    );
+    const { user } = useAppSelector((state) => state.auth);
+    const dispatch = useAppDispatch();
     const hasPermission = usePermissions();
     const location = useLocation();
     const navigate = useNavigate();
-    const orders = UseAppSelector((state) => state.orders.items);
+    const orders = useAppSelector((state) => state.orders.items);
 
     const currentLocation = location.pathname;
+    const SHOW_HEADER =
+        currentLocation !== ROUTES.LOGIN && currentLocation !== ROUTES.SIGNUP;
     const currentRoute = currentLocation.split('/')[1];
     const [dialogData, setDialogData] = useState<
         Omit<ConfirmationDialogProps, 'onCancel' | 'confirmLabel'>
@@ -45,7 +50,7 @@ export const AppLayout = () => {
 
     const [cartOpen, setCartOpen] = useState(false);
     const [searchParams, setSearchparams] = useSearchParams();
-    const cartItems = UseAppSelector((state) => state.cart.items);
+    const cartItems = useAppSelector((state) => state.cart.items);
     const cartItemsCount = cartItems.length;
     const ordersCount = orders.length;
     const handleCancel = () => {
@@ -58,11 +63,20 @@ export const AppLayout = () => {
     };
 
     const handleLogout = () => {
+        const onConfirm = () => {
+            dispatch(logout());
+            setDialogData(() => ({
+                open: false,
+                title: '',
+                message: '',
+                onConfirm: () => {},
+            }));
+        };
         setDialogData(() => ({
             open: true,
-            title: 'Logout',
-            message: 'Do you want to logout?',
-            onConfirm: () => void dispatch(logout()),
+            title: appLayoutContent.LOGOUT_TITLE,
+            message: appLayoutContent.LOGOUT_MESSAGE,
+            onConfirm: onConfirm,
         }));
     };
 
@@ -78,7 +92,7 @@ export const AppLayout = () => {
         setFoodPreference(value);
         const search = searchParams.get('search');
         setSearchparams({
-            ...(value !== 'both' && { type: value }),
+            ...(value !== FoodType.BOTH && { type: value }),
             ...(search && { search }),
         });
     };
@@ -126,15 +140,15 @@ export const AppLayout = () => {
                     search:
                         searchQuery || searchParams.get('search') || undefined,
                     type: foodPreference || searchParams.get('type'),
-                    ownerId: user?.role === 'owner' ? user?.id : '',
+                    ownerId: user?.role === Role.OWNER ? user?.id : '',
                 }),
             )
                 .unwrap()
                 .catch(() => {
                     dispatch(
                         showSnackbar({
-                            message: 'Error while fetching restaurants.',
-                            severity: 'error',
+                            message: appLayoutContent.FETCH_RESTAURANT_ERROR,
+                            severity: SnackbarTheme.ERROR,
                         }),
                     );
                 });
@@ -158,8 +172,8 @@ export const AppLayout = () => {
                 .catch(() => {
                     dispatch(
                         showSnackbar({
-                            message: 'Error while fetching menu items.',
-                            severity: 'error',
+                            message: appLayoutContent.FETCH_MENU_ERROR,
+                            severity: SnackbarTheme.ERROR,
                         }),
                     );
                 });
@@ -185,36 +199,38 @@ export const AppLayout = () => {
 
     return (
         <main>
-            <Header
-                searchBarProps={{
-                    value: searchQuery,
-                    placeholder: `${currentLocation === '/discovery' ? 'Search Restaurants....' : 'Search menu items...'}`,
-                    fullWidth: true,
-                    onKeyDown: handleKeyDown,
-                    onChange: handleSearch,
-                }}
-                vegToggleProps={{
-                    value: foodPreference,
-                    onChange: handleFoodType,
-                }}
-                cartButtonProps={{
-                    icon: <ShoppingCartOutlined />,
-                    badgeContent: cartItemsCount,
-                    onClick: handleCartOpen,
-                }}
-                ordersButtonProps={{
-                    icon: <ShoppingBagIcon />,
-                    badgeContent: ordersCount,
-                    onClick: handleNavigateOrder,
-                }}
-                profileMenuProps={{
-                    name: user?.name ?? 'User',
-                    onLogout: () => {
-                        handleLogout();
-                    },
-                }}
-                showCart={hasPermission(permissions.SHOW_CART)}
-            />
+            {SHOW_HEADER && (
+                <Header
+                    searchBarProps={{
+                        value: searchQuery,
+                        placeholder: `${currentLocation === `${ROUTES.DISCOVERY}` ? appLayoutContent.RESTAURANT_SEARCH_PLACEHOLDER : appLayoutContent.MENU_SEARCH_PLACEHOLDER}`,
+                        fullWidth: true,
+                        onChange: handleSearch,
+                        onKeyDown: handleKeyDown,
+                    }}
+                    vegToggleProps={{
+                        value: foodPreference,
+                        onChange: handleFoodType,
+                    }}
+                    cartButtonProps={{
+                        icon: <ShoppingCartOutlined />,
+                        badgeContent: cartItemsCount,
+                        onClick: handleCartOpen,
+                    }}
+                    ordersButtonProps={{
+                        icon: <ShoppingBagIcon />,
+                        badgeContent: ordersCount,
+                        onClick: handleNavigateOrder,
+                    }}
+                    profileMenuProps={{
+                        name: user?.name ?? appLayoutContent.USER,
+                        onLogout: () => {
+                            handleLogout();
+                        },
+                    }}
+                    showCart={hasPermission(permissions.SHOW_CART)}
+                />
+            )}
             <Box maxWidth={2000} margin="auto">
                 <Outlet />
             </Box>

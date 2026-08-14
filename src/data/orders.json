@@ -1,27 +1,27 @@
 [
     {
-        "id": "O1786435793877",
-        "customerId": "U3",
-        "restaurantId": "R1",
-        "restaurantName": "spice Route kitchen",
+        "id": "#O2",
+        "customerId": "U2",
+        "restaurantId": "R2",
+        "restaurantName": "Lajawaab",
         "items": [
             {
                 "item": {
-                    "restaurantID": "R1",
-                    "name": "Veg Hakka Noodles",
-                    "description": "Noodles tossed with fresh vegetables and good spices",
-                    "price": 240,
+                    "id": "M3",
+                    "restaurantID": "R2",
+                    "name": "Margherita Pizza",
                     "category": "veg",
-                    "image": "https://www.indianhealthyrecipes.com/wp-content/uploads/2021/07/hakka-noodles-recipe.jpg",
-                    "cuisine": "Chinese",
-                    "stock": 20,
-                    "id": "M1"
+                    "price": 320,
+                    "description": "Classic pizza",
+                    "image": "https://www.savoringitaly.com/wp-content/uploads/2024/09/sourdough-pizza-5.jpg",
+                    "stock": 3,
+                    "cuisine": "Italian"
                 },
-                "quantity": 2
+                "quantity": 1
             }
         ],
         "status": "pending",
-        "subtotal": 480,
-        "createdAt": "2026-08-11T08:09:53.877Z"
+        "subtotal": 320,
+        "createdAt": "2026-08-13T17:31:57.931Z"
     }
 ]

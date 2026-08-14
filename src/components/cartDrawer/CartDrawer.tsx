@@ -1,7 +1,7 @@
-import { CartContent } from '@components/cartContent/CartContent';
+import { CartContent } from '@components/cartContent';
 import { CartDrawerProps } from '@types';
 
-import { StyledCartDrawer } from './CartDrawer.styled';
+import { StyledCartDrawer } from './CartDrawer.styles';
 
 export const CartDrawer = (props: CartDrawerProps) => {
     const {

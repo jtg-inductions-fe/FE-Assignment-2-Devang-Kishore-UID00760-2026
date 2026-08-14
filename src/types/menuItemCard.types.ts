@@ -2,14 +2,21 @@ import { Control, FieldErrors, FieldValues } from 'react-hook-form';
 
 import { Cuisine, FoodType, MenuItem } from '@types';
 
-import { MenuItemFormData } from './addRestaurant.types';
+export interface MenuItemFormData {
+    name: string;
+    description?: string;
+    cuisine: Cuisine;
+    category: FoodType;
+    price: number;
+    stock: number;
+    image?: string;
+}
 
 export interface MenuFormContainer {
     open: boolean;
     control: Control<MenuItemFormData>;
     errors: FieldErrors<MenuItemFormData>;
-    cuisines: Cuisine[];
-    foodTypes: FoodType[];
+    isEditMode: boolean;
     handleClose: () => void;
     handleSubmitForm: () => void;
 }
@@ -38,10 +45,7 @@ export interface RestaurantMenuItemProps<T extends FieldValues> {
     index?: number;
     showDelete: boolean;
     control: Control<T>;
-    cuisines: Cuisine[];
-    foodTypes: FoodType[];
     onDelete?: () => void;
-    errors: FieldErrors<T>;
 }
 
 export interface MenuItemsContainer {

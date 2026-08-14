@@ -2,7 +2,7 @@
     "compilerOptions": {
         "paths": {
             "@assets/*": ["./src/assets/*"],
-            "@constant": ["./src/constant/index"],
+            "@constants": ["./src/constants/index"],
             "@components/*": ["./src/components/*"],
             "@containers/*": ["./src/containers/*"],
             "@theme": ["./src/theme/index"],
@@ -13,7 +13,8 @@
             "@hooks/*": ["./src/hooks/*"],
             "@layouts/*": ["./src/layouts/*"],
             "@data/*": ["./src/data/*"],
-            "@config/*": ["./src/config/*"]
+            "@config/*": ["./src/config/*"],
+            "@pages/*": ["./src/pages/*"]
         }
     }
 }

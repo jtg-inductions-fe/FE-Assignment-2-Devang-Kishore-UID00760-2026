@@ -1,7 +1,7 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import { IconButton, Typography } from '@mui/material';
 
-import { NumberStepper } from '@components/numberStepper/NumberStepper';
+import { NumberStepper } from '@components/numberStepper';
 import { CartItemProps } from '@types';
 
 import {
@@ -11,7 +11,7 @@ import {
     CartItemImage,
     CartItemName,
     QuantityContainer,
-} from './CartItem.styled';
+} from './CartItem.styles';
 export const CartItem = (props: CartItemProps) => {
     const { item, onChange, onDecrease, onRemove } = props;
     const { item: menuItem, quantity } = item;

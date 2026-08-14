@@ -1,35 +1,40 @@
 import ordersMock from '@data/orders.json';
-import type { CartItem, Order, OrderStatus, Role } from '@types';
+import { Order, OrderData, OrderStatus, Role } from '@types';
 import { readStorage, writeStorage } from '@utils/storage';
 
 import { getRestaurant, getRestaurants } from './restaurant.service';
 
-interface OrderData {
-    customerId: string;
-    restaurantId: string;
-    restaurantName: string;
-    items: CartItem[];
-}
-
 const ORDERS_KEY = 'orders';
 
+/**
+ * Fetches data of orders from local storage.
+ * @returns Data of orders fetched from local storage.
+ */
 const getStoredOrders = (): Order[] =>
     readStorage<Order[]>(ORDERS_KEY, ordersMock as Order[]);
 
+/**
+ * stores data in local storage.
+ * @param orders Data of order to be stored in local storage.
+ */
 const saveOrders = (orders: Order[]): void => {
     writeStorage(ORDERS_KEY, orders);
 };
 
+/**
+ * Fetches orders form local storage.
+ * @returns Data of orders.
+ */
 export const getOrders = async (
     userId: string,
     role: Role,
 ): Promise<Order[]> => {
     const orders = getStoredOrders();
-    if (role === 'customer') {
+    if (role === Role.CUSTOMER) {
         return orders.filter((order) => order.customerId === userId);
     }
 
-    if (role === 'owner') {
+    if (role === Role.OWNER) {
         const restaurants = await getRestaurants();
         const ownerRestaurantIds = restaurants
             .filter((restaurant) => restaurant.ownerId === userId)
@@ -41,6 +46,11 @@ export const getOrders = async (
     return [];
 };
 
+/**
+ * saves the order data in local storage.
+ * @param payload Data of order.
+ * @returns Data of order stored in local storage.
+ */
 export const placeOrder = async (payload: OrderData): Promise<Order> => {
     const subtotal = payload.items.reduce(
         (sum, cartItem) => sum + cartItem.item.price * cartItem.quantity,
@@ -52,12 +62,12 @@ export const placeOrder = async (payload: OrderData): Promise<Order> => {
     const restaurantName = restaurant?.name;
 
     const order: Order = {
-        id: `O${Date.now()}`,
+        id: `#O${Date.now()}`,
         customerId: payload.customerId,
         restaurantId: payload.restaurantId,
         restaurantName: restaurantName ?? payload.restaurantName,
         items: payload.items,
-        status: 'pending',
+        status: OrderStatus.PENDING,
         subtotal,
         reason: '',
         createdAt: new Date().toISOString(),
@@ -67,6 +77,12 @@ export const placeOrder = async (payload: OrderData): Promise<Order> => {
     return order;
 };
 
+/**
+ * updated the state of order.
+ * @param id Id of order to be updated.
+ * @param status Status of order to be set.
+ * @returns Data of order after update.
+ */
 export const updateOrder = (
     id: string,
     status: OrderStatus,
