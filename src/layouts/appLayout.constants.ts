@@ -6,4 +6,6 @@ export const appLayoutContent = {
     LOGOUT_MESSAGE: 'Do you want to logout?',
     FETCH_RESTAURANT_ERROR: 'Error while fetching restaurants.',
     FETCH_MENU_ERROR: 'Error while fetching menu items.',
+    CART_BUTTON: 'Cart',
+    ORDERS_BUTTON: 'Order',
 };

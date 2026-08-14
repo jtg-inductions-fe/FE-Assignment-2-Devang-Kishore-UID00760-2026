@@ -39,10 +39,17 @@ export const RestaurantBanner = (props: RestaurantBannerProps) => {
     } = props;
     return (
         <BannerContainer>
-            <BannerImage src={restaurant?.image} isOpen={restaurant?.isOpen} />
+            <BannerImage
+                src={restaurant?.image}
+                isOpen={restaurant?.isOpen}
+                alt={restaurant?.name}
+            />
             <BannerContent>
                 <RestaurantLogo src={restaurant?.logo} alt={restaurant?.name} />
-                <BackButton onClick={handleBack}>
+                <BackButton
+                    onClick={handleBack}
+                    aria-label={ACTION_BUTTONS.BACK}
+                >
                     <KeyboardBackspaceIcon />
                 </BackButton>
                 <RestaurantInfo>

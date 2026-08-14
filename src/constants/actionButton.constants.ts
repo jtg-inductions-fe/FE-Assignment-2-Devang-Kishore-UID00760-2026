@@ -4,4 +4,5 @@ export const ACTION_BUTTONS = {
     ADD: 'Add',
     SAVE: 'Save',
     EDIT: 'Edit',
+    BACK: 'Back',
 };

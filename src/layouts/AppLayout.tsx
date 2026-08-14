@@ -216,11 +216,13 @@ export const AppLayout = () => {
                         icon: <ShoppingCartOutlined />,
                         badgeContent: cartItemsCount,
                         onClick: handleCartOpen,
+                        'aria-label': `${appLayoutContent.CART_BUTTON}`,
                     }}
                     ordersButtonProps={{
                         icon: <ShoppingBagIcon />,
                         badgeContent: ordersCount,
                         onClick: handleNavigateOrder,
+                        'aria-label': `${appLayoutContent.ORDERS_BUTTON}`,
                     }}
                     profileMenuProps={{
                         name: user?.name ?? appLayoutContent.USER,

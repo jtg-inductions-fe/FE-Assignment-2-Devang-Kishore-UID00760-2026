@@ -66,9 +66,6 @@ export const MenuItemCard = (props: MenuItemCardProps) => {
                 <MenuTypography variant="body1" color="textSecondary">
                     {menuItem?.description}
                 </MenuTypography>
-                <Typography variant="body2" color="warning.main">
-                    {menuItem?.cuisine}
-                </Typography>
                 <Footer>
                     <Typography variant="h5">
                         &#8377; {menuItem?.price}
