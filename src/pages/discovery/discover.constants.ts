@@ -9,4 +9,5 @@ export const discoveryContent = {
     ADD_RESTAURANT_BUTTON: 'ADD NEW RESTAURANT',
     DISCOVER_RESTAURANT_HEADING: 'Discover Restaurants',
     NO_RESTAURANT_MESSAGE: 'No Restaurant Found',
+    DISCOVER_RESTAURANTS_HEADING: 'Discover Restaurants',
 };

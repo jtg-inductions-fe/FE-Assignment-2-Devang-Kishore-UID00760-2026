@@ -164,7 +164,9 @@ export const DiscoveryPage = () => {
             )}
             <Grid container>
                 <Grid size={8}>
-                    <Typography variant="h1">Discover Restaurants</Typography>
+                    <Typography variant="h1">
+                        {discoveryContent.DISCOVER_RESTAURANTS_HEADING}
+                    </Typography>
                 </Grid>
                 {showAddRestaurant && (
                     <Grid
