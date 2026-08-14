@@ -5,4 +5,5 @@ export const ACTION_BUTTONS = {
     SAVE: 'Save',
     EDIT: 'Edit',
     BACK: 'Back',
+    DELETE: 'Delete',
 };

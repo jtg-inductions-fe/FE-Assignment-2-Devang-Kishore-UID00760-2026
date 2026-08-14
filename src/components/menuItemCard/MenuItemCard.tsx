@@ -42,6 +42,7 @@ export const MenuItemCard = (props: MenuItemCardProps) => {
             <MenuImage
                 src={menuItem?.image}
                 alt={menuItem?.name}
+                fetchPriority="high"
                 inStock={menuItem.stock > 0}
             />
             {menuItem.stock == 0 && (
@@ -102,12 +103,19 @@ export const MenuItemCard = (props: MenuItemCardProps) => {
                         )}
                         <Stack flexDirection="row" justifyContent="flex-end">
                             {canEdit && (
-                                <Button onClick={onEdit}>
+                                <Button
+                                    onClick={onEdit}
+                                    aria-label={ACTION_BUTTONS.EDIT}
+                                >
                                     <EditOutlined />
                                 </Button>
                             )}
                             {canDelete && (
-                                <Button color="error" onClick={onDelete}>
+                                <Button
+                                    color="error"
+                                    onClick={onDelete}
+                                    aria-label={ACTION_BUTTONS.DELETE}
+                                >
                                     <DeleteOutlined />
                                 </Button>
                             )}

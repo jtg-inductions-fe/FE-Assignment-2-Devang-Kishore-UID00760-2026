@@ -141,6 +141,7 @@ export const restaurantInfoFields = [
         grid: { xs: 12, md: 6 },
         multiline: false,
         rows: undefined,
+        required: true,
     },
     {
         name: 'description',
@@ -149,6 +150,7 @@ export const restaurantInfoFields = [
         grid: { xs: 12 },
         multiline: true,
         rows: 4,
+        required: false,
     },
     {
         name: 'contactNumber',
@@ -157,6 +159,7 @@ export const restaurantInfoFields = [
         grid: { xs: 12, md: 6 },
         multiline: false,
         rows: undefined,
+        required: true,
     },
     {
         name: 'email',
@@ -165,6 +168,7 @@ export const restaurantInfoFields = [
         grid: { xs: 12, md: 6 },
         multiline: false,
         rows: undefined,
+        required: true,
     },
     {
         name: 'category',
@@ -174,5 +178,6 @@ export const restaurantInfoFields = [
         multiline: false,
         rows: undefined,
         options: FOOD_TYPES,
+        required: true,
     },
 ];

@@ -46,7 +46,7 @@ export const RestaurantSection = () => {
                                 type={field.type}
                                 multiline={field.multiline}
                                 rows={field.rows}
-                                required
+                                required={field.required}
                             />
                         )}
                     </Grid>

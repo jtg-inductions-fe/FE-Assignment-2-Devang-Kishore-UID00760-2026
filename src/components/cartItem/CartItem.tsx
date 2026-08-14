@@ -17,7 +17,11 @@ export const CartItem = (props: CartItemProps) => {
     const { item: menuItem, quantity } = item;
     return (
         <CartItemContainer>
-            <CartItemImage src={menuItem.image} alt={menuItem.name} />
+            <CartItemImage
+                src={menuItem.image}
+                alt={menuItem.name}
+                fetchPriority="high"
+            />
             <CartItemDetails>
                 <CartItemName variant="h5">{menuItem.name}</CartItemName>
                 <Typography variant="h6">&#8377;{menuItem.price}</Typography>

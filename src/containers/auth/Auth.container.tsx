@@ -100,7 +100,11 @@ export const Auth = ({ isSignUp = false }: { isSignUp: boolean }) => {
             <AuthContent>
                 <AuthCard>
                     <AuthHeader>
-                        <LogoImage src={logo} alt="Zangoo Logo" />
+                        <LogoImage
+                            src={logo}
+                            alt="Zangoo Logo"
+                            fetchPriority="high"
+                        />
                         <Typography variant="h1">
                             {isSignUp
                                 ? authContent.SIGNUP_HEADING

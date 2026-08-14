@@ -10,7 +10,7 @@ import { Box, Button, Chip, Link, Stack, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 
 import { ToggleSwitch } from '@components/toggleSwitch';
-import { RESTAURANT_STATE } from '@constants';
+import { ACTION_BUTTONS, RESTAURANT_STATE } from '@constants';
 import { FoodType } from '@types';
 
 import {
@@ -53,6 +53,7 @@ export const RestaurantCard = (props: RestaurantCardProps) => {
                 <RestaurantImageContainer>
                     <RestaurantImage
                         src={Restaurant.image}
+                        fetchPriority="high"
                         alt={Restaurant.name}
                         open={Restaurant.isOpen}
                     />
@@ -148,12 +149,19 @@ export const RestaurantCard = (props: RestaurantCardProps) => {
                 )}
                 <Box>
                     {canEdit && (
-                        <Button onClick={onEdit}>
+                        <Button
+                            onClick={onEdit}
+                            aria-label={ACTION_BUTTONS.EDIT}
+                        >
                             <EditOutlined />
                         </Button>
                     )}
                     {canDelete && (
-                        <Button color="error" onClick={onDelete}>
+                        <Button
+                            color="error"
+                            onClick={onDelete}
+                            aria-label={ACTION_BUTTONS.DELETE}
+                        >
                             <DeleteOutlined />
                         </Button>
                     )}

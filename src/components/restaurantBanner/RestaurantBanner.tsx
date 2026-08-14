@@ -41,11 +41,16 @@ export const RestaurantBanner = (props: RestaurantBannerProps) => {
         <BannerContainer>
             <BannerImage
                 src={restaurant?.image}
+                fetchPriority="high"
                 isOpen={restaurant?.isOpen}
                 alt={restaurant?.name}
             />
             <BannerContent>
-                <RestaurantLogo src={restaurant?.logo} alt={restaurant?.name} />
+                <RestaurantLogo
+                    src={restaurant?.logo}
+                    alt={restaurant?.name}
+                    fetchPriority="high"
+                />
                 <BackButton
                     onClick={handleBack}
                     aria-label={ACTION_BUTTONS.BACK}
