@@ -75,7 +75,7 @@ export const BannerImage = styled('img')<{ isOpen: boolean }>(({ isOpen }) => ({
     left: '50%',
     transform: 'translateX(-50%)',
     width: '100vw',
-    maxHeight: '100%',
+    height: '100%',
     objectFit: 'cover',
     maxWidth: 'none',
     filter: `brightness(0.2) grayscale(${isOpen ? 0 : 1})`,
