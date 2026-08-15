@@ -1,8 +1,10 @@
 import { TextField } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-export const StyledTextField = styled(TextField)(({ theme: { spacing } }) => ({
+import { BORDER_RADIUS } from '@constants';
+
+export const StyledTextField = styled(TextField)({
     '& .MuiOutlinedInput-root': {
-        borderRadius: spacing(1.5),
+        borderRadius: BORDER_RADIUS.SM,
     },
-}));
+});

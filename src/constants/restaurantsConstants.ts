@@ -46,3 +46,7 @@ export const DAYS: Day[] = [
     Day.SATURDAY,
     Day.SUNDAY,
 ];
+
+export const RESTAURANT_TEXT_CONTENT = {
+    RESTAURANT_NOT_FOUND: 'Restaurant not Found',
+};

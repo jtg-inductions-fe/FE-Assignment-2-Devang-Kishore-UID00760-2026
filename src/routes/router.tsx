@@ -4,7 +4,7 @@ import { AuthRoute } from '@components/routeGuards/AuthRoute';
 import { PrivateRoute } from '@components/routeGuards/PrivateRoute';
 import { ProtectedRoutes } from '@components/routeGuards/ProtectedRoutes';
 import { ROUTES } from '@constants';
-import { AddRestaurant } from '@containers/addRestaurant/AddRestaurant';
+import { AddEditRestaurant } from '@containers/addEditRestaurant/AddEditRestaurant';
 import { AppLayout } from '@layouts/AppLayout';
 import { LoginPage } from '@pages/auth/LoginPage';
 import { SignupPage } from '@pages/auth/SignupPage';
@@ -56,11 +56,11 @@ export const router = createBrowserRouter([
                                 children: [
                                     {
                                         path: ROUTES.ADD_RESTAURANT,
-                                        element: <AddRestaurant />,
+                                        element: <AddEditRestaurant />,
                                     },
                                     {
                                         path: ROUTES.EDIT_RESTAURANT,
-                                        element: <AddRestaurant />,
+                                        element: <AddEditRestaurant />,
                                     },
                                 ],
                             },

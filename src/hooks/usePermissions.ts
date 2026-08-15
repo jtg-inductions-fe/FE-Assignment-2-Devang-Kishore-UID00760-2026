@@ -8,5 +8,8 @@ export const usePermissions = () => {
     const role = user?.role ?? Role.CUSTOMER;
     const userPermissions = rolePermissions[role];
 
-    return (permission: string) => userPermissions.includes(permission);
+    const hasPermission = (permission: string) =>
+        userPermissions.includes(permission);
+
+    return { hasPermission };
 };

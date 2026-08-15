@@ -8,5 +8,4 @@ export interface RestaurantCardProps {
     canEdit: boolean;
     canDelete: boolean;
     canOpen: boolean;
-    formStateTime: (time: string) => string;
 }

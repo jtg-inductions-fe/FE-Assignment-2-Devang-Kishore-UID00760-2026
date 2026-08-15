@@ -12,6 +12,7 @@ import Grid from '@mui/material/Grid2';
 import { ToggleSwitch } from '@components/toggleSwitch';
 import { RESTAURANT_STATE } from '@constants';
 import { FoodType } from '@types';
+import { formateTime } from '@utils/formateTime';
 
 import {
     ClosedIcon,
@@ -39,7 +40,6 @@ export const RestaurantCard = ({
     canEdit,
     canDelete,
     canOpen,
-    formStateTime,
     onToggle,
 }: RestaurantCardProps) => (
     <RestaurantCardContainer>
@@ -91,15 +91,12 @@ export const RestaurantCard = ({
                         <RestaurantAddress>
                             <LocationOnOutlined />
                             <Typography variant="body2" color="textSecondary">
-                                {Restaurant.address?.street},{' '}
-                                {Restaurant.address?.city},{' '}
-                                {Restaurant.address?.state},{' '}
-                                {Restaurant.address?.pincode}
+                                {`${Restaurant.address?.street}, ${Restaurant.address?.city}, ${Restaurant.address?.state}, ${Restaurant.address?.pincode}`}
                             </Typography>
                         </RestaurantAddress>
                         <Stack flexDirection="row" alignItems="center" gap={2}>
                             <AccessTimeOutlined />
-                            <Typography variant="body2">{`${formStateTime(Restaurant.openingTime)}-${formStateTime(Restaurant.closingTime)}`}</Typography>
+                            <Typography variant="body2">{`${formateTime(Restaurant.openingTime)}-${formateTime(Restaurant.closingTime)}`}</Typography>
                         </Stack>
                     </RestaurantTimings>
                     <RestaurantData>

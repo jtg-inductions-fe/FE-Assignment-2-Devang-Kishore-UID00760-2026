@@ -1,5 +1,5 @@
 import menuMock from '@data/menu.json';
-import { FiltersData, FoodType, MenuItem } from '@types';
+import { FoodType, MenuItem, QueryParams } from '@types';
 import { readStorage, writeStorage } from '@utils/storage';
 
 const MENU_KEY = 'menu';
@@ -27,7 +27,7 @@ const saveMenu = (menu: MenuItem[]): void => {
  */
 export const getMenu = (payload: {
     restaurantID?: string;
-    filters?: FiltersData;
+    filters?: QueryParams;
 }): Promise<MenuItem[]> => {
     const restaurantID = payload.restaurantID;
     const filters = payload.filters;

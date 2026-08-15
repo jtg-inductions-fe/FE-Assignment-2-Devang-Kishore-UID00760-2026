@@ -5,7 +5,7 @@ import {
     getMenu,
     updateMenuItem,
 } from '@services/menu.service';
-import { FiltersData, MenuItem } from '@types';
+import { MenuItem, QueryParams } from '@types';
 
 import { MenuState } from './menuSlice.types';
 
@@ -16,7 +16,7 @@ const initialState: MenuState = {
 
 export const fetchMenu = createAsyncThunk(
     'menu/fetch',
-    (payload: { restaurantId?: string; filters?: FiltersData }) =>
+    (payload: { restaurantId?: string; filters?: QueryParams }) =>
         getMenu(payload),
 );
 

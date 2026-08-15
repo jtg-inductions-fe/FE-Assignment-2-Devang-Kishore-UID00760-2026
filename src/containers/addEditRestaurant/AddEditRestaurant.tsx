@@ -23,26 +23,26 @@ import {
 } from '@store/slices/restaurant/restaurantSlice';
 import { SnackbarTheme } from '@types';
 
-import { addRestaurantContent } from './addRestaurant.constants';
-import { STEP_FIELDS } from './addRestaurant.constants';
+import { addRestaurantContent } from './addEditRestaurant.constants';
+import { STEP_FIELDS } from './addEditRestaurant.constants';
 import {
     ActionWrapper,
     AddRestaurantContainer,
     FormWrapper,
     RestaurantForm,
     StyledPaper,
-} from './AddRestaurant.styles';
-import { AddRestaurantFormData } from './AddRestaurant.types';
+} from './AddEditRestaurant.styles';
+import { AddRestaurantFormData } from './AddEditRestaurant.types';
 import { MenuSection } from './formSections/MenuSection';
 import { RestaurantInfoSection } from './formSections/RestaurantInfoSection';
 import { RestaurantSection } from './formSections/RestaurantSection';
-import { useAddRestaurantForm } from './useAddRestaurantForm';
+import { useAddEditRestaurantForm } from './useAddEditRestaurantForm';
 const STEPS = [RestaurantSection, RestaurantInfoSection, MenuSection];
 const STEPS_TITLES = ['Restaurant', 'Restaurant Info', 'Menu'];
 
-export const AddRestaurant = () => {
+export const AddEditRestaurant = () => {
     const { methods, activeStep, nextStep, previousStep } =
-        useAddRestaurantForm();
+        useAddEditRestaurantForm();
     const { replace } = useFieldArray({
         control: methods.control,
         name: 'menu',
@@ -65,30 +65,16 @@ export const AddRestaurant = () => {
     );
     const menuItem = useAppSelector((state) => state.menu.items);
     const onSubmit = async (data: AddRestaurantFormData) => {
-        const restaurantData = {
-            ownerId: user!.id,
-            name: data.name,
-            description: data.description,
-            contactNumber: data.contactNumber,
-            email: data.email,
-            fssaiCertificateId: data.fssaiCertificateId,
-            gstNumber: data.gstNumber,
-            cuisines: data.cuisines,
-            category: data.category,
-            image: data.image,
-            logo: data.logo,
-            address: data.address,
-            isOpen: data.isOpen,
-            openingTime: data.openingTime,
-            closingTime: data.closingTime,
-            workingDays: data.workingDays,
-        };
-
         try {
             const restaurant = !isEditMode
-                ? await dispatch(saveRestaurant(restaurantData)).unwrap()
+                ? await dispatch(
+                      saveRestaurant({ ownerId: user!.id, ...data }),
+                  ).unwrap()
                 : await dispatch(
-                      updateRestaurantData({ id, data: restaurantData }),
+                      updateRestaurantData({
+                          id,
+                          data: { ownerId: user!.id, ...data },
+                      }),
                   ).unwrap();
 
             if (isEditMode) {
@@ -142,8 +128,8 @@ export const AddRestaurant = () => {
     };
 
     const handleConfirm = async () => {
-        await navigate(ROUTES.DISCOVERY);
         setIsOpen((state) => !state);
+        await navigate(ROUTES.DISCOVERY);
     };
 
     useEffect(() => {

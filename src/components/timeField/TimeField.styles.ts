@@ -1,6 +1,6 @@
 import { styled } from '@mui/material';
 
-import { TextField } from '../textField';
+import { TextField } from '@components/textField';
 
 export const StyledTimeField = styled(TextField)(
     ({ theme: { shape, spacing } }) => ({

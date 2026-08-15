@@ -9,13 +9,12 @@ import { FormImageField } from '@components/FormImageField';
 import { FormTextField } from '@components/FormTextField';
 import { TimeField } from '@components/timeField';
 import { DAYS } from '@constants';
-
 import {
     addressFields,
     restaurantBasicInfoFields,
-} from '../addRestaurant.config';
-import { addRestaurantContent } from '../addRestaurant.constants';
-import { AddRestaurantFormData } from '../AddRestaurant.types';
+} from '@containers/addEditRestaurant/addEditRestaurant.config';
+import { addRestaurantContent } from '@containers/addEditRestaurant/addEditRestaurant.constants';
+import { AddRestaurantFormData } from '@containers/addEditRestaurant/AddEditRestaurant.types';
 
 export const RestaurantInfoSection = () => {
     const {

@@ -1,20 +1,27 @@
 import { Search } from '@mui/icons-material';
-import { InputAdornment } from '@mui/material';
+import { Box, InputAdornment } from '@mui/material';
 import { TextFieldProps } from '@mui/material';
 
-import { SearchBarContainer } from './Searchbar.styled';
-import { TextField } from '../textField';
+import { TextField } from '@components/textField';
+import { BORDER_RADIUS } from '@constants';
 
 export const Searchbar = (props: TextFieldProps) => {
     const { slotProps, ...rest } = props;
     return (
-        <SearchBarContainer>
+        <Box width="100%">
             <TextField
                 {...rest}
                 slotProps={{
                     ...slotProps,
                     input: {
                         ...slotProps?.input,
+                        sx: {
+                            height: 52,
+                            borderRadius: BORDER_RADIUS.ROUNDED,
+                            '& fieldset': {
+                                borderRadius: BORDER_RADIUS.ROUNDED,
+                            },
+                        },
                         startAdornment: (
                             <InputAdornment position="start">
                                 <Search />
@@ -23,6 +30,6 @@ export const Searchbar = (props: TextFieldProps) => {
                     },
                 }}
             />
-        </SearchBarContainer>
+        </Box>
     );
 };

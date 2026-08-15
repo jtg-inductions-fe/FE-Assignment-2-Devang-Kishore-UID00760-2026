@@ -6,8 +6,9 @@ import { TextFieldProps } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 
+import { TextField } from '@components/textField';
+
 import { passwordLabels } from './passwordField.constants';
-import { TextField } from '../textField';
 
 export const PasswordField = (props: TextFieldProps) => {
     const [showPassword, setShowPassword] = useState(false);
