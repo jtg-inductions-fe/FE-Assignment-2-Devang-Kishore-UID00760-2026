@@ -105,6 +105,5 @@ export const updateMenuItem = (
  */
 export const deleteMenuItem = (id: string): Promise<string> => {
     saveMenu(getStoredMenu().filter((item) => item.id !== id));
-
     return Promise.resolve(id);
 };

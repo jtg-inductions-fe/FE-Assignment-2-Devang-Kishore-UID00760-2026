@@ -32,7 +32,7 @@ export const RestaurantImage = styled('img')(({ theme: { breakpoints } }) => ({
         maxHeight: 280,
     },
     [breakpoints.up('lg')]: {
-        maxHeight: 380,
+        maxHeight: 340,
     },
 }));
 

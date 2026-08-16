@@ -10,8 +10,11 @@ export const addRestaurantContent = {
     CANCEL: 'cancel',
     NEXT: 'Next',
     SUBMIT: 'Submit',
-    DIALOG_TITLE: 'Cancel Adding New Restaurant.',
-    DIALOG_SUBTITLE: 'Cancel Adding New Restaurant.',
+    ADD_RESTAURANT_DIALOG_TITLE: 'Cancel Adding New Restaurant.',
+    EDIT_RESTAURANT_DIALOG_TITLE: 'Cancel Editing Restaurant.',
+    ADD_RESTAURANT_DIALOG_SUBTITLE: 'Do you want to cancel  adding restaurant?',
+    EDIT_RESTAURANT_DIALOG_SUBTITLE:
+        'Do you want to cancel editing  new restaurant?',
     DIALOG_LABEL: 'Confirm',
     MENU_ITEMS_TITLE: 'Menu Item',
     ADD_MENU_BUTTON: 'Add Menu Item',
@@ -81,6 +84,7 @@ export const addRestaurantContent = {
     RESTAURANT_EDIT: 'Edit Restaurant',
     DELETE_ITEM_CONFIRM_LABEL: 'Yes Delete',
     ITEM_ADDED_MESSAGE: 'Item Added successful.',
+    FETCH_MENU_ERROR: 'Error while fetching menu',
 };
 
 export const STEP_FIELDS: FieldPath<AddRestaurantFormData>[][] = [

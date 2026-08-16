@@ -21,7 +21,7 @@ import {
     saveRestaurant,
     updateRestaurantData,
 } from '@store/slices/restaurant/restaurantSlice';
-import { SnackbarTheme } from '@types';
+import { MenuItem, SnackbarTheme } from '@types';
 
 import { addRestaurantContent } from './addEditRestaurant.constants';
 import { STEP_FIELDS } from './addEditRestaurant.constants';
@@ -54,15 +54,18 @@ export const AddEditRestaurant = () => {
     const { user } = useAppSelector((store) => store.auth);
     const { loading } = useAppSelector((state) => state.restaurants);
     const [isOpen, setIsOpen] = useState(false);
+    const [initialMenuItems, setInitialMenuItems] = useState<MenuItem[]>([]);
     const navigate = useNavigate();
     const handleCancel = () => {
         setIsOpen((state) => !state);
     };
 
     const isEditMode = !!id;
+
     const selectedRestaurant = useAppSelector(
         (state) => state.restaurants.selectedRestaurant,
     );
+
     const menuItem = useAppSelector((state) => state.menu.items);
     const onSubmit = async (data: AddRestaurantFormData) => {
         try {
@@ -77,9 +80,9 @@ export const AddEditRestaurant = () => {
                       }),
                   ).unwrap();
 
-            if (isEditMode) {
+            if (isEditMode && initialMenuItems) {
                 await Promise.all(
-                    menuItem.map(async (item) => {
+                    initialMenuItems.map(async (item) => {
                         await dispatch(removeMenuEntry(item.id)).unwrap();
                     }),
                 );
@@ -117,6 +120,7 @@ export const AddEditRestaurant = () => {
             );
         }
     };
+
     const handleNext = async () => {
         if (!(activeStep === STEPS.length - 1)) {
             const isValid = await trigger(STEP_FIELDS[activeStep]);
@@ -151,9 +155,10 @@ export const AddEditRestaurant = () => {
     }, [id, dispatch]);
 
     useEffect(() => {
-        if (id && selectedRestaurant?.id === id && menuItem) {
+        if (id && selectedRestaurant?.id === id && menuItem.length > 0) {
             methods.reset(selectedRestaurant);
             replace(menuItem);
+            setInitialMenuItems(menuItem);
         }
     }, [selectedRestaurant, methods, menuItem, replace, id]);
 
@@ -213,8 +218,16 @@ export const AddEditRestaurant = () => {
             </StyledPaper>
             <ConfirmDialog
                 open={isOpen}
-                title={`${addRestaurantContent.DIALOG_TITLE}`}
-                message={`${addRestaurantContent.DIALOG_SUBTITLE}`}
+                title={
+                    !isEditMode
+                        ? `${addRestaurantContent.ADD_RESTAURANT_DIALOG_TITLE}`
+                        : `${addRestaurantContent.EDIT_RESTAURANT_DIALOG_TITLE}`
+                }
+                message={
+                    !isEditMode
+                        ? `${addRestaurantContent.ADD_RESTAURANT_DIALOG_SUBTITLE}`
+                        : `${addRestaurantContent.EDIT_RESTAURANT_DIALOG_SUBTITLE}`
+                }
                 confirmLabel={`${addRestaurantContent.DIALOG_LABEL}`}
                 onCancel={() => setIsOpen((state) => !state)}
                 onConfirm={() => void handleConfirm()}
