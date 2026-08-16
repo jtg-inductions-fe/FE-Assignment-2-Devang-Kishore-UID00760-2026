@@ -9,8 +9,7 @@ import Grid from '@mui/material/Grid2';
 import { ConfirmDialog } from '@components/confirmationDialog';
 import { RestaurantCard } from '@components/restaurantCard';
 import { permissions } from '@config/permissions.config';
-import { ROUTES } from '@constants';
-import { CUISINES } from '@constants';
+import { BORDER_RADIUS, ROUTES } from '@constants';
 import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
 import { usePermissions } from '@hooks/usePermissions';
 import { showSnackbar } from '@store/slices/feedback/feedBackSlice';
@@ -25,7 +24,7 @@ import {
     SnackbarTheme,
 } from '@types';
 
-import { discoveryContent } from './discover.constants';
+import { cuisinesImage, discoveryContent } from './discover.constants';
 import {
     CuisineChip,
     CuisinesSection,
@@ -37,22 +36,13 @@ import {
 export const DiscoveryPage = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const hasPermission = usePermissions();
+    const { hasPermission } = usePermissions();
     const { items: restaurants, loading } = useAppSelector(
         (state) => state.restaurants,
     );
 
     const handleEdit = (id: string) => {
         void navigate(generatePath(ROUTES.EDIT_RESTAURANT, { id: id }));
-    };
-
-    const formStateTime = (time: string) => {
-        const [hoursStr, minutes] = time.split(':');
-        let hours = parseInt(hoursStr, 10);
-        const amPm = hours >= 12 ? 'PM' : 'AM';
-        hours = hours % 12;
-        hours = hours ? hours : 12;
-        return `${hours}:${minutes} ${amPm}`;
     };
 
     const handleToggleRestaurant = (restaurant: Restaurant) => {
@@ -138,92 +128,100 @@ export const DiscoveryPage = () => {
     };
 
     return (
-        <DiscoveryContainer>
-            {showCuisines && (
-                <CuisinesSection>
-                    {CUISINES.map((cuisine) => (
-                        <CuisineChip
-                            src={`/src/assets/images/cuisines/${cuisine.toLowerCase()}.webp`}
-                            key={cuisine}
-                        >
-                            {cuisine}
-                        </CuisineChip>
-                    ))}
-                </CuisinesSection>
-            )}
-            <Grid container>
-                <Grid size={8}>
-                    <Typography variant="h1">Discover Restaurants</Typography>
-                </Grid>
-                {showAddRestaurant && (
-                    <Grid
-                        size={4}
-                        container
-                        justifyContent="end"
-                        alignItems="center"
-                    >
-                        <RestaurantButton
-                            variant="contained"
-                            onClick={handleAddRestaurant}
-                        >
-                            {discoveryContent.ADD_RESTAURANT_BUTTON}
-                        </RestaurantButton>
-                    </Grid>
+        <>
+            <DiscoveryContainer>
+                {showCuisines && (
+                    <CuisinesSection>
+                        {cuisinesImage.map((cuisine) => (
+                            <CuisineChip src={cuisine.url} key={cuisine.label}>
+                                {cuisine.label}
+                            </CuisineChip>
+                        ))}
+                    </CuisinesSection>
                 )}
-            </Grid>
-            <Grid container spacing={4}>
-                {restaurants?.length === 0 && (
-                    <RestaurantNotFound>
-                        <ErrorIcon fontSize="large" color="error" />
-                        <Typography variant="h3">
-                            {discoveryContent.NO_RESTAURANT_MESSAGE}
+                <Grid container>
+                    <Grid size={8}>
+                        <Typography variant="h1">
+                            Discover Restaurants
                         </Typography>
-                    </RestaurantNotFound>
-                )}
-                {loading && (
-                    <Box>
-                        <Skeleton
-                            height={190}
-                            animation="wave"
-                            variant="rectangular"
-                        />
-                        <Skeleton animation="wave" height={20} />
-                        <Skeleton animation="wave" height={20} width="80%" />
-                    </Box>
-                )}
-                {restaurants.map((restaurant) => {
-                    checkRestaurantOpen(restaurant);
-                    return (
+                    </Grid>
+                    {showAddRestaurant && (
                         <Grid
-                            size={{ xs: 12, md: 6, lg: 4 }}
-                            key={restaurant.id}
+                            size={4}
+                            container
+                            justifyContent="end"
+                            alignItems="center"
                         >
-                            <RestaurantCard
-                                Restaurant={restaurant}
-                                onToggle={() => {
-                                    handleToggleConfirmation(restaurant);
+                            <RestaurantButton
+                                variant="contained"
+                                onClick={handleAddRestaurant}
+                                sx={{
+                                    borderRadius: BORDER_RADIUS.XL,
+                                    padding: 4,
                                 }}
-                                onDelete={() => {
-                                    handleDelete(restaurant.id);
-                                }}
-                                onEdit={() => {
-                                    handleEdit(restaurant.id);
-                                }}
-                                canDelete={hasPermission(
-                                    permissions.DELETE_RESTAURANT,
-                                )}
-                                canEdit={hasPermission(
-                                    permissions.EDIT_RESTAURANT,
-                                )}
-                                canOpen={hasPermission(
-                                    permissions.OPEN_RESTAURANT,
-                                )}
-                                formStateTime={formStateTime}
-                            />
+                            >
+                                ADD NEW RESTAURANT
+                            </RestaurantButton>
                         </Grid>
-                    );
-                })}
-            </Grid>
+                    )}
+                </Grid>
+                <Grid container spacing={4}>
+                    {restaurants?.length === 0 && (
+                        <RestaurantNotFound>
+                            <ErrorIcon fontSize="large" color="error" />
+                            <Typography variant="h3">
+                                {discoveryContent.NO_RESTAURANT_MESSAGE}
+                            </Typography>
+                        </RestaurantNotFound>
+                    )}
+                    {loading && (
+                        <Box>
+                            <Skeleton
+                                height={190}
+                                animation="wave"
+                                variant="rectangular"
+                            />
+                            <Skeleton animation="wave" height={20} />
+                            <Skeleton
+                                animation="wave"
+                                height={20}
+                                width="80%"
+                            />
+                        </Box>
+                    )}
+                    {restaurants.map((restaurant) => {
+                        checkRestaurantOpen(restaurant);
+                        return (
+                            <Grid
+                                size={{ xs: 12, md: 6, lg: 4 }}
+                                key={restaurant.id}
+                            >
+                                <RestaurantCard
+                                    Restaurant={restaurant}
+                                    onToggle={() => {
+                                        handleToggleConfirmation(restaurant);
+                                    }}
+                                    onDelete={() => {
+                                        handleDelete(restaurant.id);
+                                    }}
+                                    onEdit={() => {
+                                        handleEdit(restaurant.id);
+                                    }}
+                                    canDelete={hasPermission(
+                                        permissions.DELETE_RESTAURANT,
+                                    )}
+                                    canEdit={hasPermission(
+                                        permissions.EDIT_RESTAURANT,
+                                    )}
+                                    canOpen={hasPermission(
+                                        permissions.OPEN_RESTAURANT,
+                                    )}
+                                />
+                            </Grid>
+                        );
+                    })}
+                </Grid>
+            </DiscoveryContainer>
             <ConfirmDialog
                 open={dialogData.open}
                 title={dialogData.title}
@@ -234,6 +232,6 @@ export const DiscoveryPage = () => {
                 }}
                 onConfirm={dialogData.onConfirm}
             />
-        </DiscoveryContainer>
+        </>
     );
 };

@@ -8,9 +8,9 @@ import { FormSelectField } from '@components/FormSelectField';
 import { FormTextField } from '@components/FormTextField';
 import { TextField } from '@components/textField';
 import { CUISINES } from '@constants';
-import { restaurantInfoFields } from '@containers/addRestaurant/addRestaurant.config';
-import { addRestaurantContent } from '@containers/addRestaurant/addRestaurant.constants';
-import { AddRestaurantFormData } from '@containers/addRestaurant/AddRestaurant.types';
+import { restaurantInfoFields } from '@containers/addEditRestaurant/addEditRestaurant.config';
+import { addRestaurantContent } from '@containers/addEditRestaurant/addEditRestaurant.constants';
+import { AddRestaurantFormData } from '@containers/addEditRestaurant/AddEditRestaurant.types';
 import { useAppSelector } from '@hooks/storeHooks';
 
 export const RestaurantSection = () => {

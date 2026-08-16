@@ -3,6 +3,7 @@ import { login, signUp } from '@services/auth.service';
 import { User } from '@types';
 import { removeStorage } from '@utils/storage';
 
+import { authSliceContent } from './authSlice.constants';
 import { AuthState, UserData } from './authSlice.types';
 
 const initialState: AuthState = {
@@ -22,7 +23,9 @@ export const loginUser = createAsyncThunk(
             return await login(payload.email, payload.password);
         } catch (error) {
             return rejectWithValue(
-                error instanceof Error ? error.message : 'Login failed',
+                error instanceof Error
+                    ? error.message
+                    : authSliceContent.LOGIN_FAILED_ERROR,
             );
         }
     },
@@ -35,7 +38,9 @@ export const signupUser = createAsyncThunk(
             return await signUp(payload);
         } catch (error) {
             return rejectWithValue(
-                error instanceof Error ? error.message : 'signup failed.',
+                error instanceof Error
+                    ? error.message
+                    : authSliceContent.SIGNUP_FAILED_ERROR,
             );
         }
     },
@@ -73,7 +78,7 @@ export const authSlice = createSlice({
             })
             .addCase(loginUser.rejected, (state) => {
                 state.loading = false;
-                state.error = 'Login failed.';
+                state.error = authSliceContent.LOGIN_FAILED_ERROR;
             })
             .addCase(signupUser.pending, (state) => {
                 state.loading = true;
@@ -86,7 +91,7 @@ export const authSlice = createSlice({
             })
             .addCase(signupUser.rejected, (state) => {
                 state.loading = false;
-                state.error = 'Signup failed.';
+                state.error = authSliceContent.SIGNUP_FAILED_ERROR;
             });
     },
 });

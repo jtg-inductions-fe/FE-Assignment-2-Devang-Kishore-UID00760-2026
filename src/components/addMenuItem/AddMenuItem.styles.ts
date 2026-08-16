@@ -1,9 +1,11 @@
 import { Dialog, styled } from '@mui/material';
 
+import { BORDER_RADIUS } from '@constants';
+
 export const CustomDialog = styled(Dialog)(
     ({ theme: { spacing, palette, typography } }) => ({
         '& .MuiDialog-paper': {
-            borderRadius: spacing(5),
+            borderRadius: BORDER_RADIUS.SM,
             padding: spacing(8),
         },
 

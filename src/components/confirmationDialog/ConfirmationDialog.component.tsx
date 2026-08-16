@@ -6,7 +6,7 @@ import {
     DialogTitle,
 } from '@mui/material';
 
-import { ACTION_BUTTONS } from '@constants';
+import { actionLabels } from '@constants';
 
 import { ConfirmationDialogProps } from './confirmationDialog.types';
 import { CustomDialog } from './ConfirmDialog.styles';
@@ -42,7 +42,7 @@ export const ConfirmDialog = (props: ConfirmationDialogProps) => {
             </DialogContent>
             <DialogActions>
                 <Button color="error" onClick={onCancel}>
-                    {ACTION_BUTTONS.CANCEL}
+                    {actionLabels.CANCEL}
                 </Button>
                 <Button variant="contained" onClick={onConfirm}>
                     {confirmLabel}

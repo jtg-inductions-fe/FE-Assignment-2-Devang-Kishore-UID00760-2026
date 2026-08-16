@@ -1,6 +1,6 @@
 import { Cuisine, FoodType } from '@types';
 
-import { AddRestaurantFormData } from './AddRestaurant.types';
+import { AddRestaurantFormData } from './AddEditRestaurant.types';
 export const defaultValues: AddRestaurantFormData = {
     name: '',
     description: '',

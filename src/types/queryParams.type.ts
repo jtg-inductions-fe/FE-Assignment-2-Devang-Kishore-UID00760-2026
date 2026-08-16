@@ -1,6 +1,6 @@
 import { FoodType } from '@types';
 
-export interface FiltersData {
+export interface QueryParams {
     search?: string;
     type?: FoodType;
     ownerId?: string;

@@ -1,4 +1,9 @@
-import { CartItem } from '@types';
+import { MenuItem } from './menItem.types';
+
+export interface CartItem {
+    item: MenuItem;
+    quantity: number;
+}
 
 export interface CartContentProps {
     items: CartItem[];

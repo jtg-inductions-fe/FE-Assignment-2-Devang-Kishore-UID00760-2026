@@ -13,6 +13,7 @@ import { ConfirmDialog } from '@components/confirmationDialog';
 import { RestaurantBanner } from '@components/restaurantBanner';
 import { permissions } from '@config/permissions.config';
 import { ROUTES } from '@constants';
+import { MenuItemFormData } from '@containers/addEditRestaurant/AddEditRestaurant.types';
 import { MenuItemDisplayCard } from '@containers/menuItemCard/MenuItemDisplayCard.container';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
@@ -34,7 +35,6 @@ import {
     Cuisine,
     FoodType,
     MenuItem,
-    MenuItemFormData,
     Restaurant,
     SnackbarTheme,
 } from '@types';
@@ -56,7 +56,7 @@ export const RestaurantMenuPage = () => {
         (state) => state.restaurants.selectedRestaurant,
     );
 
-    const hasPermission = usePermissions();
+    const { hasPermission } = usePermissions();
     const menuItems = useAppSelector((state) => state.menu.items);
     const items = useAppSelector((state) => state.cart.items);
     const currentCuisines = selectedRestaurant?.cuisines.filter((cuisine) =>

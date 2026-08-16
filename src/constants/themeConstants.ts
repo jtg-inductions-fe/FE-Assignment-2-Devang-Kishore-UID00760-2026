@@ -63,11 +63,11 @@ export const COLORS = {
  * @constant
  */
 export const BORDER_RADIUS = {
-    SM: 8,
-    MD: 12,
+    SM: 4,
+    MD: 8,
     LG: 16,
-    XL: 24,
-    FULL: 9999,
+    XL: 20,
+    ROUNDED: 9999,
 };
 
 /**

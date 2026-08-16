@@ -1,4 +1,4 @@
-export const appLayoutContent = {
+export const headerTextContent = {
     RESTAURANT_SEARCH_PLACEHOLDER: 'Search Restaurants....',
     MENU_SEARCH_PLACEHOLDER: 'Search menu items...',
     USER: 'User',
