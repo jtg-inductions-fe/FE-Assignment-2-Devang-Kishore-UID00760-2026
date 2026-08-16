@@ -1,5 +1,6 @@
 import { Box, Stack, styled, Typography } from '@mui/material';
 
+import { BORDER_RADIUS } from '@constants';
 import { theme } from '@theme';
 
 export const CartItemContainer = styled(Stack)(
@@ -10,7 +11,7 @@ export const CartItemContainer = styled(Stack)(
         gap: spacing(2),
         boxShadow: shadows[2],
         padding: spacing(4),
-        borderRadius: spacing(4),
+        borderRadius: BORDER_RADIUS.SM,
         [breakpoints.up('sm')]: {
             flexDirection: 'row',
         },

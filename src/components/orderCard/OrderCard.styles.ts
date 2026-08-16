@@ -1,10 +1,12 @@
 import { Card, Stack, styled } from '@mui/material';
 
+import { BORDER_RADIUS } from '@constants';
+
 export const OrderCardContainer = styled(Card)(
     ({ theme: { spacing, breakpoints } }) => ({
         display: 'flex',
         flexDirection: 'column',
-        borderRadius: spacing(2),
+        borderRadius: BORDER_RADIUS.SM,
         padding: spacing(1),
         gap: spacing(1),
         [breakpoints.up('sm')]: {
@@ -20,21 +22,19 @@ export const OrderHeader = styled(Stack)(({ theme: { spacing } }) => ({
     padding: spacing(2),
 }));
 
-export const RestaurantImage = styled('img')(
-    ({ theme: { spacing, breakpoints } }) => ({
-        width: '100%',
-        maxHeight: 150,
-        borderRadius: spacing(4),
-        objectFit: 'cover',
+export const RestaurantImage = styled('img')(({ theme: { breakpoints } }) => ({
+    width: '100%',
+    maxHeight: 150,
+    borderRadius: BORDER_RADIUS.SM,
+    objectFit: 'cover',
 
-        [breakpoints.up('sm')]: {
-            maxHeight: 280,
-        },
-        [breakpoints.up('lg')]: {
-            maxHeight: 380,
-        },
-    }),
-);
+    [breakpoints.up('sm')]: {
+        maxHeight: 280,
+    },
+    [breakpoints.up('lg')]: {
+        maxHeight: 380,
+    },
+}));
 
 export const RestaurantDetails = styled(Stack)({
     flex: 1,

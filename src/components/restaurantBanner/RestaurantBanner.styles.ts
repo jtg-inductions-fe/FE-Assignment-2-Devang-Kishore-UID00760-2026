@@ -1,17 +1,16 @@
 import { Box, IconButton, styled, Typography } from '@mui/material';
 
 import { TextField } from '@components/textField';
+import { BORDER_RADIUS } from '@constants';
 import { theme } from '@theme';
 
-export const BannerContainer = styled(Box)(
-    ({ theme: { palette, spacing } }) => ({
-        width: '100%',
-        position: 'relative',
-        color: palette.common.white,
-        overflowX: 'hidden',
-        borderRadius: spacing(8),
-    }),
-);
+export const BannerContainer = styled(Box)(({ theme: { palette } }) => ({
+    width: '100%',
+    position: 'relative',
+    color: palette.common.white,
+    overflowX: 'hidden',
+    borderRadius: BORDER_RADIUS.MD,
+}));
 
 export const TopRow = styled(Box)(({ theme: { spacing, breakpoints } }) => ({
     display: 'flex',
@@ -55,19 +54,17 @@ export const CuisineWrapper = styled(Box)(({ theme: { spacing } }) => ({
     gap: spacing(1),
 }));
 
-export const RestaurantLogo = styled('img')(
-    ({ theme: { spacing, breakpoints } }) => ({
-        width: 100,
-        maxHeight: 100,
-        borderRadius: spacing(5),
-        border: '5px solid white',
-        [breakpoints.up('md')]: {
-            borderRadius: spacing(10),
-            width: 180,
-            height: 180,
-        },
-    }),
-);
+export const RestaurantLogo = styled('img')(({ theme: { breakpoints } }) => ({
+    width: 100,
+    maxHeight: 100,
+    borderRadius: BORDER_RADIUS.SM,
+    border: '5px solid white',
+    [breakpoints.up('md')]: {
+        borderRadius: BORDER_RADIUS.MD,
+        width: 180,
+        height: 180,
+    },
+}));
 
 export const BannerImage = styled('img')<{ isOpen: boolean }>(({ isOpen }) => ({
     position: 'absolute',

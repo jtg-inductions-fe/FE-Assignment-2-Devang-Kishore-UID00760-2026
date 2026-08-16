@@ -10,6 +10,7 @@ import { Orders } from '@components/orders';
 import { RejectedOrderDialog } from '@components/rejectOrderDialog';
 import { Searchbar } from '@components/searchBar';
 import { permissions } from '@config/permissions.config';
+import { ROUTES } from '@constants';
 import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
 import { usePermissions } from '@hooks/usePermissions';
 import { clearCart } from '@store/slices/cart/cartSlice';
@@ -27,7 +28,6 @@ import {
     ordersTextContent,
 } from './orders.constants';
 import { BackButton, EmptyOrders } from './Orders.styles';
-import { ROUTES } from '../../constants';
 
 export const OrdersPage = () => {
     const dispatch = useAppDispatch();
@@ -59,7 +59,7 @@ export const OrdersPage = () => {
         setOrdersData(initialData);
     }, [orders]);
 
-    const hasPermission = usePermissions();
+    const { hasPermission } = usePermissions();
 
     const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;

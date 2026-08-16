@@ -1,3 +1,4 @@
+import { RESTAURANT_TEXT_CONTENT } from '@constants';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
     createRestaurant,
@@ -6,7 +7,7 @@ import {
     getRestaurants,
     updateRestaurant,
 } from '@services/restaurant.service';
-import { FiltersData, Restaurant } from '@types';
+import { QueryParams, Restaurant } from '@types';
 
 import { RestaurantState } from './restaurantSlice.types';
 
@@ -19,7 +20,7 @@ const initialState: RestaurantState = {
 
 export const fetchRestaurants = createAsyncThunk(
     'restaurants/fetch',
-    (filters?: FiltersData) => getRestaurants(filters),
+    (filters?: QueryParams) => getRestaurants(filters),
 );
 
 export const saveRestaurant = createAsyncThunk(
@@ -43,7 +44,7 @@ export const fetchRestaurantByID = createAsyncThunk(
     async (id: string) => {
         const restaurant = await getRestaurant(id);
         if (!restaurant) {
-            throw new Error('Restaurant not Found');
+            throw new Error(RESTAURANT_TEXT_CONTENT.RESTAURANT_NOT_FOUND);
         }
         return restaurant;
     },

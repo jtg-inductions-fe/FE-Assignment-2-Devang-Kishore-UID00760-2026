@@ -2,10 +2,12 @@ import { Box, Container, Paper } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import { alpha, styled } from '@mui/material/styles';
 
+import { BORDER_RADIUS } from '@constants';
+
 export const StyledPaper = styled(Paper)(({ theme: { spacing } }) => ({
     padding: spacing(8),
     marginTop: spacing(4),
-    borderRadius: spacing(2),
+    borderRadius: BORDER_RADIUS.SM,
 }));
 
 export const FormWrapper = styled(Box)(({ theme: { spacing } }) => ({

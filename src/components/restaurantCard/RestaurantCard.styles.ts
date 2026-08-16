@@ -1,12 +1,13 @@
 import { Avatar, Box, Card, Chip, styled, Typography } from '@mui/material';
 
+import { BORDER_RADIUS } from '@constants';
 import { theme } from '@theme';
 
 export const RestaurantCardContainer = styled(Card)(
     ({ theme: { shadows } }) => ({
         position: 'relative',
         overflow: 'visible',
-        borderRadius: 24,
+        borderRadius: BORDER_RADIUS.XL,
         boxShadow: shadows[2],
         '&:hover': {
             boxShadow: shadows[10],
@@ -18,7 +19,9 @@ export const RestaurantImageContainer = styled(Box)({
     position: 'relative',
 });
 
-export const RestaurantImage = styled('img')<{ open: boolean }>(({ open }) => ({
+export const RestaurantImage = styled('img', {
+    shouldForwardProp: (props) => props !== 'open',
+})<{ open: boolean }>(({ open }) => ({
     width: '100%',
     height: 240,
     objectFit: 'cover',
@@ -70,20 +73,20 @@ export const RestaurantAddress = styled(Box)(({ theme: { spacing } }) => ({
 
 export const VegChip = styled(Chip)({
     width: 'fit-content',
-    borderRadius: 999,
+    borderRadius: BORDER_RADIUS.ROUNDED,
 });
 
-export const StatusBadge = styled(Box)<{ open: boolean }>(
-    ({ open, theme: { spacing, palette } }) => ({
-        position: 'absolute',
-        right: spacing(3),
-        top: 20,
-        padding: spacing(1.5, 3),
-        borderRadius: 999,
-        color: `${palette.common.white}`,
-        backgroundColor: `${open ? palette.secondary.main : palette.grey[600]}`,
-    }),
-);
+export const StatusBadge = styled(Box, {
+    shouldForwardProp: (props) => props !== 'open',
+})<{ open: boolean }>(({ open, theme: { spacing, palette } }) => ({
+    position: 'absolute',
+    right: spacing(3),
+    top: 20,
+    padding: spacing(1.5, 3),
+    borderRadius: BORDER_RADIUS.ROUNDED,
+    color: `${palette.common.white}`,
+    backgroundColor: `${open ? palette.secondary.main : palette.grey[600]}`,
+}));
 
 export const RestaurantFooter = styled(Box)(({ theme: { spacing } }) => ({
     display: 'flex',

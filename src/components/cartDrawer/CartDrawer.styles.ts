@@ -1,8 +1,10 @@
 import { Drawer, styled } from '@mui/material';
 
-export const StyledCartDrawer = styled(Drawer)(({ theme: { spacing } }) => ({
+import { BORDER_RADIUS } from '@constants';
+
+export const StyledCartDrawer = styled(Drawer)({
     '& .MuiDrawer-paper': {
-        borderRadius: `${spacing(2)} ${spacing(2)} 0 0`,
+        borderRadius: `${BORDER_RADIUS.SM} ${BORDER_RADIUS.SM} 0 0`,
         maxHeight: '90vh',
     },
-}));
+});

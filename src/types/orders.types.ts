@@ -1,4 +1,26 @@
-import { CartItem, Order, OrderStatus } from '@types';
+import { CartItem } from '@types';
+
+export enum OrderStatus {
+    PENDING = 'pending',
+    ACCEPTED = 'accepted',
+    PREPARING = 'preparing',
+    OUT_FOR_DELIVERY = 'outForDelivery',
+    DELIVERED = 'delivered',
+    REJECTED = 'rejected',
+    READY = 'ready',
+}
+
+export interface Order {
+    id: string;
+    customerId: string;
+    restaurantId: string;
+    restaurantName: string;
+    items: CartItem[];
+    status: OrderStatus;
+    subtotal: number;
+    reason?: string;
+    createdAt: string;
+}
 
 export interface OrderData {
     customerId: string;
@@ -31,10 +53,12 @@ export interface OrderViewData {
     bookingFee: number;
     total: number;
 }
+
 export interface OrderStepperData {
     steps: string[];
     activeStep: number;
 }
+
 export interface OrdersProps {
     orders: OrderViewData[];
     canEditStatus: boolean;

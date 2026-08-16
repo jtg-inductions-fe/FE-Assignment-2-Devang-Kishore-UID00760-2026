@@ -4,8 +4,8 @@ import { Box, Chip, Stack, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 
 import { Button } from '@components/button';
-import { NumberStepper } from '@components/numberStepper';
-import { ACTION_BUTTONS } from '@constants';
+import { NumberStepper } from '@components/numberStepper/NumberStepper';
+import { actionLabels } from '@constants';
 import { FoodType, MenuItemCardProps } from '@types';
 
 import {
@@ -88,7 +88,7 @@ export const MenuItemCard = (props: MenuItemCardProps) => {
                                     onClick={onClick}
                                     disabled={isCartDisabled}
                                 >
-                                    {ACTION_BUTTONS.ADD}
+                                    {actionLabels.ADD}
                                     <AddShoppingCartIcon />
                                 </Button>
                             ))}
@@ -105,7 +105,7 @@ export const MenuItemCard = (props: MenuItemCardProps) => {
                             {canEdit && (
                                 <Button
                                     onClick={onEdit}
-                                    aria-label={ACTION_BUTTONS.EDIT}
+                                    aria-label={actionLabels.EDIT}
                                 >
                                     <EditOutlined />
                                 </Button>
@@ -114,7 +114,7 @@ export const MenuItemCard = (props: MenuItemCardProps) => {
                                 <Button
                                     color="error"
                                     onClick={onDelete}
-                                    aria-label={ACTION_BUTTONS.DELETE}
+                                    aria-label={actionLabels.DELETE}
                                 >
                                     <DeleteOutlined />
                                 </Button>

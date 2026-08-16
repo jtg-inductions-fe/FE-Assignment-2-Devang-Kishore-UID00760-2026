@@ -1,6 +1,6 @@
 import { FieldPath } from 'react-hook-form';
 
-import { AddRestaurantFormData } from './AddRestaurant.types';
+import { AddRestaurantFormData } from './AddEditRestaurant.types';
 
 export const addRestaurantContent = {
     RESTAURANT_HEADING: 'ADD NEW RESTAURANT',

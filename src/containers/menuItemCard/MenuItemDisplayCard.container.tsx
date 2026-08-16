@@ -20,7 +20,7 @@ export const MenuItemDisplayCard = (props: MenuItemsContainer) => {
     } = props;
     const stock = menuItem.stock;
     const dispatch = useAppDispatch();
-    const hasPermission = usePermissions();
+    const { hasPermission } = usePermissions();
     const selectedRestaurant = useAppSelector(
         (state) => state.restaurants.selectedRestaurant,
     );

@@ -1,6 +1,7 @@
 import { Box, Card, Chip, styled, Typography } from '@mui/material';
 
 import { Button } from '@components/button';
+import { BORDER_RADIUS } from '@constants';
 import { theme } from '@theme';
 
 export const CardContainer = styled(Card)(
@@ -10,7 +11,7 @@ export const CardContainer = styled(Card)(
         gap: spacing(5),
         flexDirection: 'column',
         padding: spacing(2),
-        borderRadius: spacing(2),
+        borderRadius: BORDER_RADIUS.SM,
         position: 'relative',
         boxShadow: shadows[1],
         transition: '0.25s',
@@ -28,11 +29,11 @@ export const CardContainer = styled(Card)(
 );
 
 export const MenuImage = styled('img')<{ inStock: boolean }>(
-    ({ theme: { spacing, breakpoints }, inStock }) => ({
+    ({ theme: { breakpoints }, inStock }) => ({
         width: '100%',
         height: 200,
         objectFit: 'cover',
-        borderRadius: spacing(2),
+        borderRadius: BORDER_RADIUS.SM,
         filter: `grayscale(${inStock ? 0 : 1})`,
 
         [breakpoints.up('sm')]: {
@@ -88,9 +89,9 @@ export const Footer = styled(Box)({
     marginTop: 'auto',
 });
 
-export const AddMenuButton = styled(Button)(({ theme: { spacing } }) => ({
-    borderRadius: spacing(20),
-}));
+export const AddMenuButton = styled(Button)({
+    borderRadius: BORDER_RADIUS.XL,
+});
 
 export const MenuTypography = styled(Typography)({
     ...theme.mixins.lineClamp?.(2),

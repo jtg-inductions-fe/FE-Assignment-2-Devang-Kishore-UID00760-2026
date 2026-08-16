@@ -1,6 +1,6 @@
 import { CUISINES, FOOD_TYPES } from '@constants';
 
-import { addRestaurantContent } from './addRestaurant.constants';
+import { addRestaurantContent } from './addEditRestaurant.constants';
 
 export const menuFields = [
     {

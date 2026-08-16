@@ -1,6 +1,7 @@
+import { FormHelperText } from '@mui/material';
+
 import {
     StyledFormControl,
-    StyledHelperText,
     StyledInputLabel,
     StyledSelect,
 } from './CustomSelect.styles';
@@ -19,6 +20,6 @@ export const CustomSelect = ({
         <StyledSelect label={label} {...props}>
             {children}
         </StyledSelect>
-        <StyledHelperText>{helperText}</StyledHelperText>
+        <FormHelperText>{helperText}</FormHelperText>
     </StyledFormControl>
 );
