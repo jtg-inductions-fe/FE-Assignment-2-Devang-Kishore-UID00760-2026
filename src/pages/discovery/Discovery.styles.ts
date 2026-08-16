@@ -1,6 +1,7 @@
 import { Box, styled } from '@mui/material';
 
 import { Button } from '@components/button';
+import { BORDER_RADIUS } from '@constants';
 
 export const DiscoveryContainer = styled(Box)(({ theme: { spacing } }) => ({
     padding: spacing(8),
@@ -13,7 +14,7 @@ export const DiscoveryContainer = styled(Box)(({ theme: { spacing } }) => ({
 export const CuisinesSection = styled(Box)(({ theme: { spacing } }) => ({
     width: '100%',
     display: 'flex',
-    alignItem: 'center',
+    alignItems: 'center',
     height: spacing(20),
     gap: spacing(6),
     overflowX: 'scroll',
@@ -28,7 +29,7 @@ export const CuisineChip = styled(Box)<{ src: string }>(
         height: spacing(15),
         background: `linear-gradient(rgba(49, 49, 48, 0.3), rgba(74, 74, 74, 0.4)),url(${src}) bottom left/100% auto no-repeat`,
         backgroundSize: 'cover',
-        borderRadius: spacing(20),
+        borderRadius: BORDER_RADIUS.ROUNDED,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',

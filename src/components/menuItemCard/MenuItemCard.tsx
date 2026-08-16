@@ -5,7 +5,7 @@ import Grid from '@mui/material/Grid2';
 
 import { Button } from '@components/button';
 import { NumberStepper } from '@components/numberStepper/NumberStepper';
-import { ACTION_BUTTONS } from '@constants';
+import { actionLabels } from '@constants';
 import { FoodType, MenuItemCardProps } from '@types';
 
 import {
@@ -90,7 +90,7 @@ export const MenuItemCard = (props: MenuItemCardProps) => {
                                     onClick={onClick}
                                     disabled={isCartDisabled}
                                 >
-                                    {ACTION_BUTTONS.ADD}
+                                    {actionLabels.ADD}
                                     <AddShoppingCartIcon />
                                 </Button>
                             ))}

@@ -8,7 +8,7 @@ import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import { Button, Chip, Stack, Typography } from '@mui/material';
 
-import { ACTION_BUTTONS } from '@constants';
+import { actionLabels } from '@constants';
 import { FoodType } from '@types';
 
 import { restaurantBannerContent } from './restaurantBanner.constants';
@@ -135,10 +135,10 @@ export const RestaurantBanner = (props: RestaurantBannerProps) => {
                                         onClick={() => setIsEditingTime(false)}
                                         color="error"
                                     >
-                                        {ACTION_BUTTONS.CANCEL}
+                                        {actionLabels.CANCEL}
                                     </Button>
                                     <Button onClick={handleSaveTimings}>
-                                        {ACTION_BUTTONS.SAVE}
+                                        {actionLabels.SAVE}
                                     </Button>
                                 </Stack>
                             </Stack>
@@ -154,7 +154,7 @@ export const RestaurantBanner = (props: RestaurantBannerProps) => {
                                         onClick={() => setIsEditingTime(true)}
                                         variant="outlined"
                                     >
-                                        {ACTION_BUTTONS.EDIT}
+                                        {actionLabels.EDIT}
                                     </Button>
                                 )}
                             </Stack>

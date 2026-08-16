@@ -12,9 +12,9 @@ import { DAYS } from '@constants';
 import {
     addressFields,
     restaurantBasicInfoFields,
-} from '@containers/addRestaurant/addRestaurant.config';
-import { addRestaurantContent } from '@containers/addRestaurant/addRestaurant.constants';
-import { AddRestaurantFormData } from '@containers/addRestaurant/AddRestaurant.types';
+} from '@containers/addEditRestaurant/addEditRestaurant.config';
+import { addRestaurantContent } from '@containers/addEditRestaurant/addEditRestaurant.constants';
+import { AddRestaurantFormData } from '@containers/addEditRestaurant/AddEditRestaurant.types';
 
 export const RestaurantInfoSection = () => {
     const {

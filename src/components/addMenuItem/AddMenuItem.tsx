@@ -4,7 +4,7 @@ import { DialogActions, DialogContent, DialogTitle } from '@mui/material';
 
 import { Button } from '@components/button';
 import { RestaurantMenuItem } from '@components/restaurantMenuItem/RestaurantMenuItem';
-import { ACTION_BUTTONS } from '@constants';
+import { actionLabels } from '@constants';
 import { MenuFormContainer } from '@types';
 
 import { menuContent } from './addMenuItem.constants';
@@ -33,10 +33,10 @@ export const AddMenuItem = (props: MenuFormContainer) => {
                         variant="contained"
                         color="error"
                     >
-                        {ACTION_BUTTONS.CANCEL}
+                        {actionLabels.CANCEL}
                     </Button>
                     <Button type="submit" variant="contained" color="secondary">
-                        {ACTION_BUTTONS.SUBMIT}
+                        {actionLabels.SUBMIT}
                     </Button>
                 </DialogActions>
             </Form>
