@@ -1,7 +1,8 @@
-import { CartContent } from '@components/cartContent';
-import { CartDialogProps } from '@types';
+import { Dialog } from '@mui/material';
 
-import { StyledCartDialog } from './CartDialog.styles';
+import { CartContent } from '@components/cartContent/CartContent';
+import { BORDER_RADIUS } from '@constants';
+import { CartDialogProps } from '@types';
 
 export const CartDialog = (props: CartDialogProps) => {
     const {
@@ -16,8 +17,23 @@ export const CartDialog = (props: CartDialogProps) => {
         bookingFee,
         onCheckout,
     } = props;
+
     return (
-        <StyledCartDialog open={open} onClose={onClose} disableRestoreFocus>
+        <Dialog
+            open={open}
+            onClose={onClose}
+            disableRestoreFocus
+            slotProps={{
+                paper: {
+                    sx: {
+                        width: '100%',
+                        maxWidth: (theme) => theme.breakpoints.values.md,
+                        borderRadius: BORDER_RADIUS.SM,
+                        padding: (theme) => theme.spacing(4),
+                    },
+                },
+            }}
+        >
             <CartContent
                 items={items}
                 onClose={onClose}
@@ -29,6 +45,6 @@ export const CartDialog = (props: CartDialogProps) => {
                 bookingFee={bookingFee}
                 onCheckout={onCheckout}
             />
-        </StyledCartDialog>
+        </Dialog>
     );
 };

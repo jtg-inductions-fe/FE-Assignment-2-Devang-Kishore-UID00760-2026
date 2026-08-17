@@ -21,6 +21,7 @@ export const CartContent = (props: CartContentProps) => {
         onCheckout,
     } = props;
     const isEmpty = items.length === 0;
+
     return (
         <CartContentContainer>
             <Stack direction="row" justifyContent="space-between">

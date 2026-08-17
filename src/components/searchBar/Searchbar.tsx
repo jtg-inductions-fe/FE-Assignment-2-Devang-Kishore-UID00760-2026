@@ -7,6 +7,7 @@ import { BORDER_RADIUS } from '@constants';
 
 export const Searchbar = (props: TextFieldProps) => {
     const { slotProps, ...rest } = props;
+
     return (
         <Box width="100%">
             <TextField
@@ -16,7 +17,7 @@ export const Searchbar = (props: TextFieldProps) => {
                     input: {
                         ...slotProps?.input,
                         sx: {
-                            height: 52,
+                            maxHeight: 52,
                             borderRadius: BORDER_RADIUS.ROUNDED,
                             '& fieldset': {
                                 borderRadius: BORDER_RADIUS.ROUNDED,

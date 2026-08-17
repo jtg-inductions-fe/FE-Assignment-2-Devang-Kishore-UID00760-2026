@@ -22,11 +22,7 @@ import {
 } from '@store/slices/order/ordersSlice';
 import { Order, OrderStatus, OrderViewData, SnackbarTheme } from '@types';
 
-import {
-    orderStatusData,
-    orderStatusSteps,
-    ordersTextContent,
-} from './orders.constants';
+import { orderStatusSteps, ordersTextContent } from './orders.constants';
 import { BackButton, EmptyOrders } from './Orders.styles';
 
 export const OrdersPage = () => {
@@ -125,7 +121,7 @@ export const OrdersPage = () => {
             };
         }
         return {
-            steps: orderStatusData,
+            steps: orderStatusSteps,
             activeStep: orderStatusSteps.indexOf(status),
         };
     };
@@ -194,6 +190,7 @@ export const OrdersPage = () => {
                     </Typography>
                 </EmptyOrders>
             )}
+
             <RejectedOrderDialog
                 open={Boolean(rejectionOrderId)}
                 reason={rejectionReason}

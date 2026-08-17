@@ -12,9 +12,11 @@ import {
     CartItemName,
     QuantityContainer,
 } from './CartItem.styles';
+
 export const CartItem = (props: CartItemProps) => {
     const { item, onChange, onDecrease, onRemove } = props;
     const { item: menuItem, quantity } = item;
+
     return (
         <CartItemContainer>
             <CartItemImage

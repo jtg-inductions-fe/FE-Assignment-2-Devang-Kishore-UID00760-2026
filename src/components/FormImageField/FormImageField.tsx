@@ -10,6 +10,7 @@ export const FormImageField = <T extends FieldValues>(
     props: FormImageFieldProps<T>,
 ) => {
     const { name, control, label, alt } = props;
+
     return (
         <Controller
             name={name}

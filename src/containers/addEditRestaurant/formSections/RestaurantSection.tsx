@@ -7,7 +7,7 @@ import { CustomSelect } from '@components/customSelect';
 import { FormSelectField } from '@components/FormSelectField';
 import { FormTextField } from '@components/FormTextField';
 import { TextField } from '@components/textField';
-import { CUISINES } from '@constants';
+import { CUISINES, inputFieldTypes } from '@constants';
 import { restaurantInfoFields } from '@containers/addEditRestaurant/addEditRestaurant.config';
 import { addRestaurantContent } from '@containers/addEditRestaurant/addEditRestaurant.constants';
 import { AddRestaurantFormData } from '@containers/addEditRestaurant/AddEditRestaurant.types';
@@ -16,11 +16,12 @@ import { useAppSelector } from '@hooks/storeHooks';
 export const RestaurantSection = () => {
     const { control } = useFormContext<AddRestaurantFormData>();
     const { user } = useAppSelector((state) => state.auth);
+
     return (
         <Grid container spacing={3}>
             <Grid size={{ xs: 12, md: 6 }}>
                 <TextField
-                    label={`${addRestaurantContent.OWNER_NAME_LABEL}`}
+                    label={addRestaurantContent.OWNER_NAME_LABEL}
                     fullWidth
                     value={user?.name}
                     disabled
@@ -31,7 +32,7 @@ export const RestaurantSection = () => {
                 const fieldName = field.name as Path<AddRestaurantFormData>;
                 return (
                     <Grid key={field.name} size={field.grid}>
-                        {field.type === 'select' ? (
+                        {field.type === inputFieldTypes.SELECT ? (
                             <FormSelectField
                                 name={fieldName}
                                 control={control}
@@ -61,7 +62,9 @@ export const RestaurantSection = () => {
                         <CustomSelect
                             {...field}
                             multiple
-                            label={`${addRestaurantContent.RESTAURANT_CUISINES_LABEL}`}
+                            label={
+                                addRestaurantContent.RESTAURANT_CUISINES_LABEL
+                            }
                             error={!!fieldState.error}
                             helperText={fieldState.error?.message}
                             required

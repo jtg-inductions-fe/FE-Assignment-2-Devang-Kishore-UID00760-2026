@@ -9,14 +9,6 @@ export const orderStatusSteps = [
     OrderStatus.DELIVERED,
 ];
 
-export const orderStatusData = [
-    'Pending',
-    'accepted',
-    'Preparing',
-    'ready',
-    'out For Delivery',
-    'Delivered',
-];
 export const ordersTextContent = {
     SEARCH_PLACEHOLDER: 'Search Order By Restaurant name....',
     ORDER_SUCCESS_MESSAGE: 'Order placed successfully.',

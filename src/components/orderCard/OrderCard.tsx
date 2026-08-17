@@ -39,6 +39,7 @@ export const OrderCard = (props: OrderCardProps) => {
     const [expanded, setExpended] = useState(false);
     const firstItem = order.items[0];
     const remainingItems = order.items.length - 1;
+
     return (
         <OrderCardContainer>
             <Stack flexDirection="row" gap={4}>

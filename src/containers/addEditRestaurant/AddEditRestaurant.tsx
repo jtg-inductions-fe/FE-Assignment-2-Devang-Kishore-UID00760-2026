@@ -197,8 +197,8 @@ export const AddEditRestaurant = () => {
                                 }
                             >
                                 {activeStep === 0
-                                    ? `${addRestaurantContent.CANCEL}`
-                                    : `${addRestaurantContent.BACK}`}
+                                    ? addRestaurantContent.CANCEL
+                                    : addRestaurantContent.BACK}
                             </Button>
                             <Button
                                 type="button"
@@ -209,8 +209,8 @@ export const AddEditRestaurant = () => {
                                 loading={loading}
                             >
                                 {activeStep === STEPS.length - 1
-                                    ? `${addRestaurantContent.SUBMIT}`
-                                    : `${addRestaurantContent.NEXT}`}
+                                    ? addRestaurantContent.SUBMIT
+                                    : addRestaurantContent.NEXT}
                             </Button>
                         </ActionWrapper>
                     </RestaurantForm>
@@ -220,15 +220,15 @@ export const AddEditRestaurant = () => {
                 open={isOpen}
                 title={
                     !isEditMode
-                        ? `${addRestaurantContent.ADD_RESTAURANT_DIALOG_TITLE}`
-                        : `${addRestaurantContent.EDIT_RESTAURANT_DIALOG_TITLE}`
+                        ? addRestaurantContent.ADD_RESTAURANT_DIALOG_TITLE
+                        : addRestaurantContent.EDIT_RESTAURANT_DIALOG_TITLE
                 }
                 message={
                     !isEditMode
-                        ? `${addRestaurantContent.ADD_RESTAURANT_DIALOG_SUBTITLE}`
-                        : `${addRestaurantContent.EDIT_RESTAURANT_DIALOG_SUBTITLE}`
+                        ? addRestaurantContent.ADD_RESTAURANT_DIALOG_SUBTITLE
+                        : addRestaurantContent.EDIT_RESTAURANT_DIALOG_SUBTITLE
                 }
-                confirmLabel={`${addRestaurantContent.DIALOG_LABEL}`}
+                confirmLabel={addRestaurantContent.DIALOG_LABEL}
                 onCancel={() => setIsOpen((state) => !state)}
                 onConfirm={() => void handleConfirm()}
             />

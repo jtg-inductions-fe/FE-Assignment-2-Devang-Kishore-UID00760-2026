@@ -7,6 +7,7 @@ import { NumberStepperProps } from './numberStepper.types';
 
 export const NumberStepper = (props: NumberStepperProps) => {
     const { label, value, disabled, onChange, onBlur, onDecrement } = props;
+
     return (
         <Stack direction="row" spacing={1} alignItems="center">
             {label && <Typography variant="body2">{label}</Typography>}

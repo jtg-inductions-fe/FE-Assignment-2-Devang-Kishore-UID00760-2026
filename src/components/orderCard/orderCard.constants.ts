@@ -5,7 +5,7 @@ export const orderCardTextContent = {
     TOTAL_LABEL: 'Total',
     REJECTION_REASON_LABEL: 'Reason For Rejection:',
     ORDER_ID_LABEL: 'Order Id: ',
-    MORE: 'more',
+    MORE: 'More',
     REORDER: 'Reorder',
     ORDER_TIME_LABEL: 'Order placed on',
     CLOSED_ARIA_LABEL: 'Collapse order',

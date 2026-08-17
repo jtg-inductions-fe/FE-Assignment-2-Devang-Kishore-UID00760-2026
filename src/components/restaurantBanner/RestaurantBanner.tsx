@@ -4,10 +4,11 @@ import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import { Button, Chip, Stack, Typography } from '@mui/material';
 
+import { TextField } from '@components/textField';
 import { actionLabels } from '@constants';
+import { restaurantMenuContent } from '@pages/restaurantMenu/restaurantMenu.constants';
 import { FoodType } from '@types';
 
-import { restaurantBannerContent } from './restaurantBanner.constants';
 import {
     BackButton,
     BannerContainer,
@@ -19,7 +20,6 @@ import {
     RestaurantActions,
     RestaurantInfo,
     RestaurantLogo,
-    TimeInput,
     TopRow,
 } from './RestaurantBanner.styles';
 import { RestaurantBannerProps } from './restaurantBanner.types';
@@ -37,6 +37,7 @@ export const RestaurantBanner = (props: RestaurantBannerProps) => {
         setClosingTime,
         handleSaveTimings,
     } = props;
+
     return (
         <BannerContainer>
             <BannerImage
@@ -78,10 +79,7 @@ export const RestaurantBanner = (props: RestaurantBannerProps) => {
                     <InfoRow>
                         <LocationOnOutlined />
                         <Typography variant="body2">
-                            {restaurant?.address?.street},{' '}
-                            {restaurant?.address?.city},{' '}
-                            {restaurant?.address?.state},{' '}
-                            {restaurant?.address?.pincode}
+                            {`${restaurant?.address?.street}, ${restaurant?.address?.city}, ${restaurant?.address?.state}, ${restaurant?.address?.pincode}`}
                         </Typography>
                     </InfoRow>
                     <CuisineWrapper>
@@ -104,25 +102,33 @@ export const RestaurantBanner = (props: RestaurantBannerProps) => {
                         }
                     />
                     <Typography variant="h5">
-                        {restaurantBannerContent.TIMINGS_LABEL}
+                        {restaurantMenuContent.TIMINGS_LABEL}
                     </Typography>
                     <InfoRow>
                         {isEditingTime ? (
                             <Stack>
                                 <Stack direction="row" spacing={2}>
-                                    <TimeInput
+                                    <TextField
                                         type="time"
                                         value={openingTime}
                                         onChange={(e) =>
                                             setOpeningTime(e.target.value)
                                         }
+                                        sx={{
+                                            backgroundColor: (theme) =>
+                                                theme.palette.common.white,
+                                        }}
                                     />
-                                    <TimeInput
+                                    <TextField
                                         type="time"
                                         value={closingTime}
                                         onChange={(e) =>
                                             setClosingTime(e.target.value)
                                         }
+                                        sx={{
+                                            backgroundColor: (theme) =>
+                                                theme.palette.common.white,
+                                        }}
                                     />
                                 </Stack>
                                 <Stack

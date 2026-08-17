@@ -83,7 +83,7 @@ export const addRestaurantContent = {
     RESTAURANT_CUISINES_REQUIRED: 'Cuisines are required',
     RESTAURANT_EDIT: 'Edit Restaurant',
     DELETE_ITEM_CONFIRM_LABEL: 'Yes Delete',
-    ITEM_ADDED_MESSAGE: 'Item Added successful.',
+    ITEM_ADDED_MESSAGE: 'Item added successful.',
     FETCH_MENU_ERROR: 'Error while fetching menu',
 };
 

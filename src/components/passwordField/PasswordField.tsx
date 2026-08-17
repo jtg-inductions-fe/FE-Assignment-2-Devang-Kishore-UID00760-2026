@@ -33,8 +33,8 @@ export const PasswordField = (props: TextFieldProps) => {
                                 edge="end"
                                 aria-label={
                                     showPassword
-                                        ? `${passwordLabels.HIDE_PASSWORD}`
-                                        : `${passwordLabels.SHOW_PASSWORD}`
+                                        ? passwordLabels.HIDE_PASSWORD
+                                        : passwordLabels.SHOW_PASSWORD
                                 }
                             >
                                 {showPassword ? (

@@ -1,8 +1,9 @@
 import { Box, IconButton, styled, Typography } from '@mui/material';
 
-import { TextField } from '@components/textField';
 import { BORDER_RADIUS } from '@constants';
 import { theme } from '@theme';
+
+import { Z_INDEX } from '../../constants/themeConstants';
 
 export const BannerContainer = styled(Box)(({ theme: { palette } }) => ({
     width: '100%',
@@ -55,18 +56,20 @@ export const CuisineWrapper = styled(Box)(({ theme: { spacing } }) => ({
 }));
 
 export const RestaurantLogo = styled('img')(({ theme: { breakpoints } }) => ({
-    width: 100,
+    maxWidth: 100,
     maxHeight: 100,
     borderRadius: BORDER_RADIUS.SM,
     border: '5px solid white',
     [breakpoints.up('md')]: {
         borderRadius: BORDER_RADIUS.MD,
-        width: 180,
-        height: 180,
+        maxWidth: 180,
+        maxHeight: 180,
     },
 }));
 
-export const BannerImage = styled('img')<{ isOpen: boolean }>(({ isOpen }) => ({
+export const BannerImage = styled('img', {
+    shouldForwardProp: (props) => props !== 'isOpen',
+})<{ isOpen: boolean }>(({ isOpen }) => ({
     position: 'absolute',
     inset: 0,
     left: '50%',
@@ -74,9 +77,8 @@ export const BannerImage = styled('img')<{ isOpen: boolean }>(({ isOpen }) => ({
     width: '100vw',
     height: '100%',
     objectFit: 'cover',
-    maxWidth: 'none',
     filter: `brightness(0.2) grayscale(${isOpen ? 0 : 1})`,
-    zIndex: -1,
+    zIndex: Z_INDEX.BELOW,
 }));
 
 export const BannerContent = styled(Box)(
@@ -121,9 +123,3 @@ export const RestaurantActions = styled(Box)(
         color: palette.common.white,
     }),
 );
-
-export const TimeInput = styled(TextField)(({ theme: { palette } }) => ({
-    '& .MuiOutlinedInput-root': {
-        backgroundColor: palette.common.white,
-    },
-}));

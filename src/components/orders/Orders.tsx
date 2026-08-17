@@ -12,6 +12,7 @@ export const Orders = (props: OrdersProps) => {
         showReorder,
         getSteps,
     } = props;
+
     return (
         <OrderContainer>
             {orders.map(({ order, statusLabel, bookingFee, total }) => (

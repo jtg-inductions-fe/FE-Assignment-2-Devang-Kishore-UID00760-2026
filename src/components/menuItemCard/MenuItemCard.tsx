@@ -17,6 +17,7 @@ import {
     MenuTypography,
     OutOfStockText,
 } from './MenuItemCard.styles';
+
 export const MenuItemCard = (props: MenuItemCardProps) => {
     const {
         menuItem,
@@ -37,6 +38,7 @@ export const MenuItemCard = (props: MenuItemCardProps) => {
         onBlur,
         onDecrement,
     } = props;
+
     return (
         <CardContainer>
             <MenuImage
@@ -46,7 +48,10 @@ export const MenuItemCard = (props: MenuItemCardProps) => {
                 inStock={menuItem.stock > 0}
             />
             {menuItem.stock == 0 && (
-                <OutOfStockText label="Out Of Stock" color="error" />
+                <OutOfStockText
+                    label={actionLabels.OUT_OF_STOCK}
+                    color="error"
+                />
             )}
             <Content>
                 <Header>

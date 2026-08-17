@@ -10,6 +10,7 @@ import { ConfirmDialog } from '@components/confirmationDialog';
 import { FormImageField } from '@components/FormImageField';
 import { FormSelectField } from '@components/FormSelectField';
 import { FormTextField } from '@components/FormTextField';
+import { inputFieldTypes } from '@constants';
 import { menuFields } from '@containers/addEditRestaurant/addEditRestaurant.config';
 import { addRestaurantContent } from '@containers/addEditRestaurant/addEditRestaurant.constants';
 import { MenuCard } from '@containers/addEditRestaurant/AddEditRestaurant.styles';
@@ -61,14 +62,14 @@ export const MenuSection = () => {
                             `menu.${index}.${field.name}` as Path<AddRestaurantFormData>;
                         return (
                             <Grid key={field.name} size={field.grid}>
-                                {field.type === 'select' ? (
+                                {field.type === inputFieldTypes.SELECT ? (
                                     <FormSelectField
                                         name={fieldName}
                                         control={control}
                                         label={field.label}
                                         options={field.options ?? []}
                                     />
-                                ) : field.type === 'image' ? (
+                                ) : field.type === inputFieldTypes.IMAGE ? (
                                     <FormImageField
                                         name={fieldName}
                                         control={control}
@@ -98,10 +99,10 @@ export const MenuSection = () => {
             </Button>
             <ConfirmDialog
                 open={isOpen}
-                title={`${addRestaurantContent.MENU_DIALOG_TITLE}`}
-                message={`${addRestaurantContent.MENU_DIALOG_SUBTITLE}`}
-                confirmLabel={`${addRestaurantContent.DELETE_ITEM_CONFIRM_LABEL}`}
-                onCancel={() => setIsOpen((state) => !state)}
+                title={addRestaurantContent.MENU_DIALOG_TITLE}
+                message={addRestaurantContent.MENU_DIALOG_SUBTITLE}
+                confirmLabel={addRestaurantContent.DELETE_ITEM_CONFIRM_LABEL}
+                onCancel={() => setIsOpen(false)}
                 onConfirm={() => {
                     remove(deleteIndex);
                     setIsOpen((state) => !state);

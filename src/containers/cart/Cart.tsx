@@ -7,7 +7,7 @@ import { useMediaQuery, useTheme } from '@mui/material';
 import { CartDialog } from '@components/cartDialog';
 import { CartDrawer } from '@components/cartDrawer';
 import { ConfirmDialog } from '@components/confirmationDialog';
-import { ROUTES } from '@constants';
+import { actionLabels, ROUTES } from '@constants';
 import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
 import {
     clearCart,
@@ -92,11 +92,12 @@ export const CartContainer = (props: CartContainerProps) => {
 
         setDialogData((state) => ({
             open: !state.open,
-            title: `${cartContent.DELETE_ALERT_TITLE}`,
-            message: `${cartContent.DELETE_ALERT_MESSAGE}`,
+            title: cartContent.DELETE_ALERT_TITLE,
+            message: cartContent.DELETE_ALERT_MESSAGE,
             onConfirm: () => void confirmDelete(),
         }));
     };
+
     const handleCancel = () => {
         setDialogData((state) => ({
             open: !state.open,
@@ -105,17 +106,20 @@ export const CartContainer = (props: CartContainerProps) => {
             onConfirm: state.onConfirm,
         }));
     };
+
     const handleCheckout = async () => {
         if (!cart.items.length) {
             return;
         }
+
         const restaurantId = cart.items[0].item.restaurantID;
+
         try {
             await dispatch(fetchRestaurantByID(restaurantId)).unwrap();
         } catch {
             dispatch(
                 showSnackbar({
-                    message: `${cartContent.FAILED_ORDER_MESSAGE}`,
+                    message: cartContent.FAILED_ORDER_MESSAGE,
                     severity: SnackbarTheme.ERROR,
                 }),
             );
@@ -128,6 +132,7 @@ export const CartContainer = (props: CartContainerProps) => {
             restaurantName: currentRestaurant?.name ?? '',
             items: cart.items,
         };
+
         try {
             await dispatch(createOrder(orderData))
                 .unwrap()
@@ -138,14 +143,14 @@ export const CartContainer = (props: CartContainerProps) => {
             void navigate(ROUTES.ORDERS);
             dispatch(
                 showSnackbar({
-                    message: `${cartContent.SUCCESS_ORDER_MESSAGE}`,
+                    message: cartContent.SUCCESS_ORDER_MESSAGE,
                     severity: SnackbarTheme.SUCCESS,
                 }),
             );
         } catch {
             dispatch(
                 showSnackbar({
-                    message: `${cartContent.FAILED_ORDER_MESSAGE}`,
+                    message: cartContent.FAILED_ORDER_MESSAGE,
                     severity: SnackbarTheme.ERROR,
                 }),
             );
@@ -190,7 +195,7 @@ export const CartContainer = (props: CartContainerProps) => {
                 open={dialogData.open}
                 title={dialogData.title}
                 message={dialogData.message}
-                confirmLabel={'Confirm'}
+                confirmLabel={actionLabels.CONFIRM}
                 onCancel={() => {
                     handleCancel();
                 }}

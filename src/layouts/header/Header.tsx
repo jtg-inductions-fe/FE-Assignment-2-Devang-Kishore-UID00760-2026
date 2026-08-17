@@ -129,7 +129,10 @@ export const Header = () => {
 
     const searchBarProps = {
         value: searchQuery,
-        placeholder: `${currentLocation === `${ROUTES.DISCOVERY}` ? headerTextContent.RESTAURANT_SEARCH_PLACEHOLDER : headerTextContent.MENU_SEARCH_PLACEHOLDER}`,
+        placeholder:
+            currentLocation === ROUTES.DISCOVERY
+                ? headerTextContent.RESTAURANT_SEARCH_PLACEHOLDER
+                : headerTextContent.MENU_SEARCH_PLACEHOLDER,
         fullWidth: true,
         onChange: handleSearch,
         onKeyDown: handleKeyDown,

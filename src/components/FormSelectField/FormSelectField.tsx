@@ -10,6 +10,7 @@ export const FormSelectField = <T extends FieldValues>(
     props: FormSelectFieldProps<T>,
 ) => {
     const { name, control, label, options, required = false } = props;
+
     return (
         <Controller
             name={name}

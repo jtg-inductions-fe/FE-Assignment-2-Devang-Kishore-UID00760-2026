@@ -48,15 +48,10 @@ export const getMenu = (payload: {
         );
     }
 
-    menuData = menuData.sort((a: MenuItem, b: MenuItem) => {
-        if (a.stock === 0 && b.stock > 0) {
-            return 1;
-        }
-        if (a.stock > 0 && b.stock === 0) {
-            return -1;
-        }
-        return 0;
-    });
+    menuData = menuData.sort((a: MenuItem, b: MenuItem) =>
+        a.stock === 0 && b.stock > 0 ? 1 : -1,
+    );
+
     return Promise.resolve(menuData);
 };
 
