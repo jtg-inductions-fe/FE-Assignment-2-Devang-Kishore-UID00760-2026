@@ -7,7 +7,7 @@ export const RestaurantCardContainer = styled(Card)(
     ({ theme: { shadows } }) => ({
         position: 'relative',
         overflow: 'visible',
-        borderRadius: BORDER_RADIUS.LG,
+        borderRadius: BORDER_RADIUS.XL,
         boxShadow: shadows[2],
         '&:hover': {
             boxShadow: shadows[10],

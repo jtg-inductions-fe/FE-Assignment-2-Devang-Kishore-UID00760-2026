@@ -60,7 +60,7 @@ export const Auth = ({ isSignUp = false }: { isSignUp: boolean }) => {
             await dispatch(signupUser(data as SignupFormData)).unwrap();
             dispatch(
                 showSnackbar({
-                    message: `${authContent.SIGNUP_SUCCESS}`,
+                    message: authContent.SIGNUP_SUCCESS,
                     severity: SnackbarTheme.SUCCESS,
                 }),
             );
@@ -80,7 +80,7 @@ export const Auth = ({ isSignUp = false }: { isSignUp: boolean }) => {
             await dispatch(loginUser(data as LoginFormData)).unwrap();
             dispatch(
                 showSnackbar({
-                    message: `${authContent.LOGIN_SUCCESS}`,
+                    message: authContent.LOGIN_SUCCESS,
                     severity: SnackbarTheme.SUCCESS,
                 }),
             );

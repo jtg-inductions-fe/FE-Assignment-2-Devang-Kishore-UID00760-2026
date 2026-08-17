@@ -11,6 +11,7 @@ import { SignupPage } from '@pages/auth/SignupPage';
 import { DiscoveryPage } from '@pages/discovery/Discovery';
 import { ErrorPage } from '@pages/fallback/ErrorPage';
 import { NotFoundPage } from '@pages/fallback/NotFoundPage';
+import { RestaurantMenuPage } from '@pages/restaurantMenu/RestaurantMenu';
 
 export const router = createBrowserRouter([
     {
@@ -35,7 +36,7 @@ export const router = createBrowserRouter([
                             },
                             {
                                 path: ROUTES.RESTAURANT,
-                                element: <div>restaurant</div>,
+                                element: <RestaurantMenuPage />,
                             },
                             {
                                 path: ROUTES.CART,

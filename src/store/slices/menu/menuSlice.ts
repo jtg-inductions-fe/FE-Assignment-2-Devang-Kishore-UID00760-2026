@@ -32,6 +32,7 @@ export const updateMenuEntry = createAsyncThunk(
 );
 
 export const removeMenuEntry = createAsyncThunk('menu/remove', deleteMenuItem);
+
 export const menuSlice = createSlice({
     name: 'menu',
     initialState,

@@ -8,7 +8,7 @@ import { CustomSelect } from '@components/customSelect';
 import { FormImageField } from '@components/FormImageField';
 import { FormTextField } from '@components/FormTextField';
 import { TimeField } from '@components/timeField';
-import { DAYS } from '@constants';
+import { DAYS, inputFieldTypes } from '@constants';
 import {
     addressFields,
     restaurantBasicInfoFields,
@@ -33,7 +33,7 @@ export const RestaurantInfoSection = () => {
                 const fieldName = field.name as Path<AddRestaurantFormData>;
                 return (
                     <Grid key={field.name} size={field.grid}>
-                        {field.type === 'image' ? (
+                        {field.type === inputFieldTypes.IMAGE ? (
                             <FormImageField
                                 name={fieldName}
                                 control={control}
@@ -137,7 +137,7 @@ export const RestaurantInfoSection = () => {
                         <CustomSelect
                             {...field}
                             multiple
-                            label={`${addRestaurantContent.WORKING_DAYS_LABEL}`}
+                            label={addRestaurantContent.WORKING_DAYS_LABEL}
                             error={!!errors.workingDays}
                             helperText={errors.workingDays?.message}
                             MenuProps={{

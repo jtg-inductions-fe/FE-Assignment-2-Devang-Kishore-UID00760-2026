@@ -79,6 +79,7 @@ export const addRestaurantContent = {
     RESTAURANT_CUISINES_VALIDATION: 'Select at least one cuisine',
     RESTAURANT_CUISINES_REQUIRED: 'Cuisines are required',
     RESTAURANT_EDIT: 'Edit Restaurant',
+    DELETE_ITEM_CONFIRM_LABEL: 'Yes Delete',
 };
 
 export const STEP_FIELDS: FieldPath<AddRestaurantFormData>[][] = [

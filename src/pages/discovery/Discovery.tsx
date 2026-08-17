@@ -118,13 +118,18 @@ export const DiscoveryPage = () => {
         };
         setDialogData(() => ({
             open: true,
-            title: `${restaurant.isOpen ? discoveryContent.CLOSE : discoveryContent.OPEN}`,
-            message: `${restaurant.isOpen ? discoveryContent.CLOSE_MESSAGE : discoveryContent.OPEN_MESSAGE}`,
+            title: restaurant.isOpen
+                ? discoveryContent.CLOSE
+                : discoveryContent.OPEN,
+            message: restaurant.isOpen
+                ? discoveryContent.CLOSE_MESSAGE
+                : discoveryContent.OPEN_MESSAGE,
             onConfirm: () => {
                 confirmToggle();
             },
         }));
     };
+
     return (
         <>
             <DiscoveryContainer>
@@ -154,7 +159,7 @@ export const DiscoveryPage = () => {
                                 variant="contained"
                                 onClick={handleAddRestaurant}
                                 sx={{
-                                    borderRadius: BORDER_RADIUS.LG,
+                                    borderRadius: BORDER_RADIUS.XL,
                                     padding: 4,
                                 }}
                             >

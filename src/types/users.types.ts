@@ -2,6 +2,7 @@ export enum Role {
     CUSTOMER = 'customer',
     OWNER = 'owner',
 }
+
 export interface UserData {
     name: string;
     email: string;

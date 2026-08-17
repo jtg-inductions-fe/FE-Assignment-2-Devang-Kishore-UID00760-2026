@@ -65,9 +65,14 @@ export const COLORS = {
 export const BORDER_RADIUS = {
     SM: 4,
     MD: 8,
-    LG: 20,
-    XL: 16,
+    LG: 16,
+    XL: 20,
     ROUNDED: 9999,
+};
+
+export const Z_INDEX = {
+    BELOW: -1,
+    FRONT: 2,
 };
 
 /**

@@ -26,10 +26,10 @@ const saveMenu = (menu: MenuItem[]): void => {
  * @returns Data of menu items served by the restaurant.
  */
 export const getMenu = (payload: {
-    restaurantID?: string;
+    restaurantId?: string;
     filters?: QueryParams;
 }): Promise<MenuItem[]> => {
-    const restaurantID = payload.restaurantID;
+    const restaurantID = payload.restaurantId;
     const filters = payload.filters;
     const menu = getStoredMenu();
     const currentMenu = restaurantID
@@ -47,6 +47,11 @@ export const getMenu = (payload: {
             (menuItem) => menuItem.category === filters.type,
         );
     }
+
+    menuData = menuData.sort((a: MenuItem, b: MenuItem) =>
+        a.stock === 0 && b.stock > 0 ? 1 : -1,
+    );
+
     return Promise.resolve(menuData);
 };
 

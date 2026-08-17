@@ -1,0 +1,1 @@
+export { RestaurantBanner } from './RestaurantBanner';
