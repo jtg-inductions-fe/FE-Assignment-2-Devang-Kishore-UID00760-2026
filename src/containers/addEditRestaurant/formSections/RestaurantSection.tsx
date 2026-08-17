@@ -8,17 +8,13 @@ import { FormSelectField } from '@components/FormSelectField';
 import { FormTextField } from '@components/FormTextField';
 import { TextField } from '@components/textField';
 import { CUISINES } from '@constants';
+import { restaurantInfoFields } from '@containers/addEditRestaurant/addEditRestaurant.config';
+import { addRestaurantContent } from '@containers/addEditRestaurant/addEditRestaurant.constants';
+import { AddRestaurantFormData } from '@containers/addEditRestaurant/AddEditRestaurant.types';
 import { useAppSelector } from '@hooks/storeHooks';
 
-import { restaurantInfoFields } from '../addRestaurant.config';
-import { addRestaurantContent } from '../addRestaurant.constants';
-import { AddRestaurantFormData } from '../AddRestaurant.types';
-
 export const RestaurantSection = () => {
-    const {
-        control,
-        formState: { errors },
-    } = useFormContext<AddRestaurantFormData>();
+    const { control } = useFormContext<AddRestaurantFormData>();
     const { user } = useAppSelector((state) => state.auth);
     return (
         <Grid container spacing={3}>
@@ -61,13 +57,13 @@ export const RestaurantSection = () => {
                 <Controller
                     name="cuisines"
                     control={control}
-                    render={({ field }) => (
+                    render={({ field, fieldState }) => (
                         <CustomSelect
                             {...field}
                             multiple
                             label={`${addRestaurantContent.RESTAURANT_CUISINES_LABEL}`}
-                            error={!!errors.cuisines}
-                            helperText={errors.cuisines?.message}
+                            error={!!fieldState.error}
+                            helperText={fieldState.error?.message}
                             required
                             MenuProps={{
                                 anchorOrigin: {

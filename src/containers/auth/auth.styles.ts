@@ -6,6 +6,7 @@ import { styled } from '@mui/material/styles';
 
 import backgroundDesktop from '@assets/images/auth-image-desktop.webp';
 import backgroundMobile from '@assets/images/auth-image-mobile.webp';
+import { BORDER_RADIUS } from '@constants';
 const backgroundGradient =
     'linear-gradient(rgba(250,250, 248, 0.9), rgba(250,250, 248, 0.9))';
 export const AuthWrapper = styled(Box)(
@@ -56,7 +57,7 @@ export const AuthCard = styled(Paper)(
         width: '100%',
         maxWidth: 480,
         padding: spacing(3),
-        borderRadius: spacing(5),
+        borderRadius: BORDER_RADIUS.SM,
         backgroundColor: 'transparent',
         boxShadow: 'none',
 

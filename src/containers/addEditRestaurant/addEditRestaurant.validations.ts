@@ -3,7 +3,7 @@ import * as yup from 'yup';
 import { CUISINES, DAYS, FOOD_TYPES } from '@constants';
 import { Cuisine, Day, FoodType } from '@types';
 
-import { addRestaurantContent } from './addRestaurant.constants';
+import { addRestaurantContent } from './addEditRestaurant.constants';
 export const addRestaurantSchema = yup.object({
     name: yup
         .string()
@@ -31,8 +31,8 @@ export const addRestaurantSchema = yup.object({
         .array()
         .of(yup.mixed<Cuisine>().oneOf(CUISINES).required())
         .ensure()
-        .min(1, 'Select at least one cuisine')
-        .required('Cuisines are required'),
+        .min(1, addRestaurantContent.RESTAURANT_CUISINES_VALIDATION)
+        .required(addRestaurantContent.RESTAURANT_CUISINES_REQUIRED),
     address: yup.object({
         street: yup
             .string()

@@ -1,23 +1,26 @@
+import { RESTAURANT_TEXT_CONTENT } from '@constants';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
     createRestaurant,
     deleteRestaurant,
+    getRestaurant,
     getRestaurants,
     updateRestaurant,
 } from '@services/restaurant.service';
-import { Restaurant } from '@types';
+import { QueryParams, Restaurant } from '@types';
 
 import { RestaurantState } from './restaurantSlice.types';
 
 const initialState: RestaurantState = {
     items: [],
+    selectedRestaurant: null,
     loading: false,
     error: null,
 };
 
 export const fetchRestaurants = createAsyncThunk(
     'restaurants/fetch',
-    getRestaurants,
+    (filters?: QueryParams) => getRestaurants(filters),
 );
 
 export const saveRestaurant = createAsyncThunk(
@@ -34,6 +37,17 @@ export const updateRestaurantData = createAsyncThunk(
 export const removeRestaurant = createAsyncThunk(
     'restaurant/remove',
     (id: string) => deleteRestaurant(id),
+);
+
+export const fetchRestaurantByID = createAsyncThunk(
+    'restaurants/fetchById',
+    async (id: string) => {
+        const restaurant = await getRestaurant(id);
+        if (!restaurant) {
+            throw new Error(RESTAURANT_TEXT_CONTENT.RESTAURANT_NOT_FOUND);
+        }
+        return restaurant;
+    },
 );
 
 export const RestaurantSlice = createSlice({
@@ -61,6 +75,9 @@ export const RestaurantSlice = createSlice({
                 state.items = state.items.filter(
                     (item) => item.id !== action.payload,
                 );
+            })
+            .addCase(fetchRestaurantByID.fulfilled, (state, action) => {
+                state.selectedRestaurant = action.payload;
             });
     },
 });

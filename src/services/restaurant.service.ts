@@ -1,5 +1,5 @@
 import restaurantMock from '@data/restaurants.json';
-import { Restaurant } from '@types';
+import { FoodType, QueryParams, Restaurant } from '@types';
 import { readStorage, writeStorage } from '@utils/storage';
 
 const RESTAURANTS_KEY = 'restaurants';
@@ -21,10 +21,31 @@ const saveRestaurants = (restaurants: Restaurant[]): void => {
 
 /**
  * Fetches data of all the restaurants.
+ * @param filters searchbar and veg/nonVge filters.
  * @returns Promise of all the stored restaurants.
  */
-export const getRestaurants = (): Promise<Restaurant[]> =>
-    Promise.resolve(getStoredRestaurants());
+export const getRestaurants = (
+    filters?: QueryParams,
+): Promise<Restaurant[]> => {
+    let restaurants = getStoredRestaurants();
+    if (filters?.search) {
+        const search = filters.search.toLowerCase();
+        restaurants = restaurants.filter((restaurant) =>
+            restaurant.name.toLowerCase().includes(search),
+        );
+    }
+    if (filters?.type && filters.type !== FoodType.BOTH) {
+        restaurants = restaurants.filter(
+            (restaurant) => restaurant.category === filters.type,
+        );
+    }
+    if (filters?.ownerId) {
+        restaurants = restaurants.filter(
+            (restaurant) => restaurant.ownerId === filters.ownerId,
+        );
+    }
+    return Promise.resolve(restaurants);
+};
 
 /**
  * Fetches data of restaurant.

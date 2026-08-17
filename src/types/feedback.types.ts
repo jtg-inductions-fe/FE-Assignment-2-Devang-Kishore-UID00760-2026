@@ -1,5 +1,9 @@
-import { SnackbarTheme } from '@types';
-
+export enum SnackbarTheme {
+    SUCCESS = 'success',
+    ERROR = 'error',
+    WARNING = 'warning',
+    INFO = 'info',
+}
 export interface FeedbackComponentType {
     snackbarOpen: boolean;
     snackbarSeverity: SnackbarTheme;

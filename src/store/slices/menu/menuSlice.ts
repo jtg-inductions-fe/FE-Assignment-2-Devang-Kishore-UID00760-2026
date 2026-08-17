@@ -5,7 +5,7 @@ import {
     getMenu,
     updateMenuItem,
 } from '@services/menu.service';
-import { MenuItem } from '@types';
+import { MenuItem, QueryParams } from '@types';
 
 import { MenuState } from './menuSlice.types';
 
@@ -13,9 +13,11 @@ const initialState: MenuState = {
     items: [],
     loading: false,
 };
+
 export const fetchMenu = createAsyncThunk(
     'menu/fetch',
-    (restaurantId?: string) => getMenu(restaurantId),
+    (payload: { restaurantId?: string; filters?: QueryParams }) =>
+        getMenu(payload),
 );
 
 export const createMenuEntry = createAsyncThunk(
@@ -43,13 +45,13 @@ export const menuSlice = createSlice({
                 state.loading = false;
                 state.items = action.payload;
             })
-            .addCase(createMenuEntry.fulfilled, (state, action) => {
-                state.items.push(action.payload);
-            })
             .addCase(updateMenuEntry.fulfilled, (state, action) => {
                 state.items = state.items.map((item) =>
                     item.id === action.payload.id ? action.payload : item,
                 );
+            })
+            .addCase(createMenuEntry.fulfilled, (state, action) => {
+                state.items.push(action.payload);
             })
             .addCase(removeMenuEntry.fulfilled, (state, action) => {
                 state.items = state.items.filter(

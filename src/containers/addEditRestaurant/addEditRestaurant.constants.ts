@@ -1,6 +1,6 @@
 import { FieldPath } from 'react-hook-form';
 
-import { AddRestaurantFormData } from './AddRestaurant.types';
+import { AddRestaurantFormData } from './AddEditRestaurant.types';
 
 export const addRestaurantContent = {
     RESTAURANT_HEADING: 'ADD NEW RESTAURANT',
@@ -75,6 +75,10 @@ export const addRestaurantContent = {
     ITEM_STOCK_REQUIRED: 'Stock is required',
     ITEM_STOCK_VALIDATION: 'Stock cannot be less than 0',
     ATLEAST_ONE_ITEM_VALIDATION: 'Add at least one menu item',
+    SNACKBAR_ERROR_MESSAGE: 'Error while fetching restaurant data.',
+    RESTAURANT_CUISINES_VALIDATION: 'Select at least one cuisine',
+    RESTAURANT_CUISINES_REQUIRED: 'Cuisines are required',
+    RESTAURANT_EDIT: 'Edit Restaurant',
 };
 
 export const STEP_FIELDS: FieldPath<AddRestaurantFormData>[][] = [

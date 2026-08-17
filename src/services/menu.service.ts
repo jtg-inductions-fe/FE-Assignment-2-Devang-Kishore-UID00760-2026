@@ -1,5 +1,5 @@
 import menuMock from '@data/menu.json';
-import { MenuItem } from '@types';
+import { FoodType, MenuItem, QueryParams } from '@types';
 import { readStorage, writeStorage } from '@utils/storage';
 
 const MENU_KEY = 'menu';
@@ -21,16 +21,32 @@ const saveMenu = (menu: MenuItem[]): void => {
 
 /**
  * Fetches data of menu items served by a restaurant.
- * @param restaurantID :Id of restaurant whose menu needed to be fetched
+ * @param restaurantID :Id of restaurant whose menu needed to be fetched.
+ * @param filters: searchbar and veg/nonVeg filter
  * @returns Data of menu items served by the restaurant.
  */
-export const getMenu = (restaurantID?: string): Promise<MenuItem[]> => {
+export const getMenu = (payload: {
+    restaurantID?: string;
+    filters?: QueryParams;
+}): Promise<MenuItem[]> => {
+    const restaurantID = payload.restaurantID;
+    const filters = payload.filters;
     const menu = getStoredMenu();
     const currentMenu = restaurantID
         ? menu.filter((item) => restaurantID === item.restaurantID)
         : menu;
-    const menuData = currentMenu;
-
+    let menuData = currentMenu;
+    if (filters?.search) {
+        const search = filters.search.toLowerCase();
+        menuData = menuData.filter((menuItem) =>
+            menuItem.name.toLowerCase().includes(search),
+        );
+    }
+    if (filters?.type && filters.type !== FoodType.BOTH) {
+        menuData = menuData.filter(
+            (menuItem) => menuItem.category === filters.type,
+        );
+    }
     return Promise.resolve(menuData);
 };
 

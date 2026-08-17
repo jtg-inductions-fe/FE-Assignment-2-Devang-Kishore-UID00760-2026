@@ -4,10 +4,11 @@ import { AuthRoute } from '@components/routeGuards/AuthRoute';
 import { PrivateRoute } from '@components/routeGuards/PrivateRoute';
 import { ProtectedRoutes } from '@components/routeGuards/ProtectedRoutes';
 import { ROUTES } from '@constants';
-import { AddRestaurant } from '@containers/AddRestaurant/AddRestaurant';
+import { AddEditRestaurant } from '@containers/addEditRestaurant/AddEditRestaurant';
 import { AppLayout } from '@layouts/AppLayout';
 import { LoginPage } from '@pages/auth/LoginPage';
 import { SignupPage } from '@pages/auth/SignupPage';
+import { DiscoveryPage } from '@pages/discovery/Discovery';
 import { ErrorPage } from '@pages/fallback/ErrorPage';
 import { NotFoundPage } from '@pages/fallback/NotFoundPage';
 
@@ -30,7 +31,7 @@ export const router = createBrowserRouter([
                             },
                             {
                                 path: ROUTES.DISCOVERY,
-                                element: <div>discovery</div>,
+                                element: <DiscoveryPage />,
                             },
                             {
                                 path: ROUTES.RESTAURANT,
@@ -55,7 +56,11 @@ export const router = createBrowserRouter([
                                 children: [
                                     {
                                         path: ROUTES.ADD_RESTAURANT,
-                                        element: <AddRestaurant />,
+                                        element: <AddEditRestaurant />,
+                                    },
+                                    {
+                                        path: ROUTES.EDIT_RESTAURANT,
+                                        element: <AddEditRestaurant />,
                                     },
                                 ],
                             },

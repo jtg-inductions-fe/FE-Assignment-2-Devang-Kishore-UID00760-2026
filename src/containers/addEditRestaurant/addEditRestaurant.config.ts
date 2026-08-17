@@ -1,6 +1,6 @@
 import { CUISINES, FOOD_TYPES } from '@constants';
 
-import { addRestaurantContent } from './addRestaurant.constants';
+import { addRestaurantContent } from './addEditRestaurant.constants';
 
 export const menuFields = [
     {
@@ -153,7 +153,7 @@ export const restaurantInfoFields = [
     {
         name: 'contactNumber',
         type: 'text',
-        label: addRestaurantContent.RESTAURANT_DESCRIPTION_LABEL,
+        label: addRestaurantContent.RESTAURANT_CONTACT_NUMBER_LABEL,
         grid: { xs: 12, md: 6 },
         multiline: false,
         rows: undefined,

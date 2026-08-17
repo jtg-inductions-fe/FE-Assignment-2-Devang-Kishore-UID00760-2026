@@ -18,13 +18,20 @@ export const CUISINES: Cuisine[] = [
     Cuisine.INDIAN,
     Cuisine.CHINESE,
     Cuisine.ITALIAN,
+    Cuisine.MEXICAN,
     Cuisine.AMERICAN,
+    Cuisine.JAPANESE,
     Cuisine.THAI,
-    Cuisine.CHINESE,
     Cuisine.FAST_FOOD,
     Cuisine.DESSERT,
     Cuisine.BEVERAGE,
 ];
+
+/**
+ * Restaurant State.
+ * @constant
+ */
+export const RESTAURANT_STATE = { OPEN: 'Open', CLOSE: 'Close' };
 
 /**
  * WeekDays.
@@ -39,3 +46,7 @@ export const DAYS: Day[] = [
     Day.SATURDAY,
     Day.SUNDAY,
 ];
+
+export const RESTAURANT_TEXT_CONTENT = {
+    RESTAURANT_NOT_FOUND: 'Restaurant not Found',
+};

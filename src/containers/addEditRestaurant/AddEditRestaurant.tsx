@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import { FormProvider } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { FormProvider, useFieldArray } from 'react-hook-form';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { Typography } from '@mui/material';
 
@@ -11,31 +11,43 @@ import { CustomStepper } from '@components/strapper/CustomStepper';
 import { ROUTES } from '@constants';
 import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
 import { showSnackbar } from '@store/slices/feedback/feedBackSlice';
-import { createMenuEntry } from '@store/slices/menu/menuSlice';
-import { saveRestaurant } from '@store/slices/restaurant/restaurantSlice';
+import {
+    createMenuEntry,
+    fetchMenu,
+    removeMenuEntry,
+} from '@store/slices/menu/menuSlice';
+import {
+    fetchRestaurantByID,
+    saveRestaurant,
+    updateRestaurantData,
+} from '@store/slices/restaurant/restaurantSlice';
 import { SnackbarTheme } from '@types';
 
-import { addRestaurantContent } from './addRestaurant.constants';
-import { STEP_FIELDS } from './addRestaurant.constants';
+import { addRestaurantContent } from './addEditRestaurant.constants';
+import { STEP_FIELDS } from './addEditRestaurant.constants';
 import {
     ActionWrapper,
     AddRestaurantContainer,
     FormWrapper,
     RestaurantForm,
     StyledPaper,
-} from './AddRestaurant.styles';
-import { AddRestaurantFormData } from './AddRestaurant.types';
+} from './AddEditRestaurant.styles';
+import { AddRestaurantFormData } from './AddEditRestaurant.types';
 import { MenuSection } from './formSections/MenuSection';
 import { RestaurantInfoSection } from './formSections/RestaurantInfoSection';
 import { RestaurantSection } from './formSections/RestaurantSection';
-import { useAddRestaurantForm } from './useAddRestaurantForm';
+import { useAddEditRestaurantForm } from './useAddEditRestaurantForm';
 const STEPS = [RestaurantSection, RestaurantInfoSection, MenuSection];
 const STEPS_TITLES = ['Restaurant', 'Restaurant Info', 'Menu'];
 
-export const AddRestaurant = () => {
+export const AddEditRestaurant = () => {
     const { methods, activeStep, nextStep, previousStep } =
-        useAddRestaurantForm();
-
+        useAddEditRestaurantForm();
+    const { replace } = useFieldArray({
+        control: methods.control,
+        name: 'menu',
+    });
+    const { id } = useParams();
     const ActiveStep = STEPS[activeStep];
     const { trigger } = methods;
     const dispatch = useAppDispatch();
@@ -47,28 +59,31 @@ export const AddRestaurant = () => {
         setIsOpen((state) => !state);
     };
 
+    const isEditMode = !!id;
+    const selectedRestaurant = useAppSelector(
+        (state) => state.restaurants.selectedRestaurant,
+    );
+    const menuItem = useAppSelector((state) => state.menu.items);
     const onSubmit = async (data: AddRestaurantFormData) => {
         try {
-            const restaurant = await dispatch(
-                saveRestaurant({
-                    ownerId: user!.id,
-                    name: data.name,
-                    description: data.description,
-                    contactNumber: data.contactNumber,
-                    email: data.email,
-                    fssaiCertificateId: data.fssaiCertificateId,
-                    gstNumber: data.gstNumber,
-                    cuisines: data.cuisines,
-                    category: data.category,
-                    image: data.image,
-                    logo: data.logo,
-                    address: data.address,
-                    isOpen: data.isOpen,
-                    openingTime: data.openingTime,
-                    closingTime: data.closingTime,
-                    workingDays: data.workingDays,
-                }),
-            ).unwrap();
+            const restaurant = !isEditMode
+                ? await dispatch(
+                      saveRestaurant({ ownerId: user!.id, ...data }),
+                  ).unwrap()
+                : await dispatch(
+                      updateRestaurantData({
+                          id,
+                          data: { ownerId: user!.id, ...data },
+                      }),
+                  ).unwrap();
+
+            if (isEditMode) {
+                await Promise.all(
+                    menuItem.map(async (item) => {
+                        await dispatch(removeMenuEntry(item.id)).unwrap();
+                    }),
+                );
+            }
 
             await Promise.all(
                 data.menu.map((item) =>
@@ -112,11 +127,43 @@ export const AddRestaurant = () => {
         }
     };
 
+    const handleConfirm = async () => {
+        setIsOpen((state) => !state);
+        await navigate(ROUTES.DISCOVERY);
+    };
+
+    useEffect(() => {
+        if (!id) return;
+
+        dispatch(fetchRestaurantByID(id))
+            .unwrap()
+            .then(async () => {
+                await dispatch(fetchMenu({ restaurantId: id })).unwrap();
+            })
+            .catch(() => {
+                dispatch(
+                    showSnackbar({
+                        message: addRestaurantContent.SNACKBAR_ERROR_MESSAGE,
+                        severity: SnackbarTheme.ERROR,
+                    }),
+                );
+            });
+    }, [id, dispatch]);
+
+    useEffect(() => {
+        if (id && selectedRestaurant?.id === id && menuItem) {
+            methods.reset(selectedRestaurant);
+            replace(menuItem);
+        }
+    }, [selectedRestaurant, methods, menuItem, replace, id]);
+
     return (
         <AddRestaurantContainer maxWidth="lg">
             <StyledPaper elevation={2}>
                 <Typography variant="h3" mb={4}>
-                    {addRestaurantContent.RESTAURANT_HEADING}
+                    {!isEditMode
+                        ? addRestaurantContent.RESTAURANT_HEADING
+                        : addRestaurantContent.RESTAURANT_EDIT}
                 </Typography>
                 <Typography variant="body1" mb={4} color="secondary.main">
                     {addRestaurantContent.RESTAURANT_SUBHEADING}
@@ -170,12 +217,7 @@ export const AddRestaurant = () => {
                 message={`${addRestaurantContent.DIALOG_SUBTITLE}`}
                 confirmLabel={`${addRestaurantContent.DIALOG_LABEL}`}
                 onCancel={() => setIsOpen((state) => !state)}
-                onConfirm={() =>
-                    void (async () => {
-                        await navigate(ROUTES.DISCOVERY);
-                        setIsOpen((state) => !state);
-                    })
-                }
+                onConfirm={() => void handleConfirm()}
             />
         </AddRestaurantContainer>
     );

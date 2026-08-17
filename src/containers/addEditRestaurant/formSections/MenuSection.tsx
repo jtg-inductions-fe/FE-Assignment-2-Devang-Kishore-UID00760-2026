@@ -10,12 +10,11 @@ import { ConfirmDialog } from '@components/confirmationDialog';
 import { FormImageField } from '@components/FormImageField';
 import { FormSelectField } from '@components/FormSelectField';
 import { FormTextField } from '@components/FormTextField';
+import { menuFields } from '@containers/addEditRestaurant/addEditRestaurant.config';
+import { addRestaurantContent } from '@containers/addEditRestaurant/addEditRestaurant.constants';
+import { MenuCard } from '@containers/addEditRestaurant/AddEditRestaurant.styles';
+import { AddRestaurantFormData } from '@containers/addEditRestaurant/AddEditRestaurant.types';
 import { Cuisine, FoodType } from '@types';
-
-import { menuFields } from '../addRestaurant.config';
-import { addRestaurantContent } from '../addRestaurant.constants';
-import { MenuCard } from '../AddRestaurant.styles';
-import { AddRestaurantFormData } from '../AddRestaurant.types';
 
 export const MenuSection = () => {
     const { control } = useFormContext<AddRestaurantFormData>();
