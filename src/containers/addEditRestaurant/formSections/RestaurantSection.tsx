@@ -16,6 +16,7 @@ import { useAppSelector } from '@hooks/storeHooks';
 export const RestaurantSection = () => {
     const { control } = useFormContext<AddRestaurantFormData>();
     const { user } = useAppSelector((state) => state.auth);
+
     return (
         <Grid container spacing={3}>
             <Grid size={{ xs: 12, md: 6 }}>
@@ -46,7 +47,7 @@ export const RestaurantSection = () => {
                                 type={field.type}
                                 multiline={field.multiline}
                                 rows={field.rows}
-                                required
+                                required={field.required}
                             />
                         )}
                     </Grid>

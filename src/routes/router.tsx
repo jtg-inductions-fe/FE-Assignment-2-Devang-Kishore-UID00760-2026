@@ -11,6 +11,7 @@ import { SignupPage } from '@pages/auth/SignupPage';
 import { DiscoveryPage } from '@pages/discovery/Discovery';
 import { ErrorPage } from '@pages/fallback/ErrorPage';
 import { NotFoundPage } from '@pages/fallback/NotFoundPage';
+import { OrdersPage } from '@pages/orders/Orders';
 import { RestaurantMenuPage } from '@pages/restaurantMenu/RestaurantMenu';
 
 export const router = createBrowserRouter([
@@ -39,12 +40,8 @@ export const router = createBrowserRouter([
                                 element: <RestaurantMenuPage />,
                             },
                             {
-                                path: ROUTES.CART,
-                                element: <div>cart</div>,
-                            },
-                            {
                                 path: ROUTES.ORDERS,
-                                element: <div>orders</div>,
+                                element: <OrdersPage />,
                             },
                             {
                                 element: (

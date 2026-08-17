@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getOrders, placeOrder, updateOrder } from '@services/orders.service';
-import { OrderStatus } from '@types';
+import { OrderStatus, Role } from '@types';
 
 import { OrderData, OrdersState } from './orderSlice.types';
 
@@ -9,15 +9,20 @@ const initialState: OrdersState = {
     loading: false,
 };
 
-export const fetchOrders = createAsyncThunk('orders/fetch', getOrders);
+export const fetchOrders = createAsyncThunk(
+    'orders/fetch',
+    ({ userId, role }: { userId: string; role: Role }) =>
+        getOrders(userId, role),
+);
+
 export const createOrder = createAsyncThunk(
     'orders/create',
     (payload: OrderData) => placeOrder(payload),
 );
 export const updateOrderStatus = createAsyncThunk(
     'orders/status',
-    (payload: { id: string; status: OrderStatus }) =>
-        updateOrder(payload.id, payload.status),
+    (payload: { id: string; status: OrderStatus; reason?: string }) =>
+        updateOrder(payload.id, payload.status, payload.reason),
 );
 
 export const ordersSlice = createSlice({

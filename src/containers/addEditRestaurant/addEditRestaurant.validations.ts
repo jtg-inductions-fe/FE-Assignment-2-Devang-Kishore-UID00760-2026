@@ -4,6 +4,7 @@ import { CUISINES, DAYS, FOOD_TYPES } from '@constants';
 import { Cuisine, Day, FoodType } from '@types';
 
 import { addRestaurantContent } from './addEditRestaurant.constants';
+
 export const addRestaurantSchema = yup.object({
     name: yup
         .string()

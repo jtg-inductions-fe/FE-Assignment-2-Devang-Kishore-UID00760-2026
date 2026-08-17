@@ -30,11 +30,11 @@ export const CardContainer = styled(Card)(
 
 export const MenuImage = styled('img', {
     shouldForwardProp: (props) => props !== 'inStock',
-})<{ inStock: boolean }>(({ theme: { spacing, breakpoints }, inStock }) => ({
+})<{ inStock: boolean }>(({ theme: { breakpoints }, inStock }) => ({
     width: '100%',
     height: 200,
     objectFit: 'cover',
-    borderRadius: spacing(2),
+    borderRadius: BORDER_RADIUS.SM,
     filter: `grayscale(${inStock ? 0 : 1})`,
 
     [breakpoints.up('sm')]: {

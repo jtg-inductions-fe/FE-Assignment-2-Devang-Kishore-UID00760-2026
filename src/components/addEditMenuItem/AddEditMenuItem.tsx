@@ -16,6 +16,7 @@ import { menuContent } from './addEditMenuItem.constants';
 
 export const AddEditMenuItem = (props: MenuFormContainer) => {
     const { open, handleClose, handleSubmitForm, control, isEditMode } = props;
+
     return (
         <Dialog
             open={open}

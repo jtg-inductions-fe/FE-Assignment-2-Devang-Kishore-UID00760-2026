@@ -17,6 +17,7 @@ export const CartDrawer = (props: CartDrawerProps) => {
         bookingFee,
         onCheckout,
     } = props;
+
     return (
         <Drawer
             anchor="bottom"

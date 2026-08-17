@@ -18,4 +18,5 @@ export const restaurantMenuContent = {
     POSITIVE_PRICE: 'Price must be greater than 0',
     STOCK_REQUIRED: 'Stock is required',
     POSITIVE_STOCK: 'Stock cannot be less than 0',
+    TIMINGS_LABEL: 'Restaurant Timings',
 };

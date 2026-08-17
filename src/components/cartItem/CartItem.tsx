@@ -1,7 +1,7 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import { IconButton, Typography } from '@mui/material';
 
-import { NumberStepper } from '@components/numberStepper/NumberStepper';
+import { NumberStepper } from '@components/numberStepper';
 import { CartItemProps } from '@types';
 
 import {
@@ -19,7 +19,11 @@ export const CartItem = (props: CartItemProps) => {
 
     return (
         <CartItemContainer>
-            <CartItemImage src={menuItem.image} alt={menuItem.name} />
+            <CartItemImage
+                src={menuItem.image}
+                alt={menuItem.name}
+                fetchPriority="high"
+            />
             <CartItemDetails>
                 <CartItemName variant="h5">{menuItem.name}</CartItemName>
                 <Typography variant="h6">&#8377;{menuItem.price}</Typography>

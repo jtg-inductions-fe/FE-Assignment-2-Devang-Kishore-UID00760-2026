@@ -38,11 +38,13 @@ export const MenuItemCard = (props: MenuItemCardProps) => {
         onBlur,
         onDecrement,
     } = props;
+
     return (
         <CardContainer>
             <MenuImage
                 src={menuItem?.image}
                 alt={menuItem?.name}
+                fetchPriority="high"
                 inStock={menuItem.stock > 0}
             />
             {menuItem.stock == 0 && (
@@ -70,9 +72,6 @@ export const MenuItemCard = (props: MenuItemCardProps) => {
                 <MenuTypography variant="body1" color="textSecondary">
                     {menuItem?.description}
                 </MenuTypography>
-                <Typography variant="body2" color="warning.main">
-                    {menuItem?.cuisine}
-                </Typography>
                 <Footer>
                     <Typography variant="h5">
                         &#8377; {menuItem?.price}
@@ -109,12 +108,19 @@ export const MenuItemCard = (props: MenuItemCardProps) => {
                         )}
                         <Stack flexDirection="row" justifyContent="flex-end">
                             {canEdit && (
-                                <Button onClick={onEdit}>
+                                <Button
+                                    onClick={onEdit}
+                                    aria-label={actionLabels.EDIT}
+                                >
                                     <EditOutlined />
                                 </Button>
                             )}
                             {canDelete && (
-                                <Button color="error" onClick={onDelete}>
+                                <Button
+                                    color="error"
+                                    onClick={onDelete}
+                                    aria-label={actionLabels.DELETE}
+                                >
                                     <DeleteOutlined />
                                 </Button>
                             )}

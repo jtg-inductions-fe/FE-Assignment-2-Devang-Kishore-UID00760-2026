@@ -10,7 +10,7 @@ export const CustomStepper = ({
     <Stepper activeStep={activeStep} alternativeLabel {...stepperProps}>
         {steps.map((step) => (
             <Step key={step}>
-                <StepLabel>{step}</StepLabel>
+                <StepLabel>{step.toUpperCase()}</StepLabel>
             </Step>
         ))}
     </Stepper>

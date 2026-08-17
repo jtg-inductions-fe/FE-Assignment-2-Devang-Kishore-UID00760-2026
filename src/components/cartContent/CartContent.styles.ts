@@ -11,3 +11,12 @@ export const CartContentContainer = styled(Box)(
         },
     }),
 );
+
+export const CartCardsContainer = styled(Box)(({ theme: { spacing } }) => ({
+    display: 'flex',
+    flexDirection: 'column',
+    gap: spacing(5),
+    maxHeight: 480,
+    overflow: 'auto',
+    padding: spacing(2),
+}));

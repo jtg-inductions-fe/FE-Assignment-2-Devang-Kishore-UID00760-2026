@@ -1,6 +1,11 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react';
 
-import { Link, useLocation } from 'react-router-dom';
+import {
+    Link,
+    useLocation,
+    useNavigate,
+    useSearchParams,
+} from 'react-router-dom';
 
 import { ShoppingCartOutlined } from '@mui/icons-material';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
@@ -19,6 +24,7 @@ import { usePermissions } from '@hooks/usePermissions';
 import { logout } from '@store/slices/auth/authSlice';
 import { showSnackbar } from '@store/slices/feedback/feedBackSlice';
 import { fetchMenu } from '@store/slices/menu/menuSlice';
+import { fetchOrders } from '@store/slices/order/ordersSlice';
 import { fetchRestaurants } from '@store/slices/restaurant/restaurantSlice';
 import { ConfirmationDialogProps, FoodType, Role, SnackbarTheme } from '@types';
 
@@ -35,21 +41,10 @@ import {
 
 export const Header = () => {
     const [searchQuery, setSearchQuery] = useState('');
+    const [cartOpen, setCartOpen] = useState(false);
     const [foodPreference, setFoodPreference] = useState<FoodType>(
         FoodType.BOTH,
     );
-    const { user } = useAppSelector((state) => state.auth);
-    const dispatch = useAppDispatch();
-    const { hasPermission } = usePermissions();
-    const location = useLocation();
-
-    const cartItems = useAppSelector((state) => state.cart.items);
-    const orders = useAppSelector((state) => state.orders.items);
-    const [cartOpen, setCartOpen] = useState(false);
-    const cartItemsCount = cartItems.length;
-    const ordersCount = orders.length;
-    const currentLocation = location.pathname;
-    const currentRoute = currentLocation.split('/')[1];
     const [dialogData, setDialogData] = useState<
         Omit<ConfirmationDialogProps, 'onCancel' | 'confirmLabel'>
     >({
@@ -58,6 +53,19 @@ export const Header = () => {
         message: '',
         onConfirm: () => {},
     });
+    const [searchParams, setSearchparams] = useSearchParams();
+    const { user } = useAppSelector((state) => state.auth);
+    const dispatch = useAppDispatch();
+    const { hasPermission } = usePermissions();
+    const location = useLocation();
+    const cartItems = useAppSelector((state) => state.cart.items);
+    const orders = useAppSelector((state) => state.orders.items);
+    const showCart = hasPermission(permissions.SHOW_CART);
+    const navigate = useNavigate();
+    const cartItemsCount = cartItems.length;
+    const ordersCount = orders.length;
+    const currentLocation = location.pathname;
+    const currentRoute = currentLocation.split('/')[1];
 
     const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
@@ -66,6 +74,11 @@ export const Header = () => {
 
     const handleFoodType = (value: FoodType) => {
         setFoodPreference(value);
+        const search = searchParams.get('search');
+        setSearchparams({
+            ...(value !== FoodType.BOTH && { type: value }),
+            ...(search && { search }),
+        });
     };
 
     const handleCancel = () => {
@@ -94,6 +107,26 @@ export const Header = () => {
         setCartOpen(true);
     };
 
+    const handleNavigateOrder = () => {
+        void navigate(ROUTES.ORDERS);
+    };
+    const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+        if (event.key != 'Enter') {
+            return;
+        }
+        const query = searchQuery.trim();
+        if (!query) {
+            searchParams.delete('search');
+            setSearchparams(searchParams);
+            return;
+        }
+        const type = searchParams.get('type');
+        setSearchparams({
+            search: query,
+            ...(type && { type }),
+        });
+    };
+
     const searchBarProps = {
         value: searchQuery,
         placeholder:
@@ -102,6 +135,7 @@ export const Header = () => {
                 : headerTextContent.MENU_SEARCH_PLACEHOLDER,
         fullWidth: true,
         onChange: handleSearch,
+        onKeyDown: handleKeyDown,
     };
 
     const cartButtonProps = {
@@ -113,6 +147,7 @@ export const Header = () => {
     const ordersButtonProps = {
         icon: <ShoppingBagIcon />,
         badgeContent: ordersCount,
+        onClick: handleNavigateOrder,
     };
 
     const profileMenuProps = {
@@ -159,13 +194,15 @@ export const Header = () => {
                 });
         };
 
-        const timer = setTimeout(
-            () =>
-                currentRoute === 'discovery'
-                    ? handleRestaurantFetch()
-                    : handleMenuFetch(),
-            500,
-        );
+        const timer = setTimeout(() => {
+            if (currentRoute === 'discovery') {
+                handleRestaurantFetch();
+            }
+            if (currentRoute === 'restaurant') {
+                handleMenuFetch();
+            }
+        }, 500);
+
         return () => clearTimeout(timer);
     }, [
         dispatch,
@@ -176,7 +213,14 @@ export const Header = () => {
         user,
     ]);
 
-    const showCart = hasPermission(permissions.SHOW_CART);
+    useEffect(() => {
+        if (!user?.id || !user.role) {
+            return;
+        }
+
+        void dispatch(fetchOrders({ userId: user.id, role: user.role }));
+    }, [dispatch, user]);
+
     return (
         <>
             <HeaderBox>
@@ -197,13 +241,19 @@ export const Header = () => {
                                 }
                             }}
                         >
-                            <SwitchButton value="Both" color="primary">
+                            <SwitchButton value={FoodType.BOTH} color="primary">
                                 {FoodType.BOTH}
                             </SwitchButton>
-                            <SwitchButton value="Veg" color="secondary">
+                            <SwitchButton
+                                value={FoodType.VEG}
+                                color="secondary"
+                            >
                                 {FoodType.VEG}
                             </SwitchButton>
-                            <SwitchButton value="Non Veg" color="error">
+                            <SwitchButton
+                                value={FoodType.NON_VEG}
+                                color="error"
+                            >
                                 {FoodType.NON_VEG}
                             </SwitchButton>
                         </SwitchButtonGroup>

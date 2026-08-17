@@ -17,6 +17,7 @@ export const CartDialog = (props: CartDialogProps) => {
         bookingFee,
         onCheckout,
     } = props;
+
     return (
         <Dialog
             open={open}

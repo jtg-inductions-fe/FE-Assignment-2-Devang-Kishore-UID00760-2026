@@ -6,9 +6,9 @@ import { Button, Chip, Stack, Typography } from '@mui/material';
 
 import { TextField } from '@components/textField';
 import { actionLabels } from '@constants';
+import { restaurantMenuContent } from '@pages/restaurantMenu/restaurantMenu.constants';
 import { FoodType } from '@types';
 
-import { restaurantBannerContent } from './restaurantBanner.constants';
 import {
     BackButton,
     BannerContainer,
@@ -37,12 +37,22 @@ export const RestaurantBanner = (props: RestaurantBannerProps) => {
         setClosingTime,
         handleSaveTimings,
     } = props;
+
     return (
         <BannerContainer>
-            <BannerImage src={restaurant?.image} isOpen={restaurant?.isOpen} />
+            <BannerImage
+                src={restaurant?.image}
+                fetchPriority="high"
+                isOpen={restaurant?.isOpen}
+                alt={restaurant?.name}
+            />
             <BannerContent>
-                <RestaurantLogo src={restaurant?.logo} alt={restaurant?.name} />
-                <BackButton onClick={handleBack}>
+                <RestaurantLogo
+                    src={restaurant?.logo}
+                    alt={restaurant?.name}
+                    fetchPriority="high"
+                />
+                <BackButton onClick={handleBack} aria-label={actionLabels.BACK}>
                     <KeyboardBackspaceIcon />
                 </BackButton>
                 <RestaurantInfo>
@@ -92,7 +102,7 @@ export const RestaurantBanner = (props: RestaurantBannerProps) => {
                         }
                     />
                     <Typography variant="h5">
-                        {restaurantBannerContent.TIMINGS_LABEL}
+                        {restaurantMenuContent.TIMINGS_LABEL}
                     </Typography>
                     <InfoRow>
                         {isEditingTime ? (

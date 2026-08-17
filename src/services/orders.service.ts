@@ -1,8 +1,8 @@
 import ordersMock from '@data/orders.json';
-import { Order, OrderData, OrderStatus } from '@types';
+import { Order, OrderData, OrderStatus, Role } from '@types';
 import { readStorage, writeStorage } from '@utils/storage';
 
-import { getRestaurant } from './restaurant.service';
+import { getRestaurant, getRestaurants } from './restaurant.service';
 
 const ORDERS_KEY = 'orders';
 
@@ -25,8 +25,26 @@ const saveOrders = (orders: Order[]): void => {
  * Fetches orders form local storage.
  * @returns Data of orders.
  */
-export const getOrders = (): Promise<Order[]> =>
-    Promise.resolve(getStoredOrders());
+export const getOrders = async (
+    userId: string,
+    role: Role,
+): Promise<Order[]> => {
+    const orders = getStoredOrders();
+    if (role === Role.CUSTOMER) {
+        return orders.filter((order) => order.customerId === userId);
+    }
+
+    if (role === Role.OWNER) {
+        const restaurants = await getRestaurants();
+        const ownerRestaurantIds = restaurants
+            .filter((restaurant) => restaurant.ownerId === userId)
+            .map((currentRestaurant) => currentRestaurant.id);
+        return orders.filter((order) =>
+            ownerRestaurantIds.includes(order.restaurantId),
+        );
+    }
+    return [];
+};
 
 /**
  * saves the order data in local storage.
@@ -44,13 +62,14 @@ export const placeOrder = async (payload: OrderData): Promise<Order> => {
     const restaurantName = restaurant?.name;
 
     const order: Order = {
-        id: `O${orders.length + 1}`,
+        id: `#O${Date.now()}`,
         customerId: payload.customerId,
         restaurantId: payload.restaurantId,
         restaurantName: restaurantName ?? payload.restaurantName,
         items: payload.items,
         status: OrderStatus.PENDING,
         subtotal,
+        reason: '',
         createdAt: new Date().toISOString(),
     };
 
@@ -67,11 +86,12 @@ export const placeOrder = async (payload: OrderData): Promise<Order> => {
 export const updateOrder = (
     id: string,
     status: OrderStatus,
+    reason?: string,
 ): Promise<Order> => {
     const orders = getStoredOrders();
 
     const updated = orders.map((order) =>
-        order.id === id ? { ...order, status } : order,
+        order.id === id ? { ...order, status, reason } : order,
     );
 
     const order = updated.find((entry) => entry.id === id);

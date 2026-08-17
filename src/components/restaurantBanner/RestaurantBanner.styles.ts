@@ -5,15 +5,13 @@ import { theme } from '@theme';
 
 import { Z_INDEX } from '../../constants/themeConstants';
 
-export const BannerContainer = styled(Box)(
-    ({ theme: { palette, spacing } }) => ({
-        width: '100%',
-        position: 'relative',
-        color: palette.common.white,
-        overflowX: 'hidden',
-        borderRadius: spacing(8),
-    }),
-);
+export const BannerContainer = styled(Box)(({ theme: { palette } }) => ({
+    width: '100%',
+    position: 'relative',
+    color: palette.common.white,
+    overflowX: 'hidden',
+    borderRadius: BORDER_RADIUS.MD,
+}));
 
 export const TopRow = styled(Box)(({ theme: { spacing, breakpoints } }) => ({
     display: 'flex',

@@ -1,4 +1,4 @@
-import { MenuItemCard } from '@components/menuItemCard/MenuItemCard';
+import { MenuItemCard } from '@components/menuItemCard';
 import { permissions } from '@config/permissions.config';
 import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
 import { usePermissions } from '@hooks/usePermissions';

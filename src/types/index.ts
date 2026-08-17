@@ -4,7 +4,16 @@ export type { QueryParams } from './queryParams.type';
 export type { ConfirmationDialogProps } from './confirmationDialog.types';
 export type { UserData, User } from './users.types';
 export { Role } from './users.types';
-export type { OrderData, Order } from './orders.types';
+export type {
+    OrderData,
+    Order,
+    OrderStatusSelectProps,
+    OrderCardProps,
+    OrderViewData,
+    OrderStepperData,
+    OrdersProps,
+    RejectedOrderDialogProps,
+} from './orders.types';
 export { OrderStatus } from './orders.types';
 export type {
     MenuItem,

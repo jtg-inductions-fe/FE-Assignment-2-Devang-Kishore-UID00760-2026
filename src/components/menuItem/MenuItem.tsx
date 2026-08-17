@@ -17,6 +17,7 @@ export const MenuItem = <T extends FieldValues>(
     props: RestaurantMenuItemProps<T>,
 ) => {
     const { index, showDelete, control, onDelete } = props;
+
     return (
         <MenuCard container spacing={3}>
             {index !== undefined && (

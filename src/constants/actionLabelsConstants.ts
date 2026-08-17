@@ -8,5 +8,7 @@ export const actionLabels = {
     CONFIRM: 'Confirm',
     SAVE: 'Save',
     EDIT: 'Edit',
+    BACK: 'Back',
+    DELETE: 'Delete',
     OUT_OF_STOCK: 'Out Of Stock',
 };

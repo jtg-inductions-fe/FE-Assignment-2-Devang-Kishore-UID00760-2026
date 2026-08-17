@@ -1,12 +1,12 @@
 import CloseIcon from '@mui/icons-material/Close';
 import { Divider, IconButton, Stack, Typography } from '@mui/material';
 
-import { CartItem } from '@components/cartItem/CartItem';
-import { CartSummary } from '@components/cartSummary/CartSummary';
+import { CartItem } from '@components/cartItem';
+import { CartSummary } from '@components/cartSummary';
 import { CartContentProps } from '@types';
 
 import { cartTextContent } from './cartContent.constants';
-import { CartContentContainer } from './CartContent.styles';
+import { CartCardsContainer, CartContentContainer } from './CartContent.styles';
 
 export const CartContent = (props: CartContentProps) => {
     const {
@@ -21,6 +21,7 @@ export const CartContent = (props: CartContentProps) => {
         onCheckout,
     } = props;
     const isEmpty = items.length === 0;
+
     return (
         <CartContentContainer>
             <Stack direction="row" justifyContent="space-between">
@@ -42,7 +43,7 @@ export const CartContent = (props: CartContentProps) => {
                 </Stack>
             ) : (
                 <>
-                    <Stack spacing={6}>
+                    <CartCardsContainer>
                         {items.map((cartItem) => (
                             <CartItem
                                 key={cartItem.item.id}
@@ -52,7 +53,7 @@ export const CartContent = (props: CartContentProps) => {
                                 onRemove={onRemove}
                             />
                         ))}
-                    </Stack>
+                    </CartCardsContainer>
                     <Divider />
                     <CartSummary
                         total={total}

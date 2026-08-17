@@ -81,7 +81,7 @@ export const createRestaurant = (
     payload: Omit<Restaurant, 'id'>,
 ): Promise<Restaurant> => {
     const restaurants = getStoredRestaurants();
-    const restaurant = { ...payload, id: `R${restaurants.length + 1}` };
+    const restaurant = { ...payload, id: `R${Date.now()}` };
     saveRestaurants([...restaurants, restaurant]);
 
     return Promise.resolve(restaurant);

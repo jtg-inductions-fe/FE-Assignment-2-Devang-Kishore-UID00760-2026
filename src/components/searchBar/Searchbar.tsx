@@ -7,6 +7,7 @@ import { BORDER_RADIUS } from '@constants';
 
 export const Searchbar = (props: TextFieldProps) => {
     const { slotProps, ...rest } = props;
+
     return (
         <Box width="100%">
             <TextField

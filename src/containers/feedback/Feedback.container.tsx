@@ -9,6 +9,7 @@ import { hideSnackbar } from '@store/slices/feedback/feedBackSlice';
 export const Feedback = () => {
     const dispatch = useAppDispatch();
     const feedback = useAppSelector((state) => state.feedback);
+
     return (
         <FeedbackComponent
             snackbarOpen={feedback.snackbarOpen}

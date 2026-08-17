@@ -63,7 +63,7 @@ export const signUp = ({
     }
 
     const newUser = {
-        id: `U${users.length + 1}`,
+        id: `U${Date.now()}`,
         name: name,
         email: email,
         password: password,

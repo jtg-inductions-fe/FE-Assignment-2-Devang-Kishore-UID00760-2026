@@ -64,7 +64,7 @@ export const addMenuItem = (
     payload: Omit<MenuItem, 'id'>,
 ): Promise<MenuItem> => {
     const menu = getStoredMenu();
-    const item = { ...payload, id: `M${menu.length + 1}` };
+    const item = { ...payload, id: `M${Date.now()}` };
     saveMenu([...menu, item]);
 
     return Promise.resolve(item);
@@ -100,6 +100,5 @@ export const updateMenuItem = (
  */
 export const deleteMenuItem = (id: string): Promise<string> => {
     saveMenu(getStoredMenu().filter((item) => item.id !== id));
-
     return Promise.resolve(id);
 };
