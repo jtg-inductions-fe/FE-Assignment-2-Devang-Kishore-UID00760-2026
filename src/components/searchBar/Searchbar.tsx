@@ -16,7 +16,7 @@ export const Searchbar = (props: TextFieldProps) => {
                     input: {
                         ...slotProps?.input,
                         sx: {
-                            height: 52,
+                            maxHeight: 52,
                             borderRadius: BORDER_RADIUS.ROUNDED,
                             '& fieldset': {
                                 borderRadius: BORDER_RADIUS.ROUNDED,

@@ -27,25 +27,25 @@ export const CardContainer = styled(Card)(
     }),
 );
 
-export const MenuImage = styled('img')<{ inStock: boolean }>(
-    ({ theme: { spacing, breakpoints }, inStock }) => ({
-        width: '100%',
-        height: 200,
-        objectFit: 'cover',
-        borderRadius: spacing(2),
-        filter: `grayscale(${inStock ? 0 : 1})`,
+export const MenuImage = styled('img', {
+    shouldForwardProp: (props) => props !== 'inStock',
+})<{ inStock: boolean }>(({ theme: { spacing, breakpoints }, inStock }) => ({
+    width: '100%',
+    height: 200,
+    objectFit: 'cover',
+    borderRadius: spacing(2),
+    filter: `grayscale(${inStock ? 0 : 1})`,
 
-        [breakpoints.up('sm')]: {
-            width: 180,
-            height: 140,
-        },
+    [breakpoints.up('sm')]: {
+        width: 180,
+        height: 140,
+    },
 
-        [breakpoints.up('md')]: {
-            width: 240,
-            height: 180,
-        },
-    }),
-);
+    [breakpoints.up('md')]: {
+        width: 240,
+        height: 180,
+    },
+}));
 
 export const OutOfStockText = styled(Chip)(
     ({ theme: { spacing, breakpoints, typography } }) => ({

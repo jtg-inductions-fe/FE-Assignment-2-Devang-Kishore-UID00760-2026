@@ -1,6 +1,5 @@
 import { Box, styled } from '@mui/material';
 
-import { Button } from '@components/button';
 import { BORDER_RADIUS } from '@constants';
 
 export const DiscoveryContainer = styled(Box)(({ theme: { spacing } }) => ({
@@ -53,7 +52,3 @@ export const RestaurantNotFound = styled(Box)(
         color: palette.primary.contrastText,
     }),
 );
-
-export const RestaurantButton = styled(Button)(({ theme }) => ({
-    borderRadius: theme.spacing(20),
-}));

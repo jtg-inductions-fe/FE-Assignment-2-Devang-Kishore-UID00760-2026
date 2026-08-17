@@ -8,6 +8,7 @@ import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import { Button, Chip, Stack, Typography } from '@mui/material';
 
+import { TextField } from '@components/textField';
 import { actionLabels } from '@constants';
 import { FoodType } from '@types';
 
@@ -24,7 +25,6 @@ import {
     RestaurantActions,
     RestaurantInfo,
     RestaurantLogo,
-    TimeInput,
     TopRow,
 } from './RestaurantBanner.styles';
 import { RestaurantBannerProps } from './restaurantBanner.types';
@@ -79,10 +79,7 @@ export const RestaurantBanner = (props: RestaurantBannerProps) => {
                     <InfoRow>
                         <LocationOnOutlined />
                         <Typography variant="body2">
-                            {restaurant?.address?.street},{' '}
-                            {restaurant?.address?.city},{' '}
-                            {restaurant?.address?.state},{' '}
-                            {restaurant?.address?.pincode}
+                            {`${restaurant?.address?.street}, ${restaurant?.address?.city}, ${restaurant?.address?.state}, ${restaurant?.address?.pincode}`}
                         </Typography>
                     </InfoRow>
                     <CuisineWrapper>
@@ -111,19 +108,27 @@ export const RestaurantBanner = (props: RestaurantBannerProps) => {
                         {isEditingTime ? (
                             <Stack>
                                 <Stack direction="row" spacing={2}>
-                                    <TimeInput
+                                    <TextField
                                         type="time"
                                         value={openingTime}
                                         onChange={(e) =>
                                             setOpeningTime(e.target.value)
                                         }
+                                        sx={{
+                                            backgroundColor: (theme) =>
+                                                theme.palette.common.white,
+                                        }}
                                     />
-                                    <TimeInput
+                                    <TextField
                                         type="time"
                                         value={closingTime}
                                         onChange={(e) =>
                                             setClosingTime(e.target.value)
                                         }
+                                        sx={{
+                                            backgroundColor: (theme) =>
+                                                theme.palette.common.white,
+                                        }}
                                     />
                                 </Stack>
                                 <Stack

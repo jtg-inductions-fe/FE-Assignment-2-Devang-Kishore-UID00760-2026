@@ -2,31 +2,34 @@ import * as yup from 'yup';
 
 import { CUISINES, FOOD_TYPES } from '@constants';
 import { Cuisine, FoodType } from '@types';
+
+import { restaurantMenuContent } from './restaurantMenu.constants';
+
 export const MenuItemSchema = yup.object({
-    name: yup.string().trim().required('Item name is required'),
+    name: yup.string().trim().required(restaurantMenuContent.NAME_REQUIRED),
     description: yup.string().trim(),
 
     cuisine: yup
         .mixed<Cuisine>()
         .oneOf(CUISINES)
-        .required('cuisine is required'),
+        .required(restaurantMenuContent.CUISINE_REQUIRED),
 
     category: yup
         .mixed<FoodType>()
         .oneOf(FOOD_TYPES)
-        .required('Category is required'),
+        .required(restaurantMenuContent.CATEGORY_REQUIRED),
 
     price: yup
         .number()
-        .typeError('Price is required')
-        .positive('Price must be greater than 0')
-        .required('Price is required'),
+        .typeError(restaurantMenuContent.PRICE_REQUIRED)
+        .positive(restaurantMenuContent.POSITIVE_PRICE)
+        .required(restaurantMenuContent.PRICE_REQUIRED),
 
     stock: yup
         .number()
-        .typeError('Stock is required')
-        .min(0, 'Stock cannot be less than 0')
-        .required('Stock is required'),
+        .typeError(restaurantMenuContent.STOCK_REQUIRED)
+        .min(0, restaurantMenuContent.POSITIVE_PRICE)
+        .required(restaurantMenuContent.STOCK_REQUIRED),
 
     image: yup.string(),
 });

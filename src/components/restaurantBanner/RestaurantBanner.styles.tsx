@@ -1,7 +1,9 @@
 import { Box, IconButton, styled, Typography } from '@mui/material';
 
-import { TextField } from '@components/textField';
+import { BORDER_RADIUS } from '@constants';
 import { theme } from '@theme';
+
+import { Z_INDEX } from '../../constants/themeConstants';
 
 export const BannerContainer = styled(Box)(
     ({ theme: { palette, spacing } }) => ({
@@ -55,31 +57,30 @@ export const CuisineWrapper = styled(Box)(({ theme: { spacing } }) => ({
     gap: spacing(1),
 }));
 
-export const RestaurantLogo = styled('img')(
-    ({ theme: { spacing, breakpoints } }) => ({
-        width: 100,
-        maxHeight: 100,
-        borderRadius: spacing(5),
-        border: '5px solid white',
-        [breakpoints.up('md')]: {
-            borderRadius: spacing(10),
-            width: 180,
-            height: 180,
-        },
-    }),
-);
+export const RestaurantLogo = styled('img')(({ theme: { breakpoints } }) => ({
+    maxWidth: 100,
+    maxHeight: 100,
+    borderRadius: BORDER_RADIUS.SM,
+    border: '5px solid white',
+    [breakpoints.up('md')]: {
+        borderRadius: BORDER_RADIUS.MD,
+        maxWidth: 180,
+        maxHeight: 180,
+    },
+}));
 
-export const BannerImage = styled('img')<{ isOpen: boolean }>(({ isOpen }) => ({
+export const BannerImage = styled('img', {
+    shouldForwardProp: (props) => props !== 'isOpen',
+})<{ isOpen: boolean }>(({ isOpen }) => ({
     position: 'absolute',
     inset: 0,
     left: '50%',
     transform: 'translateX(-50%)',
     width: '100vw',
-    maxHeight: '100%',
+    height: '100%',
     objectFit: 'cover',
-    maxWidth: 'none',
     filter: `brightness(0.2) grayscale(${isOpen ? 0 : 1})`,
-    zIndex: -1,
+    zIndex: Z_INDEX.BELOW,
 }));
 
 export const BannerContent = styled(Box)(
@@ -124,9 +125,3 @@ export const RestaurantActions = styled(Box)(
         color: palette.common.white,
     }),
 );
-
-export const TimeInput = styled(TextField)(({ theme: { palette } }) => ({
-    '& .MuiOutlinedInput-root': {
-        backgroundColor: palette.common.white,
-    },
-}));

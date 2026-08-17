@@ -11,4 +11,11 @@ export const restaurantMenuContent = {
     NO_ITEM_FOUND: 'No Menu item Found',
     CONFIRM_LABEL: 'Confirm',
     MENU_SECTION_HEADING: 'Menu Items',
+    NAME_REQUIRED: 'Item name is required',
+    CUISINE_REQUIRED: 'cuisine is required',
+    CATEGORY_REQUIRED: 'Category is required',
+    PRICE_REQUIRED: 'Price is required',
+    POSITIVE_PRICE: 'Price must be greater than 0',
+    STOCK_REQUIRED: 'Stock is required',
+    POSITIVE_STOCK: 'Stock cannot be less than 0',
 };

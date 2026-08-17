@@ -14,3 +14,4 @@ export {
 } from './restaurantsConstants';
 export { USERS } from './userConstants';
 export { actionLabels } from './actionLabelsConstants';
+export { inputFieldTypes } from './inputFieldsConstants';

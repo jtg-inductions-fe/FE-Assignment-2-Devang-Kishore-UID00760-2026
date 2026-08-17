@@ -7,7 +7,7 @@ import { Error } from '@mui/icons-material';
 import { Box, Divider, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 
-import { AddMenuItem } from '@components/addMenuItem/AddMenuItem';
+import { AddEditMenuItem } from '@components/addEditMenuItem/AddEditMenuItem';
 import { Button } from '@components/button';
 import { ConfirmDialog } from '@components/confirmationDialog';
 import { RestaurantBanner } from '@components/restaurantBanner';
@@ -73,7 +73,7 @@ export const RestaurantMenuPage = () => {
             .catch(() => {
                 dispatch(
                     showSnackbar({
-                        message: `${restaurantMenuContent.RESTAURANT_FETCH_ERROR}`,
+                        message: restaurantMenuContent.RESTAURANT_FETCH_ERROR,
                         severity: SnackbarTheme.ERROR,
                     }),
                 );
@@ -99,7 +99,7 @@ export const RestaurantMenuPage = () => {
             }
             dispatch(
                 showSnackbar({
-                    message: `${restaurantMenuContent.ITEM_ADDED_MESSAGE}`,
+                    message: restaurantMenuContent.ITEM_ADDED_MESSAGE,
                     severity: SnackbarTheme.SUCCESS,
                 }),
             );
@@ -129,7 +129,7 @@ export const RestaurantMenuPage = () => {
             }
             dispatch(
                 showSnackbar({
-                    message: `${restaurantMenuContent.ITEM_ADDED_MESSAGE}`,
+                    message: restaurantMenuContent.ITEM_ADDED_MESSAGE,
                     severity: SnackbarTheme.SUCCESS,
                 }),
             );
@@ -140,8 +140,8 @@ export const RestaurantMenuPage = () => {
         };
         setDialogData({
             open: true,
-            title: `${restaurantMenuContent.DIFFERENT_RESTAURANTS_ALERT_TITLE}`,
-            message: `${restaurantMenuContent.DIFFERENT_RESTAURANTS_ALERT_MESSAGE}`,
+            title: restaurantMenuContent.DIFFERENT_RESTAURANTS_ALERT_TITLE,
+            message: restaurantMenuContent.DIFFERENT_RESTAURANTS_ALERT_MESSAGE,
             onConfirm: () => void onConfirm(),
         });
     };
@@ -212,7 +212,7 @@ export const RestaurantMenuPage = () => {
             ).unwrap();
             dispatch(
                 showSnackbar({
-                    message: `${restaurantMenuContent.ITEM_ADDED_MESSAGE}`,
+                    message: restaurantMenuContent.ITEM_ADDED_MESSAGE,
                     severity: SnackbarTheme.SUCCESS,
                 }),
             );
@@ -244,7 +244,7 @@ export const RestaurantMenuPage = () => {
             ).unwrap();
             dispatch(
                 showSnackbar({
-                    message: `${restaurantMenuContent.ITEM_ADDED_MESSAGE}`,
+                    message: restaurantMenuContent.ITEM_ADDED_MESSAGE,
                     severity: SnackbarTheme.SUCCESS,
                 }),
             );
@@ -274,8 +274,8 @@ export const RestaurantMenuPage = () => {
 
         setDialogData(() => ({
             open: true,
-            title: `${restaurantMenuContent.DELETE_ITEM_ALERT_TITLE}`,
-            message: `${restaurantMenuContent.DELETE_ITEM_ALERT_MESSAGE}`,
+            title: restaurantMenuContent.DELETE_ITEM_ALERT_TITLE,
+            message: restaurantMenuContent.DELETE_ITEM_ALERT_MESSAGE,
             onConfirm: () => {
                 confirmDelete();
             },
@@ -304,7 +304,7 @@ export const RestaurantMenuPage = () => {
         } catch {
             dispatch(
                 showSnackbar({
-                    message: `${restaurantMenuContent.UPDATE_TIMINGS_ERROR}`,
+                    message: restaurantMenuContent.UPDATE_TIMINGS_ERROR,
                     severity: SnackbarTheme.ERROR,
                 }),
             );
@@ -396,7 +396,7 @@ export const RestaurantMenuPage = () => {
                     </Grid>
                 ))}
             </MenuItemsContainer>
-            <AddMenuItem
+            <AddEditMenuItem
                 open={addMenu}
                 handleClose={() => setAddMenu((state) => !state)}
                 isEditMode={isEditMode}

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { generatePath, useNavigate } from 'react-router-dom';
 
 import ErrorIcon from '@mui/icons-material/Error';
-import { Box, Skeleton, Typography } from '@mui/material';
+import { Box, Button, Skeleton, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 
 import { ConfirmDialog } from '@components/confirmationDialog';
@@ -29,7 +29,6 @@ import {
     CuisineChip,
     CuisinesSection,
     DiscoveryContainer,
-    RestaurantButton,
     RestaurantNotFound,
 } from './Discovery.styles';
 
@@ -119,8 +118,12 @@ export const DiscoveryPage = () => {
         };
         setDialogData(() => ({
             open: true,
-            title: `${restaurant.isOpen ? discoveryContent.CLOSE : discoveryContent.OPEN}`,
-            message: `${restaurant.isOpen ? discoveryContent.CLOSE_MESSAGE : discoveryContent.OPEN_MESSAGE}`,
+            title: restaurant.isOpen
+                ? discoveryContent.CLOSE
+                : discoveryContent.OPEN,
+            message: restaurant.isOpen
+                ? discoveryContent.CLOSE_MESSAGE
+                : discoveryContent.OPEN_MESSAGE,
             onConfirm: () => {
                 confirmToggle();
             },
@@ -152,16 +155,16 @@ export const DiscoveryPage = () => {
                             justifyContent="end"
                             alignItems="center"
                         >
-                            <RestaurantButton
+                            <Button
                                 variant="contained"
                                 onClick={handleAddRestaurant}
                                 sx={{
-                                    borderRadius: BORDER_RADIUS.LG,
+                                    borderRadius: BORDER_RADIUS.XL,
                                     padding: 4,
                                 }}
                             >
                                 ADD NEW RESTAURANT
-                            </RestaurantButton>
+                            </Button>
                         </Grid>
                     )}
                 </Grid>

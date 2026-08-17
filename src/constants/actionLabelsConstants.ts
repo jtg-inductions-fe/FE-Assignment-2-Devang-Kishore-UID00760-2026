@@ -7,4 +7,5 @@ export const actionLabels = {
     ADD: 'Add',
     SAVE: 'Save',
     EDIT: 'Edit',
+    OUT_OF_STOCK: 'Out Of Stock',
 };
