@@ -17,4 +17,12 @@ export type {
 export { FoodType, Cuisine } from './menItem.types';
 export type { Address, Restaurant } from './restaurant.types';
 export { Day } from './restaurant.types';
-export type { CartItem } from './cart.types';
+export type {
+    CartItem,
+    CartContentProps,
+    CartItemProps,
+    CartSummaryProps,
+    CartDialogProps,
+    CartDrawerProps,
+    CartContainerProps,
+} from './cart.types';

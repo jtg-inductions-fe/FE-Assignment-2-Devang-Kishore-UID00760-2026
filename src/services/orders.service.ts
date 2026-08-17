@@ -2,6 +2,8 @@ import ordersMock from '@data/orders.json';
 import { Order, OrderData, OrderStatus } from '@types';
 import { readStorage, writeStorage } from '@utils/storage';
 
+import { getRestaurant } from './restaurant.service';
+
 const ORDERS_KEY = 'orders';
 
 /**
@@ -31,19 +33,21 @@ export const getOrders = (): Promise<Order[]> =>
  * @param payload Data of order.
  * @returns Data of order stored in local storage.
  */
-export const placeOrder = (payload: OrderData): Promise<Order> => {
+export const placeOrder = async (payload: OrderData): Promise<Order> => {
     const subtotal = payload.items.reduce(
         (sum, cartItem) => sum + cartItem.item.price * cartItem.quantity,
         0,
     );
 
     const orders = getStoredOrders();
+    const restaurant = await getRestaurant(payload.restaurantId);
+    const restaurantName = restaurant?.name;
 
     const order: Order = {
         id: `O${orders.length + 1}`,
         customerId: payload.customerId,
         restaurantId: payload.restaurantId,
-        restaurantName: payload.restaurantName,
+        restaurantName: restaurantName ?? payload.restaurantName,
         items: payload.items,
         status: OrderStatus.PENDING,
         subtotal,
@@ -51,8 +55,7 @@ export const placeOrder = (payload: OrderData): Promise<Order> => {
     };
 
     saveOrders([order, ...orders]);
-
-    return Promise.resolve(order);
+    return order;
 };
 
 /**
@@ -61,7 +64,7 @@ export const placeOrder = (payload: OrderData): Promise<Order> => {
  * @param status Status of order to be set.
  * @returns Data of order after update.
  */
-export const updateOrder = async (
+export const updateOrder = (
     id: string,
     status: OrderStatus,
 ): Promise<Order> => {
@@ -78,6 +81,5 @@ export const updateOrder = async (
     }
 
     saveOrders(updated);
-
     return Promise.resolve(order);
 };

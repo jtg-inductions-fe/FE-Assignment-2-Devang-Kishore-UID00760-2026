@@ -14,7 +14,7 @@ export const CuisinesSection = styled(Box)(({ theme: { spacing } }) => ({
     width: '100%',
     display: 'flex',
     alignItems: 'center',
-    height: spacing(20),
+    height: 100,
     gap: spacing(6),
     overflowX: 'scroll',
     '&::-webkit-scrollbar': {
@@ -23,9 +23,9 @@ export const CuisinesSection = styled(Box)(({ theme: { spacing } }) => ({
 }));
 
 export const CuisineChip = styled(Box)<{ src: string }>(
-    ({ theme: { spacing, palette, breakpoints }, src }) => ({
-        minWidth: spacing(30),
-        height: spacing(15),
+    ({ theme: { palette, breakpoints }, src }) => ({
+        minWidth: 120,
+        height: 60,
         background: `linear-gradient(rgba(49, 49, 48, 0.3), rgba(74, 74, 74, 0.4)),url(${src}) bottom left/100% auto no-repeat`,
         backgroundSize: 'cover',
         borderRadius: BORDER_RADIUS.ROUNDED,
@@ -35,8 +35,8 @@ export const CuisineChip = styled(Box)<{ src: string }>(
         shrink: 0,
         color: palette.common.white,
         [breakpoints.up('md')]: {
-            minWidth: spacing(40),
-            minHeight: spacing(20),
+            minWidth: 160,
+            minHeight: 80,
         },
     }),
 );
@@ -48,7 +48,7 @@ export const RestaurantNotFound = styled(Box)(
         justifyContent: 'center',
         width: '100%',
         gap: spacing(5),
-        minHeight: spacing(120),
+        minHeight: 480,
         color: palette.primary.contrastText,
     }),
 );

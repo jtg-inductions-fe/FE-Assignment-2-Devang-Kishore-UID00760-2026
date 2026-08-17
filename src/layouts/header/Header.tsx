@@ -13,6 +13,7 @@ import { ProfileMenu } from '@components/profileMenu';
 import { Searchbar } from '@components/searchBar';
 import { permissions } from '@config/permissions.config';
 import { ROUTES } from '@constants';
+import { CartContainer } from '@containers/cart/Cart';
 import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
 import { usePermissions } from '@hooks/usePermissions';
 import { logout } from '@store/slices/auth/authSlice';
@@ -42,6 +43,11 @@ export const Header = () => {
     const { hasPermission } = usePermissions();
     const location = useLocation();
 
+    const cartItems = useAppSelector((state) => state.cart.items);
+    const orders = useAppSelector((state) => state.orders.items);
+    const [cartOpen, setCartOpen] = useState(false);
+    const cartItemsCount = cartItems.length;
+    const ordersCount = orders.length;
     const currentLocation = location.pathname;
     const currentRoute = currentLocation.split('/')[1];
     const [dialogData, setDialogData] = useState<
@@ -80,6 +86,14 @@ export const Header = () => {
         }));
     };
 
+    const handleCartClose = () => {
+        setCartOpen(false);
+    };
+
+    const handleCartOpen = () => {
+        setCartOpen(true);
+    };
+
     const searchBarProps = {
         value: searchQuery,
         placeholder:
@@ -92,12 +106,13 @@ export const Header = () => {
 
     const cartButtonProps = {
         icon: <ShoppingCartOutlined />,
-        badgeContent: 3,
+        badgeContent: cartItemsCount,
+        onClick: handleCartOpen,
     };
 
     const ordersButtonProps = {
         icon: <ShoppingBagIcon />,
-        badgeContent: 3,
+        badgeContent: ordersCount,
     };
 
     const profileMenuProps = {
@@ -216,6 +231,7 @@ export const Header = () => {
                 }}
                 onConfirm={dialogData.onConfirm}
             />
+            <CartContainer open={cartOpen} onClose={handleCartClose} />
         </>
     );
 };

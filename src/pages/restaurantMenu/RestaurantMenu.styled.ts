@@ -24,7 +24,7 @@ export const EmptyMenu = styled(Box)(({ theme: { spacing } }) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    minHeight: spacing(150),
+    minHeight: 200,
     width: '100%',
     gap: spacing(2),
 }));
