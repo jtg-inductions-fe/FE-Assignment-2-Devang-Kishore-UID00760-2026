@@ -1,6 +1,6 @@
 import { createTheme } from '@mui/material/styles';
 
-import { SCALING_FACTOR } from '@constant';
+import { SCALING_FACTOR } from '@constants';
 
 /* Customized MUI components themes */
 import { components } from './components';
@@ -17,7 +17,6 @@ let theme = createTheme({
     components,
     typography: {
         fontFamily: 'Inter',
-        ...typography.typographyUtil,
     },
     spacing: (factor: number) =>
         theme.typography.pxToRem(factor * SCALING_FACTOR),
@@ -27,6 +26,7 @@ let theme = createTheme({
 theme = createTheme(theme, {
     typography: {
         ...typography.typographyStyle(theme),
+        ...typography.typographyUtil,
     },
 });
 

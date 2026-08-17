@@ -1,0 +1,22 @@
+export const restaurantMenuContent = {
+    RESTAURANT_FETCH_ERROR: 'Error while fetching restaurant data.',
+    ITEM_ADDED_MESSAGE: 'Item Added successfully.',
+    DIFFERENT_RESTAURANTS_ALERT_TITLE: 'Different Restaurant',
+    DIFFERENT_RESTAURANTS_ALERT_MESSAGE:
+        'your cart contains items from another restaurant.Do you want to clear your cart and add this items?',
+    DELETE_ITEM_ALERT_TITLE: `Delete Menu Item`,
+    DELETE_ITEM_ALERT_MESSAGE: 'Do you want to delete Menu Item?',
+    UPDATE_TIMINGS_ERROR: 'error while updating restaurant timings',
+    ADD_ITEM_BUTTON: '+ Add New Item',
+    NO_ITEM_FOUND: 'No Menu item Found',
+    CONFIRM_LABEL: 'Confirm',
+    MENU_SECTION_HEADING: 'Menu Items',
+    NAME_REQUIRED: 'Item name is required',
+    CUISINE_REQUIRED: 'cuisine is required',
+    CATEGORY_REQUIRED: 'Category is required',
+    PRICE_REQUIRED: 'Price is required',
+    POSITIVE_PRICE: 'Price must be greater than 0',
+    STOCK_REQUIRED: 'Stock is required',
+    POSITIVE_STOCK: 'Stock cannot be less than 0',
+    TIMINGS_LABEL: 'Restaurant Timings',
+};

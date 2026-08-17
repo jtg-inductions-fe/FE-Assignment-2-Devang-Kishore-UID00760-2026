@@ -1,0 +1,27 @@
+[
+    {
+        "id": "#O1786703593095",
+        "customerId": "U2",
+        "restaurantId": "R2",
+        "restaurantName": "Lajawaab",
+        "items": [
+            {
+                "item": {
+                    "id": "M3",
+                    "restaurantID": "R2",
+                    "name": "Margherita Pizza",
+                    "category": "veg",
+                    "price": 320,
+                    "description": "Classic pizza",
+                    "image": "https://www.savoringitaly.com/wp-content/uploads/2024/09/sourdough-pizza-5.jpg",
+                    "stock": 3,
+                    "cuisine": "Italian"
+                },
+                "quantity": 1
+            }
+        ],
+        "status": "pending",
+        "subtotal": 320,
+        "createdAt": "2026-08-13T17:31:57.931Z"
+    }
+]
