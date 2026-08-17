@@ -7,12 +7,13 @@ import { Button } from '@components/button';
 import { FormImageField } from '@components/FormImageField';
 import { FormSelectField } from '@components/FormSelectField';
 import { FormTextField } from '@components/FormTextField';
+import { inputFieldTypes } from '@constants';
 import { RestaurantMenuItemProps } from '@types';
 
-import { menuFields, menuItemContent } from './restaurantMenuItem.constants';
-import { MenuCard } from './RestaurantMenuItem.styles';
+import { menuFields, menuItemContent } from './menuItem.constants';
+import { MenuCard } from './MenuItem.styles';
 
-export const RestaurantMenuItem = <T extends FieldValues>(
+export const MenuItem = <T extends FieldValues>(
     props: RestaurantMenuItemProps<T>,
 ) => {
     const { index, showDelete, control, onDelete } = props;
@@ -36,14 +37,14 @@ export const RestaurantMenuItem = <T extends FieldValues>(
                 const fieldName = field.name as Path<T>;
                 return (
                     <Grid key={field.name} size={field.grid}>
-                        {field.type === 'select' ? (
+                        {field.type === inputFieldTypes.SELECT ? (
                             <FormSelectField
                                 name={fieldName}
                                 control={control}
                                 label={field.label}
                                 options={field.options ?? []}
                             />
-                        ) : field.type === 'image' ? (
+                        ) : field.type === inputFieldTypes.IMAGE ? (
                             <FormImageField
                                 name={fieldName}
                                 control={control}

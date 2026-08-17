@@ -7,7 +7,7 @@ import { useMediaQuery, useTheme } from '@mui/material';
 import { CartDialog } from '@components/cartDialog/CartDialog';
 import { CartDrawer } from '@components/cartDrawer/CartDrawer';
 import { ConfirmDialog } from '@components/confirmationDialog';
-import { ROUTES } from '@constants';
+import { actionLabels, ROUTES } from '@constants';
 import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
 import {
     clearCart,
@@ -190,7 +190,7 @@ export const CartContainer = (props: CartContainerProps) => {
                 open={dialogData.open}
                 title={dialogData.title}
                 message={dialogData.message}
-                confirmLabel={'Confirm'}
+                confirmLabel={actionLabels.CONFIRM}
                 onCancel={() => {
                     handleCancel();
                 }}

@@ -29,8 +29,8 @@ export const ProfileMenu = ({ name, onLogout }: ProfileMenuProps) => {
         <>
             <IconButton
                 onClick={handleOpen}
-                aria-label={`${actionLabels.ACCOUNT_LABEL}`}
-                aria-controls={`${open ? actionLabels.ACCOUNT_OPEN : undefined}`}
+                aria-label={actionLabels.ACCOUNT_LABEL}
+                aria-controls={open ? actionLabels.ACCOUNT_OPEN : undefined}
                 aria-haspopup="true"
                 aria-expanded={open}
             >

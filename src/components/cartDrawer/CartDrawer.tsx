@@ -1,7 +1,8 @@
-import { CartContent } from '@components/cartContent/CartContent';
-import { CartDrawerProps } from '@types';
+import { Drawer } from '@mui/material';
 
-import { StyledCartDrawer } from './CartDrawer.styles';
+import { CartContent } from '@components/cartContent/CartContent';
+import { BORDER_RADIUS } from '@constants';
+import { CartDrawerProps } from '@types';
 
 export const CartDrawer = (props: CartDrawerProps) => {
     const {
@@ -17,7 +18,20 @@ export const CartDrawer = (props: CartDrawerProps) => {
         onCheckout,
     } = props;
     return (
-        <StyledCartDrawer anchor="bottom" open={open} onClose={onClose}>
+        <Drawer
+            anchor="bottom"
+            open={open}
+            onClose={onClose}
+            sx={{
+                borderRadius: `${BORDER_RADIUS.SM} ${BORDER_RADIUS.SM} 0 0`,
+                maxHeight: '90vh',
+            }}
+            PaperProps={{
+                sx: {
+                    sx: { width: 280, backgroundColor: 'background.default' },
+                },
+            }}
+        >
             <CartContent
                 items={items}
                 onClose={onClose}
@@ -29,6 +43,6 @@ export const CartDrawer = (props: CartDrawerProps) => {
                 bookingFee={bookingFee}
                 onCheckout={onCheckout}
             />
-        </StyledCartDrawer>
+        </Drawer>
     );
 };

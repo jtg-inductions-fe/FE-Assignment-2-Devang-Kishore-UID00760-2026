@@ -4,7 +4,7 @@ import Grid from '@mui/material/Grid2';
 
 import { CartSummaryProps } from '@types';
 
-import { CartSummaryContent } from './cartSummary.constants';
+import { cartSummaryContent } from './cartSummary.constants';
 import {
     CartSummaryContainer,
     SummaryRow,
@@ -13,24 +13,25 @@ import {
 
 export const CartSummary = (props: CartSummaryProps) => {
     const { subTotal, bookingFee, total, onCheckout } = props;
+
     return (
         <CartSummaryContainer>
             <SummaryRow>
                 <Typography variant="h5">
-                    {CartSummaryContent.SUBTOTAL_LABEL}
+                    {cartSummaryContent.SUBTOTAL_LABEL}
                 </Typography>
                 <Typography variant="h5">&#8377;{subTotal}</Typography>
             </SummaryRow>
             <SummaryRow>
                 <Typography variant="h5">
-                    {CartSummaryContent.BOOKING_LABEL}
+                    {cartSummaryContent.BOOKING_LABEL}
                 </Typography>
                 <Typography variant="h5">&#8377;{bookingFee}</Typography>
             </SummaryRow>
             <Divider />
             <TotalRow>
                 <Typography variant="h5">
-                    {CartSummaryContent.TOTAL_LABEL}
+                    {cartSummaryContent.TOTAL_LABEL}
                 </Typography>
                 <Typography variant="h5">&#8377;{total}</Typography>
             </TotalRow>
@@ -38,7 +39,7 @@ export const CartSummary = (props: CartSummaryProps) => {
                 <Button variant="contained">
                     <ShoppingCartCheckoutIcon />
                     <Typography variant="body1" onClick={onCheckout}>
-                        {CartSummaryContent.CHECKOUT_BUTTON}
+                        {cartSummaryContent.CHECKOUT_BUTTON}
                     </Typography>
                 </Button>
             </Grid>

@@ -192,8 +192,8 @@ export const AddEditRestaurant = () => {
                                 }
                             >
                                 {activeStep === 0
-                                    ? `${addRestaurantContent.CANCEL}`
-                                    : `${addRestaurantContent.BACK}`}
+                                    ? addRestaurantContent.CANCEL
+                                    : addRestaurantContent.BACK}
                             </Button>
                             <Button
                                 type="button"
@@ -204,8 +204,8 @@ export const AddEditRestaurant = () => {
                                 loading={loading}
                             >
                                 {activeStep === STEPS.length - 1
-                                    ? `${addRestaurantContent.SUBMIT}`
-                                    : `${addRestaurantContent.NEXT}`}
+                                    ? addRestaurantContent.SUBMIT
+                                    : addRestaurantContent.NEXT}
                             </Button>
                         </ActionWrapper>
                     </RestaurantForm>
@@ -213,9 +213,9 @@ export const AddEditRestaurant = () => {
             </StyledPaper>
             <ConfirmDialog
                 open={isOpen}
-                title={`${addRestaurantContent.DIALOG_TITLE}`}
-                message={`${addRestaurantContent.DIALOG_SUBTITLE}`}
-                confirmLabel={`${addRestaurantContent.DIALOG_LABEL}`}
+                title={addRestaurantContent.DIALOG_TITLE}
+                message={addRestaurantContent.DIALOG_SUBTITLE}
+                confirmLabel={addRestaurantContent.DIALOG_LABEL}
                 onCancel={() => setIsOpen((state) => !state)}
                 onConfirm={() => void handleConfirm()}
             />

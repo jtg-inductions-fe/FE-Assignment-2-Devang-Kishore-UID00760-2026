@@ -70,6 +70,11 @@ export const BORDER_RADIUS = {
     ROUNDED: 9999,
 };
 
+export const Z_INDEX = {
+    BELOW: -1,
+    FRONT: 2,
+};
+
 /**
  * Base font size in pixels.
  * @constant
