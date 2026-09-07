@@ -71,7 +71,7 @@ export const Auth = ({ isSignUp = false }: { isSignUp: boolean }) => {
                     severity: SnackbarTheme.SUCCESS,
                 }),
             );
-            await navigate(ROUTES.DISCOVERY, { replace: true });
+            await navigate(ROUTES.LOGIN, { replace: true });
         } catch (error) {
             dispatch(
                 showSnackbar({
@@ -187,6 +187,11 @@ export const Auth = ({ isSignUp = false }: { isSignUp: boolean }) => {
                                         }
                                         error={!!fieldState.error}
                                         helperText={fieldState.error?.message}
+                                        autoComplete={
+                                            isSignUp
+                                                ? authContent.NEW_PASSWORD
+                                                : authContent.CURRENT_PASSWORD
+                                        }
                                     />
                                 )}
                             />
@@ -208,6 +213,9 @@ export const Auth = ({ isSignUp = false }: { isSignUp: boolean }) => {
                                             error={!!fieldState.error}
                                             helperText={
                                                 fieldState.error?.message
+                                            }
+                                            autoComplete={
+                                                authContent.NEW_PASSWORD
                                             }
                                         />
                                     )}

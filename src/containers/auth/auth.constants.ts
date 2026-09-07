@@ -27,6 +27,8 @@ export const authContent = {
     CITY_PLACEHOLDER: 'New Delhi',
     PIN_CODE_PLACEHOLDER: '110208',
     ADDRESS_LABEL: 'Address',
+    CURRENT_PASSWORD: 'current password',
+    NEW_PASSWORD: 'new password',
 };
 
 export const authValidationFields = {

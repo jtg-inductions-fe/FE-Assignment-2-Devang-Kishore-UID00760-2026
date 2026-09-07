@@ -10,7 +10,7 @@ export const updateUserName = async (name: string): Promise<User> => {
 };
 
 export const deleteUserProfile = async (): Promise<void> => {
-    await api.delete(ROUTES.API_USERS);
+    await api.delete(ROUTES.API_ME);
 };
 
 export const createAddress = async (address: Address): Promise<AddressData> => {

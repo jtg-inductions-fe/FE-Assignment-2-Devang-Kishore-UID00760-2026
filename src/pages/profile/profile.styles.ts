@@ -14,17 +14,11 @@ export const ProfileCardContent = styled(CardContent)(({ theme }) => ({
     padding: theme.spacing(3),
 }));
 
-export const NameContainer = styled(Stack)(
-    ({ theme: { spacing, breakpoints } }) => ({
-        flexDirection: 'column',
-        alignItems: 'flex-start',
-        padding: spacing(2),
-
-        [breakpoints.up('lg')]: {
-            flexDirection: 'row',
-        },
-    }),
-);
+export const NameContainer = styled(Stack)(({ theme: { spacing } }) => ({
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    padding: spacing(2),
+}));
 
 export const AddressContainer = styled(Stack)(({ theme: { spacing } }) => ({
     flexDirection: 'row',

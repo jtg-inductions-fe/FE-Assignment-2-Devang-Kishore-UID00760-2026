@@ -46,9 +46,6 @@ export const signupUser = createAsyncThunk(
     async (payload: UserData, { rejectWithValue }) => {
         try {
             await signUp(payload);
-
-            await login(payload.email, payload.password);
-            return await getCurrentUser();
         } catch (error) {
             if (axios.isAxiosError<ApiError>(error)) {
                 return rejectWithValue(
@@ -124,10 +121,9 @@ export const authSlice = createSlice({
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(signupUser.fulfilled, (state, action) => {
+            .addCase(signupUser.fulfilled, (state) => {
                 state.loading = false;
-                state.user = action.payload;
-                state.isLoggedIn = true;
+                state.error = null;
             })
             .addCase(signupUser.rejected, (state) => {
                 state.loading = false;
@@ -159,8 +155,6 @@ export const authSlice = createSlice({
             })
             .addCase(logoutCurrentUser.rejected, (state) => {
                 state.loading = false;
-                state.user = null;
-                state.isLoggedIn = false;
                 state.error = authSliceContent.USER_FETCH_FAILED;
             });
     },
