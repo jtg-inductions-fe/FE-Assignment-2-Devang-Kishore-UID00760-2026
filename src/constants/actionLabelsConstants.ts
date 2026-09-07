@@ -11,4 +11,5 @@ export const actionLabels = {
     BACK: 'Back',
     DELETE: 'Delete',
     OUT_OF_STOCK: 'Out Of Stock',
+    PROFILE: 'Profile',
 };

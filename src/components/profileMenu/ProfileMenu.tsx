@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { LogoutOutlined } from '@mui/icons-material';
+import { AccountCircle } from '@mui/icons-material';
 import {
     Avatar,
     Divider,
@@ -15,7 +16,11 @@ import { actionLabels, BORDER_RADIUS } from '@constants';
 
 import { ProfileMenuProps } from './profileMenu.types';
 
-export const ProfileMenu = ({ name, onLogout }: ProfileMenuProps) => {
+export const ProfileMenu = ({
+    name,
+    onLogout,
+    onProfileClick,
+}: ProfileMenuProps) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const handleOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -71,6 +76,18 @@ export const ProfileMenu = ({ name, onLogout }: ProfileMenuProps) => {
                         <LogoutOutlined fontSize="small" />
                     </ListItemIcon>
                     {actionLabels.LOGOUT}
+                </MenuItem>
+                <MenuItem
+                    onClick={() => {
+                        onProfileClick();
+                        handleClose();
+                    }}
+                    sx={{ py: 1.5, px: 2 }}
+                >
+                    <ListItemIcon>
+                        <AccountCircle />
+                    </ListItemIcon>
+                    {actionLabels.PROFILE}
                 </MenuItem>
             </Menu>
         </>

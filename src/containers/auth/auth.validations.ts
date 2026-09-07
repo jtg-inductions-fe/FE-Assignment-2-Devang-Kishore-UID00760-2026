@@ -23,6 +23,16 @@ const name = yup
     .required(authValidationFields.NAME_REQUIRED)
     .min(2, authValidationFields.NAME_MIN_LENGTH)
     .max(50, authValidationFields.NAME_MAX_LENGTH);
+const address = yup.object({
+    street: yup.string().trim().required(authValidationFields.STREET_REQUIRED),
+    city: yup.string().trim().required(authValidationFields.CITY_REQUIRED),
+    state: yup.string().trim().required(authValidationFields.STATE_REQUIRED),
+    pincode: yup
+        .string()
+        .trim()
+        .required(authValidationFields.PINCODE_REQUIRED)
+        .matches(/^\d+$/, authValidationFields.PINCODE_VALIDATION),
+});
 
 export const loginSchema = yup.object({
     email,
@@ -30,7 +40,7 @@ export const loginSchema = yup.object({
 });
 
 export const signupSchema = yup.object({
-    name,
+    full_name: name,
     password,
     email,
     confirmPassword: yup
@@ -38,6 +48,7 @@ export const signupSchema = yup.object({
         .required(authValidationFields.CONFIRM_PASSWORD_REQUIRED)
         .oneOf([yup.ref('password')], authValidationFields.PASSWORD_MISMATCH),
     role: yup.mixed<Role>().oneOf([Role.CUSTOMER, Role.OWNER]).required(),
+    address,
 });
 
 export type LoginFormData = yup.InferType<typeof loginSchema>;

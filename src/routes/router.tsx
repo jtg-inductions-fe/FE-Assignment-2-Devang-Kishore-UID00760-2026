@@ -12,6 +12,7 @@ import { DiscoveryPage } from '@pages/discovery/Discovery';
 import { ErrorPage } from '@pages/fallback/ErrorPage';
 import { NotFoundPage } from '@pages/fallback/NotFoundPage';
 import { OrdersPage } from '@pages/orders/Orders';
+import Profile from '@pages/profile/profile';
 import { RestaurantMenuPage } from '@pages/restaurantMenu/RestaurantMenu';
 
 export const router = createBrowserRouter([
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
                                 element: (
                                     <Navigate to={ROUTES.DISCOVERY} replace />
                                 ),
+                            },
+                            {
+                                path: ROUTES.PROFILE,
+                                element: <Profile />,
                             },
                             {
                                 path: ROUTES.DISCOVERY,

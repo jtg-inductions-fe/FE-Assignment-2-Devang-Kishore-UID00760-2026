@@ -1,5 +1,6 @@
-import { getCurrentUser } from '@services/auth.service';
-import { setUser } from '@store/slices/auth/authSlice';
+import { useEffect } from 'react';
+
+import { fetchCurrentUser } from '@store/slices/auth/authSlice';
 
 import { useAppDispatch, useAppSelector } from './storeHooks';
 import { UseAuthReturn } from './useAuth.type';
@@ -9,9 +10,11 @@ export const useAuth = (): UseAuthReturn => {
         (state) => state.auth,
     );
     const dispatch = useAppDispatch();
-    if (user) return { user, isLoggedIn, error, loading };
-
-    dispatch(setUser(getCurrentUser()));
+    useEffect(() => {
+        if (!user) {
+            void dispatch(fetchCurrentUser());
+        }
+    }, [user, dispatch]);
 
     return { user, isLoggedIn, error, loading };
 };

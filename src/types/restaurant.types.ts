@@ -1,4 +1,4 @@
-import { Cuisine, FoodType } from '@types';
+import { Address, Cuisine, FoodType } from '@types';
 
 export enum Day {
     MONDAY = 'Monday',
@@ -8,13 +8,6 @@ export enum Day {
     FRIDAY = 'Friday',
     SATURDAY = 'Saturday',
     SUNDAY = 'Sunday',
-}
-
-export interface Address {
-    street: string;
-    city: string;
-    state: string;
-    pincode: string;
 }
 
 export interface Restaurant {
