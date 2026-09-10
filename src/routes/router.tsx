@@ -3,7 +3,7 @@ import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { AuthRoute } from '@components/routeGuards/AuthRoute';
 import { PrivateRoute } from '@components/routeGuards/PrivateRoute';
 import { ProtectedRoutes } from '@components/routeGuards/ProtectedRoutes';
-import { ROUTES } from '@constants';
+import { ROUTES, USERS } from '@constants';
 import { AddEditRestaurant } from '@containers/addEditRestaurant/AddEditRestaurant';
 import { AppLayout } from '@layouts/AppLayout';
 import { LoginPage } from '@pages/auth/LoginPage';
@@ -50,7 +50,7 @@ export const router = createBrowserRouter([
                             },
                             {
                                 element: (
-                                    <ProtectedRoutes allowedRoles={['owner']} />
+                                    <ProtectedRoutes allowedRoles={[USERS.owner]} />
                                 ),
                                 children: [
                                     {

@@ -8,4 +8,5 @@ export interface FormTextFieldProps<T extends FieldValues> {
     multiline?: boolean;
     rows?: number;
     required?: boolean;
+    disabled?:boolean;
 }

@@ -18,6 +18,7 @@ import { ProfileMenu } from '@components/profileMenu';
 import { Searchbar } from '@components/searchBar';
 import { permissions } from '@config/permissions.config';
 import { ROUTES } from '@constants';
+import { PAGE_SIZE } from '@constants';
 import { CartContainer } from '@containers/cart/Cart';
 import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
 import { usePermissions } from '@hooks/usePermissions';
@@ -26,7 +27,7 @@ import { showSnackbar } from '@store/slices/feedback/feedBackSlice';
 import { fetchMenu } from '@store/slices/menu/menuSlice';
 import { fetchOrders } from '@store/slices/order/ordersSlice';
 import { fetchRestaurants } from '@store/slices/restaurant/restaurantSlice';
-import { ConfirmationDialogProps, FoodType, Role, SnackbarTheme } from '@types';
+import { ConfirmationDialogProps, FoodType, SnackbarTheme } from '@types';
 
 import { headerTextContent } from './header.constants';
 import {
@@ -43,7 +44,7 @@ export const Header = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [cartOpen, setCartOpen] = useState(false);
     const [foodPreference, setFoodPreference] = useState<FoodType>(
-        FoodType.BOTH,
+        FoodType.VEG,
     );
     const [dialogData, setDialogData] = useState<
         Omit<ConfirmationDialogProps, 'onCancel' | 'confirmLabel'>
@@ -66,7 +67,7 @@ export const Header = () => {
     const ordersCount = orders.length;
     const currentLocation = location.pathname;
     const currentRoute = currentLocation.split('/')[1];
-
+    const {loading,hasMore,nextCursor}=useAppSelector((state)=>state.restaurants)
     const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         setSearchQuery(value);
@@ -76,7 +77,7 @@ export const Header = () => {
         setFoodPreference(value);
         const search = searchParams.get('search');
         setSearchparams({
-            ...(value !== FoodType.BOTH && { type: value }),
+            ...(value !== FoodType.VEG && { type: value }),
             ...(search && { search }),
         });
     };
@@ -161,8 +162,9 @@ export const Header = () => {
             dispatch(
                 fetchRestaurants({
                     search: searchQuery,
-                    type: foodPreference,
-                    ownerId: user?.role === Role.OWNER ? user?.id : '',
+                    food_type: foodPreference,
+                    page_size:PAGE_SIZE,
+                    append:false
                 }),
             )
                 .unwrap()
@@ -181,7 +183,7 @@ export const Header = () => {
             dispatch(
                 fetchMenu({
                     restaurantId: restaurantId,
-                    filters: { search: searchQuery, type: foodPreference },
+                    filters: { search: searchQuery, food_type: foodPreference, page_size:PAGE_SIZE,append:false},
                 }),
             )
                 .unwrap()
@@ -194,17 +196,25 @@ export const Header = () => {
                     );
                 });
         };
+        if(searchQuery||foodPreference!=FoodType.VEG){
+            const timer = setTimeout(() => {
+                if (currentRoute === 'discovery') {
+                    handleRestaurantFetch();
+                }
+                if (currentRoute === 'restaurant') {
+                    handleMenuFetch();
+                }
+            }, 500);
 
-        const timer = setTimeout(() => {
+            return () => clearTimeout(timer);
+        }else{
             if (currentRoute === 'discovery') {
-                handleRestaurantFetch();
-            }
+                    handleRestaurantFetch();
+                }
             if (currentRoute === 'restaurant') {
-                handleMenuFetch();
-            }
-        }, 500);
-
-        return () => clearTimeout(timer);
+                    handleMenuFetch();
+             }
+        }
     }, [
         dispatch,
         searchQuery,
@@ -213,6 +223,43 @@ export const Header = () => {
         currentLocation,
         user,
     ]);
+
+    useEffect(()=>{
+        if(currentRoute!="discovery")
+            return
+
+        const handleScroll=()=>{
+            if(loading||!hasMore||!nextCursor){
+                return;
+            }
+            const nearBottom=window.innerHeight+window.scrollY>=document.documentElement.scrollHeight-500;
+            if(!nearBottom) 
+                return;
+            dispatch(
+                fetchRestaurants({
+                    search: searchQuery,
+                    food_type: foodPreference,
+                    cursor:nextCursor,
+                    page_size:PAGE_SIZE,
+                    append:true
+                }),
+            )
+                .unwrap()
+                .catch(() => {
+                    dispatch(
+                        showSnackbar({
+                            message: headerTextContent.FETCH_RESTAURANT_ERROR,
+                            severity: SnackbarTheme.ERROR,
+                        }),
+                    );
+                });
+        }
+        window.addEventListener("scroll",handleScroll);
+
+        return ()=>{
+            window.removeEventListener("scroll",handleScroll);
+        }
+    },[currentRoute,searchQuery,foodPreference,loading,hasMore,nextCursor,dispatch])
 
     useEffect(() => {
         if (!user?.id || !user.role) {
@@ -242,20 +289,17 @@ export const Header = () => {
                                 }
                             }}
                         >
-                            <SwitchButton value={FoodType.BOTH} color="primary">
-                                {FoodType.BOTH}
-                            </SwitchButton>
                             <SwitchButton
                                 value={FoodType.VEG}
                                 color="secondary"
                             >
-                                {FoodType.VEG}
+                                {headerTextContent.VEG}
                             </SwitchButton>
                             <SwitchButton
                                 value={FoodType.NON_VEG}
                                 color="error"
                             >
-                                {FoodType.NON_VEG}
+                                {headerTextContent.NON_VEG}
                             </SwitchButton>
                         </SwitchButtonGroup>
                     </FoodTypeSwitch>

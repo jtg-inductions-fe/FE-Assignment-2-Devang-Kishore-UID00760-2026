@@ -1,7 +1,8 @@
 [
     {
         "id": "R1",
-        "ownerId": "U1",
+        "owner_id": "U1",
+        "is_available":true,
         "name": "Spice Route Kitchen",
         "cuisines": ["Indian", "Chinese"],
         "address": {
@@ -11,18 +12,15 @@
             "pincode": "1025"
         },
         "description": "Good food, fresh food",
-        "ownerGovId": "12432",
-        "contactNumber": "82746244142",
+        "contact_number": "82746244142",
         "email": "spice@restaurant.com",
-        "fssaiCertificateId": "1233123421",
-        "gstNumber": "12345",
-        "category": "Veg",
-        "image": "https://plus.unsplash.com/premium_photo-1694547926001-f2151e4a476b?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Zm9vZF9waG90b2dyYXBoeXxlbnwwfHwwfHx8MA%3D%3D",
-        "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEwjxMyA0h7jPtwarVPkSXqlN6oQQfLJHDsVdXtp1uRA&s=10",
-        "isOpen": true,
-        "openingTime": "01:33",
-        "closingTime": "19:59",
-        "workingDays": [
+        "food_type": "Veg",
+        "image_link": "https://plus.unsplash.com/premium_photo-1694547926001-f2151e4a476b?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Zm9vZF9waG90b2dyYXBoeXxlbnwwfHwwfHx8MA%3D%3D",
+        "logo_link": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEwjxMyA0h7jPtwarVPkSXqlN6oQQfLJHDsVdXtp1uRA&s=10",
+        "is_open": true,
+        "opening_time": "01:33",
+        "closing_time": "19:59",
+        "working_days": [
             "Monday",
             "Tuesday",
             "Wednesday",

@@ -20,13 +20,13 @@ export const CartItem = (props: CartItemProps) => {
     return (
         <CartItemContainer>
             <CartItemImage
-                src={menuItem.image}
+                src={menuItem.image_link}
                 alt={menuItem.name}
                 fetchPriority="high"
             />
             <CartItemDetails>
                 <CartItemName variant="h5">{menuItem.name}</CartItemName>
-                <Typography variant="h6">&#8377;{menuItem.price}</Typography>
+                <Typography variant="h6">&#8377;{menuItem.price_amount}</Typography>
             </CartItemDetails>
             <CartActions>
                 <QuantityContainer>

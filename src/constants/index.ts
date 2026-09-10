@@ -11,6 +11,7 @@ export {
     DAYS,
     RESTAURANT_STATE,
     RESTAURANT_TEXT_CONTENT,
+    PAGE_SIZE
 } from './restaurantsConstants';
 export { USERS } from './userConstants';
 export { actionLabels } from './actionLabelsConstants';

@@ -1,9 +1,8 @@
 import { Control, FieldErrors, FieldValues } from 'react-hook-form';
 
 export enum FoodType {
-    VEG = 'Veg',
-    NON_VEG = 'Non Veg',
-    BOTH = 'Both',
+    VEG = 'VEG',
+    NON_VEG = 'NON_VEG',
 }
 export enum Cuisine {
     INDIAN = 'Indian',
@@ -21,11 +20,11 @@ export enum Cuisine {
 export interface MenuItem {
     id: string;
     name: string;
-    restaurantID: string;
+    restaurant_id: string;
     description?: string;
-    category: FoodType;
-    price: number;
-    image?: string;
+    food_type: FoodType;
+    price_amount: number;
+    image_link?: string;
     stock: number;
     cuisine: Cuisine;
 }
@@ -34,11 +33,12 @@ export interface MenuItemFormData {
     name: string;
     description?: string;
     cuisine: Cuisine;
-    category: FoodType;
-    price: number;
+    food_type: FoodType;
+    price_amount: number;
     stock: number;
-    image?: string;
+    image_link?: string;
 }
+
 
 export interface MenuFormContainer {
     open: boolean;

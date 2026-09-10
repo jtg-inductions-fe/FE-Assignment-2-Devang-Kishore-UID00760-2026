@@ -22,4 +22,5 @@ export const ROUTES = {
     API_LOGIN: '/auth/login',
     API_SIGNUP: '/auth/signup',
     API_ADDRESSES: '/users/me/addresses',
+    API_RESTAURANTS:'/restaurants/',
 };

@@ -86,7 +86,7 @@ export const MenuItemDisplayCard = (props: MenuItemsContainer) => {
             onDecrease={handleDecrease}
             quantity={quantity ?? 0}
             presentInCart={presentInCart}
-            isCartDisabled={stock == 0 || !(selectedRestaurant?.isOpen ?? true)}
+            isCartDisabled={stock == 0 || !(selectedRestaurant?.is_open ?? true)}
             changeStock={() => void stockChange}
             onBlur={(value: number) => void stockChange(value)}
             onDecrement={() => void handleStockDecrement()}

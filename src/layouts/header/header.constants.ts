@@ -8,4 +8,6 @@ export const headerTextContent = {
     FETCH_MENU_ERROR: 'Error while fetching menu items.',
     CART_BUTTON: 'Cart',
     ORDERS_BUTTON: 'Order',
+    VEG:"Veg",
+    NON_VEG:'Non Veg'
 };

@@ -35,9 +35,10 @@ export const getOrders = async (
     }
 
     if (role === Role.OWNER) {
-        const restaurants = await getRestaurants();
+        const response = await getRestaurants();
+        const restaurants=response.items
         const ownerRestaurantIds = restaurants
-            .filter((restaurant) => restaurant.ownerId === userId)
+            .filter((restaurant) => restaurant.owner_id === userId)
             .map((currentRestaurant) => currentRestaurant.id);
         return orders.filter((order) =>
             ownerRestaurantIds.includes(order.restaurantId),
@@ -53,7 +54,7 @@ export const getOrders = async (
  */
 export const placeOrder = async (payload: OrderData): Promise<Order> => {
     const subtotal = payload.items.reduce(
-        (sum, cartItem) => sum + cartItem.item.price * cartItem.quantity,
+        (sum, cartItem) => sum + cartItem.item.price_amount * cartItem.quantity,
         0,
     );
 

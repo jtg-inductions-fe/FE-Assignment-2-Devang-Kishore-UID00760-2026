@@ -3,27 +3,25 @@ export interface MenuItemFormData {
     name: string;
     description?: string;
     cuisine: Cuisine;
-    category: FoodType;
-    price: number;
+    food_type: FoodType;
+    price_amount: number;
     stock: number;
-    image?: string;
+    image_link?: string;
 }
 
 export interface AddRestaurantFormData {
     name: string;
     description?: string;
-    contactNumber: string;
+    country_code:string;
+    contact_number: string;
     email: string;
-    fssaiCertificateId: string;
-    gstNumber: string;
     cuisines: Cuisine[];
-    category: FoodType;
-    image?: string;
-    isOpen: boolean;
-    logo?: string;
+    food_type: FoodType;
+    image_link?: string;
+    is_available: boolean;
+    logo_link?: string;
     address: Address;
-    openingTime: string;
-    closingTime: string;
-    workingDays: Day[];
-    menu: MenuItemFormData[];
+    opening_time: string;
+    closing_time: string;
+    working_days: Day[];
 }

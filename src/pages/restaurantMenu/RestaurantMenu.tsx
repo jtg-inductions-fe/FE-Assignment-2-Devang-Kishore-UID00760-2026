@@ -82,7 +82,7 @@ export const RestaurantMenuPage = () => {
 
     const handleAddToCart = async (item: MenuItem) => {
         const existingRestaurantId =
-            items.length > 0 ? items[0].item.restaurantID : '';
+            items.length > 0 ? items[0].item.restaurant_id : '';
         if (
             !existingRestaurantId ||
             existingRestaurantId === selectedRestaurant?.id
@@ -149,15 +149,15 @@ export const RestaurantMenuPage = () => {
     const [isEditMode, setIsEditMode] = useState(false);
     const [isEditingTime, setIsEditingTime] = useState(false);
     const [openingTime, setOpeningTime] = useState(
-        selectedRestaurant?.openingTime,
+        selectedRestaurant?.opening_time,
     );
     const [closingTime, setClosingTime] = useState(
-        selectedRestaurant?.closingTime,
+        selectedRestaurant?.closing_time,
     );
     const defaultData = {
         name: '',
         description: '',
-        category: FoodType.VEG,
+        foodType: FoodType.VEG,
         cuisine: Cuisine.INDIAN,
         price: 0,
         stock: 0,
@@ -199,12 +199,12 @@ export const RestaurantMenuPage = () => {
                 updateMenuEntry({
                     id: currentItemId,
                     data: {
-                        restaurantID: selectedRestaurant?.id,
+                        restaurant_id: selectedRestaurant?.id,
                         name: data.name,
                         description: data.description,
-                        price: data.price,
-                        category: data.category,
-                        image: data.image,
+                        price_amount: data.price_amount,
+                        food_type: data.food_type,
+                        image_link: data.image_link,
                         cuisine: data.cuisine,
                         stock: data.stock,
                     },
@@ -232,12 +232,12 @@ export const RestaurantMenuPage = () => {
         try {
             await dispatch(
                 createMenuEntry({
-                    restaurantID: selectedRestaurant?.id ?? '',
+                    restaurant_id: selectedRestaurant?.id ?? '',
                     name: data.name,
                     description: data.description,
-                    price: data.price,
-                    category: data.category,
-                    image: data.image,
+                    price_amount: data.price_amount,
+                    food_type: data.food_type,
+                    image_link: data.image_link,
                     cuisine: data.cuisine,
                     stock: data.stock,
                 }),
@@ -295,8 +295,8 @@ export const RestaurantMenuPage = () => {
                 updateRestaurantData({
                     id: selectedRestaurant?.id ?? '',
                     data: {
-                        openingTime: openingTime,
-                        closingTime: closingTime,
+                        opening_time: openingTime,
+                        closing_time: closingTime,
                     },
                 }),
             ).unwrap();

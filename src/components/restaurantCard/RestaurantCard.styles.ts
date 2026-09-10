@@ -97,7 +97,7 @@ export const StatusBadge = styled(Box, {
 
 export const RestaurantFooter = styled(Box)(({ theme: { spacing } }) => ({
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'end',
     alignItems: 'center',
     padding: spacing(5, 3, 3),
 }));

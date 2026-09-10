@@ -15,13 +15,14 @@ import {
 } from '@containers/addEditRestaurant/addEditRestaurant.config';
 import { addRestaurantContent } from '@containers/addEditRestaurant/addEditRestaurant.constants';
 import { AddRestaurantFormData } from '@containers/addEditRestaurant/AddEditRestaurant.types';
+import { useAppSelector } from '@hooks/storeHooks';
 
 export const RestaurantInfoSection = () => {
     const {
         control,
         formState: { errors },
     } = useFormContext<AddRestaurantFormData>();
-
+    const {loading}=useAppSelector((state)=>state.restaurants)
     return (
         <Grid container spacing={4}>
             <Grid size={12}>
@@ -44,6 +45,7 @@ export const RestaurantInfoSection = () => {
                             <FormTextField
                                 name={fieldName}
                                 control={control}
+                                disabled={loading}
                                 label={field.label}
                                 type={field.type}
                                 multiline={field.multiline}
@@ -64,6 +66,7 @@ export const RestaurantInfoSection = () => {
                         <Grid key={field.name} size={field.grid}>
                             <FormTextField
                                 name={fieldName}
+                                disabled={loading}
                                 control={control}
                                 label={field.label}
                                 type={field.type}
@@ -83,7 +86,7 @@ export const RestaurantInfoSection = () => {
             <Grid container spacing={8} size={12}>
                 <Grid size={{ xs: 12, md: 4 }}>
                     <Controller
-                        name="openingTime"
+                        name="opening_time"
                         control={control}
                         render={({ field }) => (
                             <Grid>
@@ -93,8 +96,9 @@ export const RestaurantInfoSection = () => {
                                 <TimeField
                                     {...field}
                                     fullWidth
-                                    error={!!errors.openingTime}
-                                    helperText={errors.openingTime?.message}
+                                    disabled={loading}
+                                    error={!!errors.opening_time}
+                                    helperText={errors.opening_time?.message}
                                 />
                             </Grid>
                         )}
@@ -110,7 +114,7 @@ export const RestaurantInfoSection = () => {
                 </Grid>
                 <Grid size={{ xs: 12, md: 4 }}>
                     <Controller
-                        name="closingTime"
+                        name="closing_time"
                         control={control}
                         render={({ field }) => (
                             <Grid>
@@ -120,8 +124,9 @@ export const RestaurantInfoSection = () => {
                                 <TimeField
                                     {...field}
                                     fullWidth
-                                    error={!!errors.closingTime}
-                                    helperText={errors.closingTime?.message}
+                                    disabled={loading}
+                                    error={!!errors.closing_time}
+                                    helperText={errors.closing_time?.message}
                                 />
                             </Grid>
                         )}
@@ -131,15 +136,16 @@ export const RestaurantInfoSection = () => {
 
             <Grid size={12}>
                 <Controller
-                    name="workingDays"
+                    name="working_days"
                     control={control}
                     render={({ field }) => (
                         <CustomSelect
                             {...field}
                             multiple
+                            disabled={loading}
                             label={addRestaurantContent.WORKING_DAYS_LABEL}
-                            error={!!errors.workingDays}
-                            helperText={errors.workingDays?.message}
+                            error={!!errors.working_days}
+                            helperText={errors.working_days?.message}
                             MenuProps={{
                                 anchorOrigin: {
                                     horizontal: 'left',

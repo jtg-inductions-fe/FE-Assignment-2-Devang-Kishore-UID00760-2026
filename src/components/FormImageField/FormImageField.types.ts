@@ -5,4 +5,5 @@ export interface FormImageFieldProps<T extends FieldValues> {
     control: Control<T>;
     label: string;
     alt: string;
+    disabled?:boolean;
 }

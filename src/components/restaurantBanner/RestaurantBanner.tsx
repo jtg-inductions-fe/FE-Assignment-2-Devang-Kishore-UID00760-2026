@@ -41,14 +41,14 @@ export const RestaurantBanner = (props: RestaurantBannerProps) => {
     return (
         <BannerContainer>
             <BannerImage
-                src={restaurant?.image}
+                src={restaurant?.image_link}
                 fetchPriority="high"
-                isOpen={restaurant?.isOpen}
+                isOpen={restaurant?.is_open}
                 alt={restaurant?.name}
             />
             <BannerContent>
                 <RestaurantLogo
-                    src={restaurant?.logo}
+                    src={restaurant?.logo_link}
                     alt={restaurant?.name}
                     fetchPriority="high"
                 />
@@ -73,7 +73,7 @@ export const RestaurantBanner = (props: RestaurantBannerProps) => {
                     <InfoRow>
                         <CallIcon />
                         <Typography variant="body1">
-                            {restaurant?.contactNumber}
+                            {restaurant?.contact_number}
                         </Typography>
                     </InfoRow>
                     <InfoRow>
@@ -94,9 +94,9 @@ export const RestaurantBanner = (props: RestaurantBannerProps) => {
                 </RestaurantInfo>
                 <RestaurantActions>
                     <Chip
-                        label={restaurant?.category}
+                        label={restaurant?.food_type}
                         color={
-                            restaurant?.category === FoodType.VEG
+                            restaurant?.food_type === FoodType.VEG
                                 ? 'secondary'
                                 : 'error'
                         }
@@ -151,8 +151,8 @@ export const RestaurantBanner = (props: RestaurantBannerProps) => {
                             <Stack direction="row" spacing={4}>
                                 <AccessTime />
                                 <Typography variant="h6">
-                                    {restaurant?.openingTime}-
-                                    {restaurant?.closingTime}
+                                    {restaurant?.opening_time}-
+                                    {restaurant?.closing_time}
                                 </Typography>
                                 {showEdit && (
                                     <Button

@@ -15,6 +15,7 @@ export const FormTextField = <T extends FieldValues>(
         multiline = false,
         rows,
         required = false,
+        disabled=false
     } = props;
 
     return (
@@ -30,6 +31,7 @@ export const FormTextField = <T extends FieldValues>(
                     rows={rows}
                     fullWidth
                     required={required}
+                    disabled={disabled}
                     error={!!fieldState.error}
                     helperText={fieldState.error?.message}
                     onChange={(e) =>

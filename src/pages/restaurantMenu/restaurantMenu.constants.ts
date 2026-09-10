@@ -13,7 +13,7 @@ export const restaurantMenuContent = {
     MENU_SECTION_HEADING: 'Menu Items',
     NAME_REQUIRED: 'Item name is required',
     CUISINE_REQUIRED: 'cuisine is required',
-    CATEGORY_REQUIRED: 'Category is required',
+    FOOD_TYPE_REQUIRED: 'Food type is required',
     PRICE_REQUIRED: 'Price is required',
     POSITIVE_PRICE: 'Price must be greater than 0',
     STOCK_REQUIRED: 'Stock is required',

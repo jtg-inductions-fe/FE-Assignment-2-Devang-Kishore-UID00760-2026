@@ -16,7 +16,8 @@ export const addRestaurantSchema = yup.object({
         .trim()
         .email(addRestaurantContent.EMAIL_VALIDATION)
         .required(addRestaurantContent.EMAIL_REQUIRED),
-    contactNumber: yup
+    country_code:yup.string().trim().required(addRestaurantContent.COUNTRY_CODE_REQUIRED),
+    contact_number: yup
         .string()
         .trim()
         .required(addRestaurantContent.RESTAURANT_CONTACT_NUMBER_REQUIRED)
@@ -24,10 +25,10 @@ export const addRestaurantSchema = yup.object({
             /^\+?[1-9]\d{9,14}$/,
             addRestaurantContent.RESTAURANT_CONTACT_NUMBER_VALIDATION,
         ),
-    category: yup
+    food_type: yup
         .mixed<FoodType>()
         .oneOf(FOOD_TYPES)
-        .required(addRestaurantContent.RESTAURANT_CATEGORY_REQUIRED),
+        .required(addRestaurantContent.RESTAURANT_FOOD_TYPE_REQUIRED),
     cuisines: yup
         .array()
         .of(yup.mixed<Cuisine>().oneOf(CUISINES).required())
@@ -52,27 +53,15 @@ export const addRestaurantSchema = yup.object({
     }),
     logo: yup.string(),
     image: yup.string(),
-    isOpen: yup.boolean().required(),
-    openingTime: yup
+    is_available: yup.boolean().required(),
+    opening_time: yup
         .string()
         .required(addRestaurantContent.OPENING_TIME_REQUIRED),
-    closingTime: yup
+    closing_time: yup
         .string()
         .trim()
-        .required(addRestaurantContent.CLOSING_TIME_REQUIRED)
-        .test(
-            addRestaurantContent.CLOSING_TIME_VALIDATION,
-            addRestaurantContent.CLOSING_TIME_VALIDATION_ERROR,
-            function (value) {
-                const { openingTime } = this.parent as { openingTime: string };
-
-                if (!openingTime || !value) {
-                    return true;
-                }
-                return openingTime < value;
-            },
-        ),
-    workingDays: yup
+        .required(addRestaurantContent.CLOSING_TIME_REQUIRED),
+    working_days: yup
         .array()
         .of(
             yup
@@ -83,42 +72,4 @@ export const addRestaurantSchema = yup.object({
         .ensure()
         .min(1, addRestaurantContent.DAY_VALIDATION)
         .required(),
-    gstNumber: yup.string().trim().required(addRestaurantContent.GST_REQUIRED),
-    fssaiCertificateId: yup
-        .string()
-        .trim()
-        .required(addRestaurantContent.FSSAI_REQUIRED),
-    menu: yup
-        .array()
-        .of(
-            yup.object({
-                name: yup
-                    .string()
-                    .trim()
-                    .required(addRestaurantContent.ITEM_NAME_REQUIRED),
-                description: yup.string().trim(),
-                cuisine: yup
-                    .mixed<Cuisine>()
-                    .oneOf(CUISINES)
-                    .required(addRestaurantContent.ITEM_CUISINE_REQUIRED),
-                category: yup
-                    .mixed<FoodType>()
-                    .oneOf(FOOD_TYPES)
-                    .required(addRestaurantContent.ITEM_CATEGORY_REQUIRED),
-                price: yup
-                    .number()
-                    .typeError(addRestaurantContent.PRICE_REQUIRED)
-                    .positive(addRestaurantContent.POSITIVE_PRICE_VALIDATION)
-                    .required(addRestaurantContent.PRICE_REQUIRED),
-                stock: yup
-                    .number()
-                    .typeError(addRestaurantContent.ITEM_STOCK_REQUIRED)
-                    .min(0, addRestaurantContent.ITEM_STOCK_VALIDATION)
-                    .required(addRestaurantContent.ITEM_STOCK_REQUIRED),
-                image: yup.string(),
-            }),
-        )
-        .required()
-        .min(1, addRestaurantContent.ATLEAST_ONE_ITEM_VALIDATION)
-        .ensure(),
 });
