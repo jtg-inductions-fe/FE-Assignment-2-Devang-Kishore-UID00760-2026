@@ -144,6 +144,7 @@ export const Auth = ({ isSignUp = false }: { isSignUp: boolean }) => {
                                             }
                                             type="name"
                                             error={!!fieldState.error}
+                                            disabled={loading}
                                             helperText={
                                                 fieldState.error?.message
                                             }
@@ -166,6 +167,7 @@ export const Auth = ({ isSignUp = false }: { isSignUp: boolean }) => {
                                             authContent.EMAIL_PLACEHOLDER
                                         }
                                         type="email"
+                                        disabled={loading}
                                         error={!!fieldState.error}
                                         helperText={fieldState.error?.message}
                                     />
@@ -185,6 +187,7 @@ export const Auth = ({ isSignUp = false }: { isSignUp: boolean }) => {
                                         placeholder={
                                             authContent.PASSWORD_PLACEHOLDER
                                         }
+                                        disabled={loading}
                                         error={!!fieldState.error}
                                         helperText={fieldState.error?.message}
                                         autoComplete={
@@ -210,6 +213,7 @@ export const Auth = ({ isSignUp = false }: { isSignUp: boolean }) => {
                                             placeholder={
                                                 authContent.CONFIRM_PASSWORD_PLACEHOLDER
                                             }
+                                            disabled={loading}
                                             error={!!fieldState.error}
                                             helperText={
                                                 fieldState.error?.message
@@ -244,6 +248,7 @@ export const Auth = ({ isSignUp = false }: { isSignUp: boolean }) => {
                                                     authContent.STREET_PLACEHOLDER
                                                 }
                                                 error={!!fieldState.error}
+                                                disabled={loading}
                                                 helperText={
                                                     fieldState.error?.message
                                                 }
@@ -265,6 +270,7 @@ export const Auth = ({ isSignUp = false }: { isSignUp: boolean }) => {
                                                     authContent.CITY_PLACEHOLDER
                                                 }
                                                 error={!!fieldState.error}
+                                                disabled={loading}
                                                 helperText={
                                                     fieldState.error?.message
                                                 }
@@ -286,6 +292,7 @@ export const Auth = ({ isSignUp = false }: { isSignUp: boolean }) => {
                                                     authContent.STATE_PLACEHOLDER
                                                 }
                                                 error={!!fieldState.error}
+                                                disabled={loading}
                                                 helperText={
                                                     fieldState.error?.message
                                                 }
@@ -307,6 +314,7 @@ export const Auth = ({ isSignUp = false }: { isSignUp: boolean }) => {
                                                     authContent.PIN_CODE_PLACEHOLDER
                                                 }
                                                 error={!!fieldState.error}
+                                                disabled={loading}
                                                 helperText={
                                                     fieldState.error?.message
                                                 }
@@ -327,6 +335,7 @@ export const Auth = ({ isSignUp = false }: { isSignUp: boolean }) => {
                                         <Checkbox
                                             {...field}
                                             checked={value === Role.OWNER}
+                                            disabled={loading}
                                             onChange={(e) =>
                                                 onChange(
                                                     e.target.checked

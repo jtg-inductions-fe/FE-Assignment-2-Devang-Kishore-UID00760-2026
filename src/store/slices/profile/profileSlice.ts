@@ -152,7 +152,7 @@ const profileSlice = createSlice({
             })
             .addCase(addAddress.fulfilled, (state, action) => {
                 state.loading = false;
-                state.addresses.push(action.payload);
+                state.addresses.unshift(action.payload);
             })
             .addCase(addAddress.rejected, (state) => {
                 state.loading = false;
@@ -164,12 +164,11 @@ const profileSlice = createSlice({
             })
             .addCase(editAddress.fulfilled, (state, action) => {
                 state.loading = false;
-                const index = state.addresses.findIndex(
-                    (address) => address.id === action.payload.id,
+                const addresses = state.addresses.filter(
+                    (address) => address.id !== action.payload.id,
                 );
-                if (index !== -1) {
-                    state.addresses[index] = action.payload;
-                }
+                addresses.unshift(action.payload);
+                state.addresses = addresses;
             })
             .addCase(editAddress.rejected, (state) => {
                 state.loading = false;
@@ -182,7 +181,7 @@ const profileSlice = createSlice({
             .addCase(deleteAddress.fulfilled, (state, action) => {
                 state.loading = false;
                 state.addresses = state.addresses.filter(
-                    (address) => address.id === action.payload,
+                    (address) => address.id !== action.payload,
                 );
             })
             .addCase(deleteAddress.rejected, (state) => {

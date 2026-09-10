@@ -103,10 +103,8 @@ const Profile = () => {
     });
 
     useEffect(() => {
-        if (user) {
-            void dispatch(fetchAddresses());
-        }
-    }, [dispatch, user]);
+        void dispatch(fetchAddresses());
+    }, [dispatch]);
 
     useEffect(
         () => () => {
@@ -202,8 +200,6 @@ const Profile = () => {
                     }),
                 ).unwrap();
 
-                await dispatch(fetchAddresses()).unwrap();
-
                 dispatch(
                     showSnackbar({
                         message: PROFILE_TEXT.addressUpdated,
@@ -212,8 +208,6 @@ const Profile = () => {
                 );
             } else {
                 await dispatch(addAddress(data)).unwrap();
-
-                await dispatch(fetchAddresses()).unwrap();
 
                 dispatch(
                     showSnackbar({
@@ -259,8 +253,6 @@ const Profile = () => {
         try {
             if (confirmDelete.type === 'address') {
                 await dispatch(deleteAddress(confirmDelete.id)).unwrap();
-
-                await dispatch(fetchAddresses()).unwrap();
 
                 dispatch(
                     showSnackbar({
@@ -358,6 +350,7 @@ const Profile = () => {
                                     render={({ field, fieldState }) => (
                                         <TextField
                                             {...field}
+                                            disabled={loading}
                                             label={PROFILE_TEXT.name}
                                             fullWidth
                                             error={!!fieldState.error}
@@ -460,6 +453,7 @@ const Profile = () => {
                                         <TextField
                                             {...field}
                                             label={PROFILE_TEXT.streetAddress}
+                                            disabled={loading}
                                             fullWidth
                                             error={!!fieldState.error}
                                             helperText={
@@ -476,6 +470,7 @@ const Profile = () => {
                                         <TextField
                                             {...field}
                                             label={PROFILE_TEXT.city}
+                                            disabled={loading}
                                             fullWidth
                                             error={!!fieldState.error}
                                             helperText={
@@ -492,6 +487,7 @@ const Profile = () => {
                                         <TextField
                                             {...field}
                                             label={PROFILE_TEXT.state}
+                                            disabled={loading}
                                             fullWidth
                                             error={!!fieldState.error}
                                             helperText={
@@ -508,6 +504,7 @@ const Profile = () => {
                                         <TextField
                                             {...field}
                                             label={PROFILE_TEXT.pincode}
+                                            disabled={loading}
                                             fullWidth
                                             error={!!fieldState.error}
                                             helperText={
