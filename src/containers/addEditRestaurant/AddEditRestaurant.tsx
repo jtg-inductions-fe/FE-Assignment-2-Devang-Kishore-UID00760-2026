@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { FormProvider, useFieldArray } from 'react-hook-form';
+import { FormProvider } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { Typography } from '@mui/material';
@@ -11,17 +11,13 @@ import { CustomStepper } from '@components/stepper/CustomStepper';
 import { ROUTES } from '@constants';
 import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
 import { showSnackbar } from '@store/slices/feedback/feedBackSlice';
-import {
-    createMenuEntry,
-    fetchMenu,
-    removeMenuEntry,
-} from '@store/slices/menu/menuSlice';
+import { fetchMenu } from '@store/slices/menu/menuSlice';
 import {
     fetchRestaurantByID,
     saveRestaurant,
     updateRestaurantData,
 } from '@store/slices/restaurant/restaurantSlice';
-import { MenuItem, SnackbarTheme } from '@types';
+import { SnackbarTheme } from '@types';
 
 import { addRestaurantContent } from './addEditRestaurant.constants';
 import { STEP_FIELDS } from './addEditRestaurant.constants';
@@ -33,28 +29,21 @@ import {
     StyledPaper,
 } from './AddEditRestaurant.styles';
 import { AddRestaurantFormData } from './AddEditRestaurant.types';
-import { MenuSection } from './formSections/MenuSection';
 import { RestaurantInfoSection } from './formSections/RestaurantInfoSection';
 import { RestaurantSection } from './formSections/RestaurantSection';
 import { useAddEditRestaurantForm } from './useAddEditRestaurantForm';
-const STEPS = [RestaurantSection, RestaurantInfoSection, MenuSection];
-const STEPS_TITLES = ['Restaurant', 'Restaurant Info', 'Menu'];
+const STEPS = [RestaurantSection, RestaurantInfoSection];
+const STEPS_TITLES = ['Restaurant', 'Restaurant Info'];
 
 export const AddEditRestaurant = () => {
     const { methods, activeStep, nextStep, previousStep } =
         useAddEditRestaurantForm();
-    const { replace } = useFieldArray({
-        control: methods.control,
-        name: 'menu',
-    });
     const { id } = useParams();
     const ActiveStep = STEPS[activeStep];
     const { trigger } = methods;
     const dispatch = useAppDispatch();
-    const { user } = useAppSelector((store) => store.auth);
     const { loading } = useAppSelector((state) => state.restaurants);
     const [isOpen, setIsOpen] = useState(false);
-    const [initialMenuItems, setInitialMenuItems] = useState<MenuItem[]>([]);
     const navigate = useNavigate();
     const handleCancel = () => {
         setIsOpen((state) => !state);
@@ -68,45 +57,23 @@ export const AddEditRestaurant = () => {
 
     const menuItem = useAppSelector((state) => state.menu.items);
     const onSubmit = async (data: AddRestaurantFormData) => {
+        const { ...restaurantData } = data;
         try {
-            const restaurant = !isEditMode
-                ? await dispatch(
-                      saveRestaurant({ ownerId: user!.id, ...data }),
-                  ).unwrap()
-                : await dispatch(
-                      updateRestaurantData({
-                          id,
-                          data: { ownerId: user!.id, ...data },
-                      }),
-                  ).unwrap();
-
-            if (isEditMode && initialMenuItems) {
-                await Promise.all(
-                    initialMenuItems.map(async (item) => {
-                        await dispatch(removeMenuEntry(item.id)).unwrap();
+            if (!isEditMode) {
+                await dispatch(saveRestaurant(restaurantData)).unwrap();
+            } else {
+                await dispatch(
+                    updateRestaurantData({
+                        id,
+                        data: restaurantData,
                     }),
-                );
+                ).unwrap();
             }
-
-            await Promise.all(
-                data.menu.map((item) =>
-                    dispatch(
-                        createMenuEntry({
-                            restaurantID: restaurant.id,
-                            name: item.name,
-                            description: item.description,
-                            price: item.price,
-                            category: item.category,
-                            image: item.image,
-                            cuisine: item.cuisine,
-                            stock: item.stock,
-                        }),
-                    ).unwrap(),
-                ),
-            );
             dispatch(
                 showSnackbar({
-                    message: addRestaurantContent.ITEM_ADDED_MESSAGE,
+                    message: isEditMode
+                        ? addRestaurantContent.ITEM_UPDATED_MESSAGE
+                        : addRestaurantContent.ITEM_ADDED_MESSAGE,
                     severity: SnackbarTheme.SUCCESS,
                 }),
             );
@@ -155,12 +122,10 @@ export const AddEditRestaurant = () => {
     }, [id, dispatch]);
 
     useEffect(() => {
-        if (id && selectedRestaurant?.id === id && menuItem.length > 0) {
+        if (id && selectedRestaurant?.id === id) {
             methods.reset(selectedRestaurant);
-            replace(menuItem);
-            setInitialMenuItems(menuItem);
         }
-    }, [selectedRestaurant, methods, menuItem, replace, id]);
+    }, [selectedRestaurant, methods, menuItem, id]);
 
     return (
         <AddRestaurantContainer maxWidth="lg">
@@ -190,6 +155,7 @@ export const AddEditRestaurant = () => {
                             <Button
                                 color="secondary"
                                 variant="outlined"
+                                disabled={loading}
                                 onClick={
                                     activeStep === 0
                                         ? handleCancel

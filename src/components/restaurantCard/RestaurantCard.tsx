@@ -6,19 +6,15 @@ import {
     LockOutlined,
     RamenDiningOutlined,
 } from '@mui/icons-material';
-import { Box, Button, Chip, Link, Stack, Typography } from '@mui/material';
+import { Box, Button, Chip, Stack, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 
-import { ToggleSwitch } from '@components/toggleSwitch';
 import { RESTAURANT_STATE } from '@constants';
 import { FoodType } from '@types';
 import { formateTime } from '@utils/formateTime';
 
 import {
-    ClosedIcon,
-    EllipsisTypography,
-    RestaurantAddress,
-    RestaurantCardContainer,
+    ClosedIcon,EllipsisTypography,RestaurantAddress,RestaurantCardContainer,
     RestaurantContent,
     RestaurantData,
     RestaurantFooter,
@@ -26,6 +22,7 @@ import {
     RestaurantImage,
     RestaurantImageContainer,
     RestaurantInfo,
+    RestaurantLink,
     RestaurantLogo,
     RestaurantTimings,
     StatusBadge,
@@ -33,36 +30,25 @@ import {
 } from './RestaurantCard.styles';
 import { RestaurantCardProps } from './restaurantCard.types';
 
-export const RestaurantCard = ({
-    Restaurant,
-    onEdit,
-    onDelete,
-    canEdit,
-    canDelete,
-    canOpen,
-    onToggle,
-}: RestaurantCardProps) => (
+export const RestaurantCard = ({Restaurant,onEdit,onDelete,canEdit,canDelete,loading}: RestaurantCardProps) => (
+    
     <RestaurantCardContainer>
-        <Link
-            href={`/restaurant/${Restaurant.id}`}
-            underline="none"
-            color="textPrimary"
-        >
+        <RestaurantLink to={`/restaurant/${Restaurant.id}`} color="textPrimary">
             <RestaurantImageContainer>
                 <RestaurantImage
-                    src={Restaurant.image}
+                    src={Restaurant.image_link}
                     alt={Restaurant.name}
-                    open={Restaurant.isOpen}
+                    open={Restaurant.is_open&&Restaurant.is_available}
                 />
-                <RestaurantLogo src={Restaurant.logo} alt={Restaurant.name} />
-                {!Restaurant.isOpen && (
+                <RestaurantLogo src={Restaurant.logo_link} alt={Restaurant.name} />
+                {!Restaurant.is_open&&!Restaurant.is_available && (
                     <ClosedIcon>
                         <LockOutlined fontSize="inherit" />
                     </ClosedIcon>
                 )}
 
-                <StatusBadge open={Restaurant.isOpen}>
-                    {Restaurant.isOpen
+                <StatusBadge open={Restaurant.is_open&&Restaurant.is_available}>
+                    {Restaurant.is_open&&Restaurant.is_available
                         ? RESTAURANT_STATE.OPEN
                         : RESTAURANT_STATE.CLOSE}
                 </StatusBadge>
@@ -78,9 +64,9 @@ export const RestaurantCard = ({
                         </EllipsisTypography>
                     </Grid>
                     <VegChip
-                        label={Restaurant.category}
+                        label={Restaurant.food_type==FoodType.VEG?"Veg":"Non Veg"}
                         color={
-                            Restaurant.category === FoodType.VEG
+                            Restaurant.food_type === FoodType.VEG
                                 ? 'secondary'
                                 : 'error'
                         }
@@ -96,7 +82,7 @@ export const RestaurantCard = ({
                         </RestaurantAddress>
                         <Stack flexDirection="row" alignItems="center" gap={2}>
                             <AccessTimeOutlined />
-                            <Typography variant="body2">{`${formateTime(Restaurant.openingTime)}-${formateTime(Restaurant.closingTime)}`}</Typography>
+                            <Typography variant="body2">{`${formateTime(Restaurant.opening_time)}-${formateTime(Restaurant.closing_time)}`}</Typography>
                         </Stack>
                     </RestaurantTimings>
                     <RestaurantData>
@@ -119,28 +105,16 @@ export const RestaurantCard = ({
                     </RestaurantData>
                 </RestaurantInfo>
             </RestaurantContent>
-        </Link>
+        </RestaurantLink>
         <RestaurantFooter>
-            {canOpen && (
-                <ToggleSwitch
-                    label={
-                        Restaurant.isOpen
-                            ? RESTAURANT_STATE.OPEN
-                            : RESTAURANT_STATE.CLOSE
-                    }
-                    color="secondary"
-                    checked={Restaurant.isOpen}
-                    onChange={onToggle}
-                />
-            )}
             <Box>
                 {canEdit && (
-                    <Button onClick={onEdit}>
+                    <Button onClick={onEdit} loading={loading}>
                         <EditOutlined />
                     </Button>
                 )}
                 {canDelete && (
-                    <Button color="error" onClick={onDelete}>
+                    <Button color="error" onClick={onDelete} loading={loading}>
                         <DeleteOutlined />
                     </Button>
                 )}

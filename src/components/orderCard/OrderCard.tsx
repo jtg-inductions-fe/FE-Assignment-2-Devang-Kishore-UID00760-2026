@@ -45,7 +45,7 @@ export const OrderCard = (props: OrderCardProps) => {
             <Stack flexDirection="row" gap={4}>
                 <OrderHeader flex={1}>
                     <RestaurantImage
-                        src={firstItem?.item.image}
+                        src={firstItem?.item.image_link}
                         alt={order.restaurantName}
                     />
                     <RestaurantDetails>
@@ -145,7 +145,7 @@ export const OrderCard = (props: OrderCardProps) => {
                                 </Typography>
                                 <Typography variant="body2">
                                     &#8377;
-                                    {cartItem.item.price * cartItem.quantity}
+                                    {cartItem.item.price_amount * cartItem.quantity}
                                 </Typography>
                             </Stack>
                         ))}

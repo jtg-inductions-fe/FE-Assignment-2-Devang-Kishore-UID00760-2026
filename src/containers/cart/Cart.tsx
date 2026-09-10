@@ -37,7 +37,7 @@ export const CartContainer = (props: CartContainerProps) => {
     );
     const userId = useAppSelector((state) => state.auth.user?.id);
     const subtotal = cart.items.reduce(
-        (sum, cartItem) => sum + cartItem.item.price * cartItem.quantity,
+        (sum, cartItem) => sum + cartItem.item.price_amount * cartItem.quantity,
         0,
     );
     const bookingFee = Math.max(20, Math.round(subtotal * 0.01));
@@ -112,7 +112,7 @@ export const CartContainer = (props: CartContainerProps) => {
             return;
         }
 
-        const restaurantId = cart.items[0].item.restaurantID;
+        const restaurantId = cart.items[0].item.restaurant_id;
 
         try {
             await dispatch(fetchRestaurantByID(restaurantId)).unwrap();
@@ -128,7 +128,7 @@ export const CartContainer = (props: CartContainerProps) => {
         const orderData: OrderData = {
             customerId: userId ?? '',
             restaurantId:
-                currentRestaurant?.id ?? cart.items[0].item.restaurantID,
+                currentRestaurant?.id ?? cart.items[0].item.restaurant_id,
             restaurantName: currentRestaurant?.name ?? '',
             items: cart.items,
         };

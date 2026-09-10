@@ -33,7 +33,7 @@ export const getMenu = (payload: {
     const filters = payload.filters;
     const menu = getStoredMenu();
     const currentMenu = restaurantID
-        ? menu.filter((item) => restaurantID === item.restaurantID)
+        ? menu.filter((item) => restaurantID === item.restaurant_id)
         : menu;
     let menuData = currentMenu;
     if (filters?.search) {
@@ -42,9 +42,9 @@ export const getMenu = (payload: {
             menuItem.name.toLowerCase().includes(search),
         );
     }
-    if (filters?.type && filters.type !== FoodType.BOTH) {
+    if (filters?.food_type && filters.food_type !== FoodType.VEG) {
         menuData = menuData.filter(
-            (menuItem) => menuItem.category === filters.type,
+            (menuItem) => menuItem.food_type === filters.food_type,
         );
     }
 

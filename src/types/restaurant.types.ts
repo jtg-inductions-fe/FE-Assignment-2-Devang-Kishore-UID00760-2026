@@ -1,4 +1,4 @@
-import { Cuisine, FoodType } from '@types';
+import { Address, Cuisine, FoodType } from '@types';
 
 export enum Day {
     MONDAY = 'Monday',
@@ -10,29 +10,31 @@ export enum Day {
     SUNDAY = 'Sunday',
 }
 
-export interface Address {
-    street: string;
-    city: string;
-    state: string;
-    pincode: string;
-}
-
 export interface Restaurant {
     id: string;
-    ownerId: string;
+    owner_id: string;
     name: string;
     description?: string;
-    contactNumber: string;
+    country_code:string;
+    contact_number: string;
     email: string;
-    fssaiCertificateId: string;
-    gstNumber: string;
     cuisines: Cuisine[];
-    category: FoodType;
-    image?: string;
-    logo?: string;
+    food_type: FoodType;
+    image_link?: string;
+    logo_link?: string;
     address: Address;
-    isOpen: boolean;
-    openingTime: string;
-    closingTime: string;
-    workingDays: Day[];
+    is_available: boolean;
+    is_open:boolean;
+    opening_time: string;
+    closing_time: string;
+    working_days: Day[];
 }
+
+export interface PaginationResponse<T>{
+    items:T[];
+    page_size:number;
+    next_cursor:string|null;
+    has_more:boolean;
+}
+
+export type RestaurantListResponse=PaginationResponse<Restaurant>

@@ -8,10 +8,10 @@
             {
                 "item": {
                     "id": "M3",
-                    "restaurantID": "R2",
+                    "restaurant_id": "R2",
                     "name": "Margherita Pizza",
-                    "category": "veg",
-                    "price": 320,
+                    "food_type": "veg",
+                    "price_amount": 320,
                     "description": "Classic pizza",
                     "image": "https://www.savoringitaly.com/wp-content/uploads/2024/09/sourdough-pizza-5.jpg",
                     "stock": 3,

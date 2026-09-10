@@ -3,7 +3,7 @@ import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { AuthRoute } from '@components/routeGuards/AuthRoute';
 import { PrivateRoute } from '@components/routeGuards/PrivateRoute';
 import { ProtectedRoutes } from '@components/routeGuards/ProtectedRoutes';
-import { ROUTES } from '@constants';
+import { ROUTES, USERS } from '@constants';
 import { AddEditRestaurant } from '@containers/addEditRestaurant/AddEditRestaurant';
 import { AppLayout } from '@layouts/AppLayout';
 import { LoginPage } from '@pages/auth/LoginPage';
@@ -12,6 +12,7 @@ import { DiscoveryPage } from '@pages/discovery/Discovery';
 import { ErrorPage } from '@pages/fallback/ErrorPage';
 import { NotFoundPage } from '@pages/fallback/NotFoundPage';
 import { OrdersPage } from '@pages/orders/Orders';
+import Profile from '@pages/profile/profile';
 import { RestaurantMenuPage } from '@pages/restaurantMenu/RestaurantMenu';
 
 export const router = createBrowserRouter([
@@ -32,6 +33,10 @@ export const router = createBrowserRouter([
                                 ),
                             },
                             {
+                                path: ROUTES.PROFILE,
+                                element: <Profile />,
+                            },
+                            {
                                 path: ROUTES.DISCOVERY,
                                 element: <DiscoveryPage />,
                             },
@@ -45,7 +50,7 @@ export const router = createBrowserRouter([
                             },
                             {
                                 element: (
-                                    <ProtectedRoutes allowedRoles={['owner']} />
+                                    <ProtectedRoutes allowedRoles={[USERS.owner]} />
                                 ),
                                 children: [
                                     {

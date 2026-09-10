@@ -19,7 +19,6 @@ import {
 } from '@store/slices/restaurant/restaurantSlice';
 import {
     ConfirmationDialogProps,
-    Day,
     Restaurant,
     SnackbarTheme,
 } from '@types';
@@ -36,10 +35,10 @@ export const DiscoveryPage = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const { hasPermission } = usePermissions();
-    const { items: restaurants, loading } = useAppSelector(
-        (state) => state.restaurants,
-    );
-
+    const {
+        items: restaurants,
+        loading
+    } = useAppSelector((state) => state.restaurants);
     const handleEdit = (id: string) => {
         void navigate(generatePath(ROUTES.EDIT_RESTAURANT, { id: id }));
     };
@@ -48,7 +47,7 @@ export const DiscoveryPage = () => {
         dispatch(
             updateRestaurantData({
                 id: restaurant.id,
-                data: { isOpen: !restaurant.isOpen },
+                data: { is_available: !restaurant.is_available },
             }),
         )
             .unwrap()
@@ -101,26 +100,6 @@ export const DiscoveryPage = () => {
         }));
     };
 
-    const isWithinTimings = (openingTime: string, closingTime: string) => {
-        const currentTime = new Date().toLocaleTimeString('en-GB', {
-            hour: '2-digit',
-            minute: '2-digit',
-        });
-        return currentTime >= openingTime && currentTime < closingTime;
-    };
-    const checkRestaurantOpen = (restaurant: Restaurant) => {
-        const today = new Date().toLocaleDateString('en-US', {
-            weekday: 'long',
-        });
-        const workingDay = restaurant.workingDays.includes(today as Day);
-        const isWorkingTime = isWithinTimings(
-            restaurant.openingTime,
-            restaurant.closingTime,
-        );
-        if (!isWorkingTime && !workingDay && restaurant.isOpen) {
-            handleToggleRestaurant(restaurant);
-        }
-    };
 
     const handleToggleConfirmation = (restaurant: Restaurant) => {
         const confirmToggle = () => {
@@ -129,10 +108,10 @@ export const DiscoveryPage = () => {
         };
         setDialogData(() => ({
             open: true,
-            title: restaurant.isOpen
+            title: restaurant.is_open
                 ? discoveryContent.CLOSE
                 : discoveryContent.OPEN,
-            message: restaurant.isOpen
+            message: restaurant.is_open
                 ? discoveryContent.CLOSE_MESSAGE
                 : discoveryContent.OPEN_MESSAGE,
             onConfirm: () => {
@@ -140,6 +119,7 @@ export const DiscoveryPage = () => {
             },
         }));
     };
+
 
     return (
         <>
@@ -180,7 +160,7 @@ export const DiscoveryPage = () => {
                     )}
                 </Grid>
                 <Grid container spacing={4}>
-                    {restaurants?.length === 0 && (
+                    {restaurants?.length === 0 &&!loading&& (
                         <RestaurantNotFound>
                             <ErrorIcon fontSize="large" color="error" />
                             <Typography variant="h3">
@@ -188,24 +168,26 @@ export const DiscoveryPage = () => {
                             </Typography>
                         </RestaurantNotFound>
                     )}
-                    {loading && (
+                    {loading &&restaurants.length==0&&(
                         <Box>
                             <Skeleton
-                                height={190}
+                                sx={{
+                                    width: { xs: 400, md: 700 },
+                                    height: 290
+                                    }}
+
                                 animation="wave"
                                 variant="rectangular"
                             />
-                            <Skeleton animation="wave" height={20} />
+                            <Skeleton animation="wave" height={40} />
                             <Skeleton
                                 animation="wave"
-                                height={20}
+                                height={40}
                                 width="80%"
                             />
                         </Box>
                     )}
-                    {restaurants.map((restaurant) => {
-                        checkRestaurantOpen(restaurant);
-                        return (
+                    {restaurants.map((restaurant) => (
                             <Grid
                                 size={{ xs: 12, md: 6, lg: 4 }}
                                 key={restaurant.id}
@@ -230,10 +212,10 @@ export const DiscoveryPage = () => {
                                     canOpen={hasPermission(
                                         permissions.OPEN_RESTAURANT,
                                     )}
+                                    loading={loading}
                                 />
                             </Grid>
-                        );
-                    })}
+                        ))}
                 </Grid>
             </DiscoveryContainer>
             <ConfirmDialog

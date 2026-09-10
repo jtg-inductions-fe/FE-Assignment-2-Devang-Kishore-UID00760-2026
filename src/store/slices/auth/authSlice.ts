@@ -1,10 +1,17 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { login, signUp } from '@services/auth.service';
-import { User } from '@types';
-import { removeStorage } from '@utils/storage';
+import axios from 'axios';
+
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import {
+    getCurrentUser,
+    login,
+    logoutUser,
+    signUp,
+} from '@services/auth.service';
+import { UserData } from '@types';
+import { ApiError } from '@types';
 
 import { authSliceContent } from './authSlice.constants';
-import { AuthState, UserData } from './authSlice.types';
+import { AuthState } from './authSlice.types';
 
 const initialState: AuthState = {
     user: null,
@@ -20,13 +27,16 @@ export const loginUser = createAsyncThunk(
         { rejectWithValue },
     ) => {
         try {
-            return await login(payload.email, payload.password);
+            await login(payload.email, payload.password);
+            return await getCurrentUser();
         } catch (error) {
-            return rejectWithValue(
-                error instanceof Error
-                    ? error.message
-                    : authSliceContent.LOGIN_FAILED_ERROR,
-            );
+            if (axios.isAxiosError<ApiError>(error)) {
+                return rejectWithValue(
+                    error.response?.data.reason ??
+                        authSliceContent.LOGIN_FAILED_ERROR,
+                );
+            }
+            return rejectWithValue(authSliceContent.LOGIN_FAILED_ERROR);
         }
     },
 );
@@ -35,12 +45,50 @@ export const signupUser = createAsyncThunk(
     'auth/signup',
     async (payload: UserData, { rejectWithValue }) => {
         try {
-            return await signUp(payload);
+            await signUp(payload);
+        } catch (error) {
+            if (axios.isAxiosError<ApiError>(error)) {
+                return rejectWithValue(
+                    error.response?.data.reason ??
+                        authSliceContent.SIGNUP_FAILED_ERROR,
+                );
+            }
+            return rejectWithValue(authSliceContent.SIGNUP_FAILED_ERROR);
+        }
+    },
+);
+
+export const fetchCurrentUser = createAsyncThunk(
+    'users/me',
+    async (_, { rejectWithValue }) => {
+        try {
+            const user = await getCurrentUser();
+            if (!user) {
+                return rejectWithValue(authSliceContent.USER_FETCH_FAILED);
+            }
+            return user;
+        } catch (error) {
+            if (axios.isAxiosError<ApiError>(error)) {
+                return rejectWithValue(
+                    error.response?.data.reason ??
+                        authSliceContent.USER_FETCH_FAILED,
+                );
+            }
+            return rejectWithValue(authSliceContent.USER_FETCH_FAILED);
+        }
+    },
+);
+
+export const logoutCurrentUser = createAsyncThunk(
+    'auth/logout',
+    async (_, { rejectWithValue }) => {
+        try {
+            await logoutUser();
         } catch (error) {
             return rejectWithValue(
                 error instanceof Error
                     ? error.message
-                    : authSliceContent.SIGNUP_FAILED_ERROR,
+                    : authSliceContent.USER_LOGOUT_FAILED,
             );
         }
     },
@@ -50,17 +98,6 @@ export const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        setUser(state, action: PayloadAction<User | null>) {
-            state.user = action.payload;
-            if (action.payload != null) {
-                state.isLoggedIn = true;
-            }
-        },
-        logout(state) {
-            state.user = null;
-            state.isLoggedIn = false;
-            removeStorage('crt_user');
-        },
         clearError(state) {
             state.error = null;
         },
@@ -84,18 +121,45 @@ export const authSlice = createSlice({
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(signupUser.fulfilled, (state, action) => {
+            .addCase(signupUser.fulfilled, (state) => {
                 state.loading = false;
-                state.user = action.payload;
-                state.isLoggedIn = true;
+                state.error = null;
             })
             .addCase(signupUser.rejected, (state) => {
                 state.loading = false;
                 state.error = authSliceContent.SIGNUP_FAILED_ERROR;
+            })
+            .addCase(fetchCurrentUser.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(fetchCurrentUser.fulfilled, (state, action) => {
+                state.loading = false;
+                state.isLoggedIn = true;
+                state.user = action.payload;
+            })
+            .addCase(fetchCurrentUser.rejected, (state) => {
+                state.loading = false;
+                state.user = null;
+                state.isLoggedIn = false;
+                state.error = authSliceContent.USER_FETCH_FAILED;
+            })
+            .addCase(logoutCurrentUser.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(logoutCurrentUser.fulfilled, (state) => {
+                state.loading = false;
+                state.user = null;
+                state.isLoggedIn = false;
+            })
+            .addCase(logoutCurrentUser.rejected, (state) => {
+                state.loading = false;
+                state.error = authSliceContent.USER_FETCH_FAILED;
             });
     },
 });
 
-export const { logout, clearError, setUser } = authSlice.actions;
+export const { clearError } = authSlice.actions;
 
 export default authSlice.reducer;

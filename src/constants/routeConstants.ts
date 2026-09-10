@@ -14,4 +14,13 @@ export const ROUTES = {
     ADD_RESTAURANT: '/restaurant/add',
     ROOT: '/',
     ALL: '*',
+    PROFILE: '/profile',
+    API_REFRESH: '/auth/refresh',
+    API_LOGOUT: '/auth/logout',
+    API_USERS: '/users/users',
+    API_ME: '/users/me',
+    API_LOGIN: '/auth/login',
+    API_SIGNUP: '/auth/signup',
+    API_ADDRESSES: '/users/me/addresses',
+    API_RESTAURANTS:'/restaurants/',
 };

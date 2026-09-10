@@ -9,7 +9,7 @@ import { FormSelectFieldProps } from './FormSelectFeld.types';
 export const FormSelectField = <T extends FieldValues>(
     props: FormSelectFieldProps<T>,
 ) => {
-    const { name, control, label, options, required = false } = props;
+    const { name, control, label, options, required = false ,disabled=false} = props;
 
     return (
         <Controller
@@ -22,6 +22,7 @@ export const FormSelectField = <T extends FieldValues>(
                     required={required}
                     error={!!fieldState.error}
                     helperText={fieldState.error?.message}
+                    disabled={disabled}
                 >
                     {options.map((option) => (
                         <MenuItem key={option} value={option}>

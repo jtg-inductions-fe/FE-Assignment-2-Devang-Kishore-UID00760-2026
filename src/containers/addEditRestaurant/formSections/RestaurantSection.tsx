@@ -1,4 +1,5 @@
 import { Controller, Path, useFormContext } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
 
 import { MenuItem } from '@mui/material';
 import Grid from '@mui/material/Grid2';
@@ -16,14 +17,15 @@ import { useAppSelector } from '@hooks/storeHooks';
 export const RestaurantSection = () => {
     const { control } = useFormContext<AddRestaurantFormData>();
     const { user } = useAppSelector((state) => state.auth);
-
+    const {loading}=useAppSelector((state)=>state.restaurants);
+    const { id } = useParams();
     return (
         <Grid container spacing={3}>
             <Grid size={{ xs: 12, md: 6 }}>
                 <TextField
                     label={addRestaurantContent.OWNER_NAME_LABEL}
                     fullWidth
-                    value={user?.name}
+                    value={user?.full_name}
                     disabled
                 />
             </Grid>
@@ -36,6 +38,7 @@ export const RestaurantSection = () => {
                             <FormSelectField
                                 name={fieldName}
                                 control={control}
+                                disabled={loading}
                                 label={field.label}
                                 options={field.options ?? []}
                             />
@@ -45,6 +48,7 @@ export const RestaurantSection = () => {
                                 control={control}
                                 label={field.label}
                                 type={field.type}
+                                disabled={loading||!!id &&field.disabled}
                                 multiline={field.multiline}
                                 rows={field.rows}
                                 required={field.required}
@@ -67,6 +71,7 @@ export const RestaurantSection = () => {
                             }
                             error={!!fieldState.error}
                             helperText={fieldState.error?.message}
+                            disabled={loading}
                             required
                             MenuProps={{
                                 anchorOrigin: {

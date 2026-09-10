@@ -7,7 +7,6 @@ import { Cuisine, Day, FoodType } from '@types';
 export const FOOD_TYPES: FoodType[] = [
     FoodType.VEG,
     FoodType.NON_VEG,
-    FoodType.BOTH,
 ];
 
 /**
@@ -50,3 +49,5 @@ export const DAYS: Day[] = [
 export const RESTAURANT_TEXT_CONTENT = {
     RESTAURANT_NOT_FOUND: 'Restaurant not Found',
 };
+
+export const PAGE_SIZE=10

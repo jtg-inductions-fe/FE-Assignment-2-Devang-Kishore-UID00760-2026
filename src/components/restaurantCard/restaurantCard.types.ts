@@ -8,4 +8,5 @@ export interface RestaurantCardProps {
     canEdit: boolean;
     canDelete: boolean;
     canOpen: boolean;
+    loading:boolean
 }

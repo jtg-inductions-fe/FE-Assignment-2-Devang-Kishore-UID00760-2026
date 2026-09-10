@@ -1,6 +1,6 @@
 import { permissions } from './permissions.config';
 export const rolePermissions = {
-    owner: [
+    RESTAURANT_OWNER: [
         permissions.ADD_RESTAURANT,
         permissions.DELETE_RESTAURANT,
         permissions.EDIT_RESTAURANT,
@@ -12,7 +12,7 @@ export const rolePermissions = {
         permissions.SHOW_ADD_ITEM,
         permissions.CAN_EDIT_STATUS,
     ],
-    customer: [
+    CUSTOMER: [
         permissions.SHOW_CART,
         permissions.SHOW_CUISINES_GRID,
         permissions.SHOW_REORDER,

@@ -42,7 +42,7 @@ export const MenuItemCard = (props: MenuItemCardProps) => {
     return (
         <CardContainer>
             <MenuImage
-                src={menuItem?.image}
+                src={menuItem?.image_link}
                 alt={menuItem?.name}
                 fetchPriority="high"
                 inStock={menuItem.stock > 0}
@@ -61,9 +61,9 @@ export const MenuItemCard = (props: MenuItemCardProps) => {
                         </MenuTypography>
                     </Grid>
                     <Chip
-                        label={menuItem?.category}
+                        label={menuItem?.food_type}
                         color={
-                            menuItem?.category === FoodType.VEG
+                            menuItem?.food_type === FoodType.VEG
                                 ? 'secondary'
                                 : 'error'
                         }
@@ -74,7 +74,7 @@ export const MenuItemCard = (props: MenuItemCardProps) => {
                 </MenuTypography>
                 <Footer>
                     <Typography variant="h5">
-                        &#8377; {menuItem?.price}
+                        &#8377; {menuItem?.price_amount}
                     </Typography>
                     <Box padding={1}>
                         {canAddInCart &&

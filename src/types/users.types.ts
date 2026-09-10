@@ -1,19 +1,19 @@
+import { Address } from '@types';
+
 export enum Role {
-    CUSTOMER = 'customer',
-    OWNER = 'owner',
+    CUSTOMER = 'CUSTOMER',
+    OWNER = 'RESTAURANT_OWNER',
 }
 
 export interface UserData {
-    name: string;
+    full_name: string;
     email: string;
     password: string;
     role: Role;
+    address: Address;
 }
 
-export interface User {
+export interface User extends UserData {
     id: string;
-    name: string;
-    email: string;
-    role: Role;
-    password: string;
+    balance_amount: string;
 }

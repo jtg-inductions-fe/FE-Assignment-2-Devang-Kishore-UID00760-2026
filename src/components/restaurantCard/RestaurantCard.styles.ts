@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import { Avatar, Box, Card, Chip, styled, Typography } from '@mui/material';
 
 import { BORDER_RADIUS } from '@constants';
@@ -30,6 +32,11 @@ export const RestaurantImage = styled('img', {
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     filter: `grayscale(${open ? 0 : 1})`,
+}));
+
+export const RestaurantLink = styled(Link)(({ theme: { palette } }) => ({
+    color: palette.text.primary,
+    textDecoration: 'none',
 }));
 
 export const RestaurantLogo = styled(Avatar)(({ theme: { spacing } }) => ({
@@ -90,7 +97,7 @@ export const StatusBadge = styled(Box, {
 
 export const RestaurantFooter = styled(Box)(({ theme: { spacing } }) => ({
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'end',
     alignItems: 'center',
     padding: spacing(5, 3, 3),
 }));

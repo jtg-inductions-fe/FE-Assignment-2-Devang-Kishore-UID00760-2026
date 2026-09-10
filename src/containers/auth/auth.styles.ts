@@ -82,7 +82,7 @@ export const AuthForm = styled('form')(
         gap: spacing(4),
 
         [breakpoints.up('md')]: {
-            gap: spacing(8),
+            gap: spacing(4),
         },
     }),
 );

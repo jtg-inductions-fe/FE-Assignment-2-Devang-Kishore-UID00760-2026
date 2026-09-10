@@ -7,11 +7,13 @@ import { RouterProvider } from 'react-router-dom';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 
 import { Feedback } from '@containers/feedback/Feedback.container';
+import { setupInterceptor } from '@services/api';
 import { theme } from '@theme';
 
 import { router } from './routes/router';
 import { store } from './store/store';
 
+setupInterceptor(store.dispatch);
 const rootElement = document.getElementById('root') as HTMLElement;
 createRoot(rootElement).render(
     <StrictMode>

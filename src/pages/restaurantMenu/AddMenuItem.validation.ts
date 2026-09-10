@@ -14,12 +14,12 @@ export const MenuItemSchema = yup.object({
         .oneOf(CUISINES)
         .required(restaurantMenuContent.CUISINE_REQUIRED),
 
-    category: yup
+    food_type: yup
         .mixed<FoodType>()
         .oneOf(FOOD_TYPES)
-        .required(restaurantMenuContent.CATEGORY_REQUIRED),
+        .required(restaurantMenuContent.FOOD_TYPE_REQUIRED),
 
-    price: yup
+    price_amount: yup
         .number()
         .typeError(restaurantMenuContent.PRICE_REQUIRED)
         .positive(restaurantMenuContent.POSITIVE_PRICE)
