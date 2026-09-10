@@ -6,7 +6,7 @@ import {
     LockOutlined,
     RamenDiningOutlined,
 } from '@mui/icons-material';
-import { Box, Button, Chip, Link, Stack, Typography } from '@mui/material';
+import { Box, Button, Chip, Stack, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 
 import { ToggleSwitch } from '@components/toggleSwitch';
@@ -26,6 +26,7 @@ import {
     RestaurantImage,
     RestaurantImageContainer,
     RestaurantInfo,
+    RestaurantLink,
     RestaurantLogo,
     RestaurantTimings,
     StatusBadge,
@@ -43,11 +44,7 @@ export const RestaurantCard = ({
     onToggle,
 }: RestaurantCardProps) => (
     <RestaurantCardContainer>
-        <Link
-            href={`/restaurant/${Restaurant.id}`}
-            underline="none"
-            color="textPrimary"
-        >
+        <RestaurantLink to={`/restaurant/${Restaurant.id}`} color="textPrimary">
             <RestaurantImageContainer>
                 <RestaurantImage
                     src={Restaurant.image}
@@ -119,7 +116,7 @@ export const RestaurantCard = ({
                     </RestaurantData>
                 </RestaurantInfo>
             </RestaurantContent>
-        </Link>
+        </RestaurantLink>
         <RestaurantFooter>
             {canOpen && (
                 <ToggleSwitch

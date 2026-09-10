@@ -18,6 +18,17 @@ export const authContent = {
     CONFIRM_PASSWORD_PLACEHOLDER: 'Enter password again',
     LOGIN_SUCCESS: 'Login successful.',
     SIGNUP_SUCCESS: 'Signup successful.',
+    STREET_LABEL: 'Street',
+    STATE_LABEL: 'State',
+    CITY_LABEL: 'City',
+    PIN_CODE_LABEL: 'Pincode',
+    STREET_PLACEHOLDER: '123 main road',
+    STATE_PLACEHOLDER: 'Delhi',
+    CITY_PLACEHOLDER: 'New Delhi',
+    PIN_CODE_PLACEHOLDER: '110208',
+    ADDRESS_LABEL: 'Address',
+    CURRENT_PASSWORD: 'current password',
+    NEW_PASSWORD: 'new password',
 };
 
 export const authValidationFields = {
@@ -31,4 +42,9 @@ export const authValidationFields = {
     NAME_MAX_LENGTH: 'name cannot exceed 50 characters.',
     CONFIRM_PASSWORD_REQUIRED: 'confirm password is required',
     PASSWORD_MISMATCH: 'password do not match.',
+    STREET_REQUIRED: 'Street is required',
+    CITY_REQUIRED: 'City is required',
+    STATE_REQUIRED: 'State is required',
+    PINCODE_REQUIRED: 'Pincode is required',
+    PINCODE_VALIDATION: 'PinCode is incorrect',
 };

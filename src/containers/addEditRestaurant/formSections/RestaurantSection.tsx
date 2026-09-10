@@ -23,7 +23,7 @@ export const RestaurantSection = () => {
                 <TextField
                     label={addRestaurantContent.OWNER_NAME_LABEL}
                     fullWidth
-                    value={user?.name}
+                    value={user?.full_name}
                     disabled
                 />
             </Grid>

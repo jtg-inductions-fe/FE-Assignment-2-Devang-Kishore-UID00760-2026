@@ -4,6 +4,9 @@ export type { QueryParams } from './queryParams.type';
 export type { ConfirmationDialogProps } from './confirmationDialog.types';
 export type { UserData, User } from './users.types';
 export { Role } from './users.types';
+export type { Address, AddressData } from './address.types';
+export type { ApiError } from './api.types';
+
 export type {
     OrderData,
     Order,
@@ -24,7 +27,7 @@ export type {
     MenuItemsContainer,
 } from './menItem.types';
 export { FoodType, Cuisine } from './menItem.types';
-export type { Address, Restaurant } from './restaurant.types';
+export type { Restaurant } from './restaurant.types';
 export { Day } from './restaurant.types';
 export type {
     CartItem,

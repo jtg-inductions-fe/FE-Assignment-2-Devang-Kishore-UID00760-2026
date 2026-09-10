@@ -21,7 +21,7 @@ import { ROUTES } from '@constants';
 import { CartContainer } from '@containers/cart/Cart';
 import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
 import { usePermissions } from '@hooks/usePermissions';
-import { logout } from '@store/slices/auth/authSlice';
+import { logoutCurrentUser } from '@store/slices/auth/authSlice';
 import { showSnackbar } from '@store/slices/feedback/feedBackSlice';
 import { fetchMenu } from '@store/slices/menu/menuSlice';
 import { fetchOrders } from '@store/slices/order/ordersSlice';
@@ -95,7 +95,7 @@ export const Header = () => {
             open: true,
             title: headerTextContent.LOGOUT_TITLE,
             message: headerTextContent.LOGOUT_MESSAGE,
-            onConfirm: () => void dispatch(logout()),
+            onConfirm: () => void dispatch(logoutCurrentUser()),
         }));
     };
 
@@ -151,8 +151,9 @@ export const Header = () => {
     };
 
     const profileMenuProps = {
-        name: user?.name ?? headerTextContent.USER,
+        name: user?.full_name ?? headerTextContent.USER,
         onLogout: handleLogout,
+        onProfileClick: () => navigate(ROUTES.PROFILE),
     };
 
     useEffect(() => {

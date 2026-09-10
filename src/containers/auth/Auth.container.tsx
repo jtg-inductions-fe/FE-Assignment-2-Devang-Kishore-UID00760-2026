@@ -2,6 +2,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 import { Box, Checkbox, Stack } from '@mui/material';
+import Grid from '@mui/material/Grid2';
 import Typography from '@mui/material/Typography';
 
 import logo from '@assets/images/logo.svg';
@@ -38,11 +39,17 @@ export const Auth = ({ isSignUp = false }: { isSignUp: boolean }) => {
     const navigate = useNavigate();
     const { loading } = useAppSelector((state) => state.auth);
     const signupDefaultValues = {
-        name: '',
+        full_name: '',
         email: '',
         password: '',
         confirmPassword: '',
         role: Role.CUSTOMER,
+        address: {
+            street: '',
+            city: '',
+            pincode: '',
+            state: '',
+        },
     };
     const loginDefaultValues = {
         email: '',
@@ -64,7 +71,7 @@ export const Auth = ({ isSignUp = false }: { isSignUp: boolean }) => {
                     severity: SnackbarTheme.SUCCESS,
                 }),
             );
-            await navigate(ROUTES.DISCOVERY, { replace: true });
+            await navigate(ROUTES.LOGIN, { replace: true });
         } catch (error) {
             dispatch(
                 showSnackbar({
@@ -105,7 +112,7 @@ export const Auth = ({ isSignUp = false }: { isSignUp: boolean }) => {
                             alt="Zangoo Logo"
                             fetchPriority="high"
                         />
-                        <Typography variant="h1">
+                        <Typography variant="h2">
                             {isSignUp
                                 ? authContent.SIGNUP_HEADING
                                 : authContent.LOGIN_HEADING}
@@ -127,7 +134,7 @@ export const Auth = ({ isSignUp = false }: { isSignUp: boolean }) => {
                                     {authContent.NAME_FIELD}
                                 </Typography>
                                 <Controller
-                                    name="name"
+                                    name="full_name"
                                     control={control}
                                     render={({ field, fieldState }) => (
                                         <TextField
@@ -137,6 +144,7 @@ export const Auth = ({ isSignUp = false }: { isSignUp: boolean }) => {
                                             }
                                             type="name"
                                             error={!!fieldState.error}
+                                            disabled={loading}
                                             helperText={
                                                 fieldState.error?.message
                                             }
@@ -159,13 +167,14 @@ export const Auth = ({ isSignUp = false }: { isSignUp: boolean }) => {
                                             authContent.EMAIL_PLACEHOLDER
                                         }
                                         type="email"
+                                        disabled={loading}
                                         error={!!fieldState.error}
                                         helperText={fieldState.error?.message}
                                     />
                                 )}
                             />
                         </Stack>
-                        <Stack flexDirection="column" gap={1}>
+                        <Stack gap={1} flexDirection="column">
                             <Typography variant="subtitle1">
                                 {authContent.PASSWORD_FIELD}
                             </Typography>
@@ -178,14 +187,20 @@ export const Auth = ({ isSignUp = false }: { isSignUp: boolean }) => {
                                         placeholder={
                                             authContent.PASSWORD_PLACEHOLDER
                                         }
+                                        disabled={loading}
                                         error={!!fieldState.error}
                                         helperText={fieldState.error?.message}
+                                        autoComplete={
+                                            isSignUp
+                                                ? authContent.NEW_PASSWORD
+                                                : authContent.CURRENT_PASSWORD
+                                        }
                                     />
                                 )}
                             />
                         </Stack>
                         {isSignUp && (
-                            <Stack flexDirection="column" gap={1}>
+                            <Stack gap={1} flexDirection="column">
                                 <Typography variant="subtitle1">
                                     {authContent.CONFIRM_PASSWORD_FIELD}
                                 </Typography>
@@ -198,14 +213,116 @@ export const Auth = ({ isSignUp = false }: { isSignUp: boolean }) => {
                                             placeholder={
                                                 authContent.CONFIRM_PASSWORD_PLACEHOLDER
                                             }
+                                            disabled={loading}
                                             error={!!fieldState.error}
                                             helperText={
                                                 fieldState.error?.message
+                                            }
+                                            autoComplete={
+                                                authContent.NEW_PASSWORD
                                             }
                                         />
                                     )}
                                 />
                             </Stack>
+                        )}
+
+                        {isSignUp && (
+                            <Grid container spacing={2}>
+                                <Grid size={12}>
+                                    <Typography variant="subtitle1">
+                                        {authContent.ADDRESS_LABEL}
+                                    </Typography>
+                                </Grid>
+                                <Grid size={12}>
+                                    <Typography variant="subtitle2">
+                                        {authContent.STREET_LABEL}
+                                    </Typography>
+                                    <Controller
+                                        name="address.street"
+                                        control={control}
+                                        render={({ field, fieldState }) => (
+                                            <TextField
+                                                {...field}
+                                                placeholder={
+                                                    authContent.STREET_PLACEHOLDER
+                                                }
+                                                error={!!fieldState.error}
+                                                disabled={loading}
+                                                helperText={
+                                                    fieldState.error?.message
+                                                }
+                                            />
+                                        )}
+                                    />
+                                </Grid>
+                                <Grid size={4}>
+                                    <Typography variant="subtitle2">
+                                        {authContent.CITY_LABEL}
+                                    </Typography>
+                                    <Controller
+                                        name="address.city"
+                                        control={control}
+                                        render={({ field, fieldState }) => (
+                                            <TextField
+                                                {...field}
+                                                placeholder={
+                                                    authContent.CITY_PLACEHOLDER
+                                                }
+                                                error={!!fieldState.error}
+                                                disabled={loading}
+                                                helperText={
+                                                    fieldState.error?.message
+                                                }
+                                            />
+                                        )}
+                                    />
+                                </Grid>
+                                <Grid size={4}>
+                                    <Typography variant="subtitle2">
+                                        {authContent.STATE_LABEL}
+                                    </Typography>
+                                    <Controller
+                                        name="address.state"
+                                        control={control}
+                                        render={({ field, fieldState }) => (
+                                            <TextField
+                                                {...field}
+                                                placeholder={
+                                                    authContent.STATE_PLACEHOLDER
+                                                }
+                                                error={!!fieldState.error}
+                                                disabled={loading}
+                                                helperText={
+                                                    fieldState.error?.message
+                                                }
+                                            />
+                                        )}
+                                    />
+                                </Grid>
+                                <Grid size={4}>
+                                    <Typography variant="subtitle2">
+                                        {authContent.PIN_CODE_LABEL}
+                                    </Typography>
+                                    <Controller
+                                        name="address.pincode"
+                                        control={control}
+                                        render={({ field, fieldState }) => (
+                                            <TextField
+                                                {...field}
+                                                placeholder={
+                                                    authContent.PIN_CODE_PLACEHOLDER
+                                                }
+                                                error={!!fieldState.error}
+                                                disabled={loading}
+                                                helperText={
+                                                    fieldState.error?.message
+                                                }
+                                            />
+                                        )}
+                                    />
+                                </Grid>
+                            </Grid>
                         )}
                         {isSignUp && (
                             <Box display="Flex" alignItems="center">
@@ -218,11 +335,12 @@ export const Auth = ({ isSignUp = false }: { isSignUp: boolean }) => {
                                         <Checkbox
                                             {...field}
                                             checked={value === Role.OWNER}
+                                            disabled={loading}
                                             onChange={(e) =>
                                                 onChange(
                                                     e.target.checked
-                                                        ? 'owner'
-                                                        : 'customer',
+                                                        ? Role.OWNER
+                                                        : Role.CUSTOMER,
                                                 )
                                             }
                                             inputProps={{
